@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Spotify Circular Black';
+  src: local('Spotify Circular Black'),
+    url(/circular-spotify-text-font/CircularSpotifyText-Black.otf);
+}
+
+@font-face {
+  font-family: 'Spotify Circular Black I';
+  src: local('Spotify Circular Black I'),
+    url(/circular-spotify-text-font/CircularSpotifyText-BlackItalic.otf);
+}
+
+@font-face {
+  font-family: 'Spotify Circular Bold';
+  src: local('Spotify Circular Bold'),
+    url(/circular-spotify-text-font/CircularSpotifyText-Bold.otf);
+}
+
+@font-face {
+  font-family: 'Spotify Circular Book';
+  src: local('Spotify Circular Book'),
+    url(/circular-spotify-text-font/CircularSpotifyText-Book.otf);
+}
+@font-face {
+  font-family: 'Spotify Circular Book I';
+  src: local('Spotify Circular Book I'),
+    url(/circular-spotify-text-font/CircularSpotifyText-BookItalic.otf);
+}
+
+@font-face {
+  font-family: 'Spotify Circular Light';
+  src: local('Spotify Circular Light'),
+    url(/circular-spotify-text-font/CircularSpotifyText-Light.otf);
+}
+
+@font-face {
+  font-family: 'Spotify Circular Medium';
+  src: local('Spotify Circular Medium'),
+    url(/circular-spotify-text-font/CircularSpotifyText-Medium.otf);
+}
+
+@font-face {
+  font-family: 'Spotify Circular Medium I';
+  src: local('Spotify Circular Medium I'),
+    url(/circular-spotify-text-font/CircularSpotifyText-MediumItalic.otf);
+}
+
+:root {
+  font-size: 1.25vw;
+  font-family: 'Spotify Circular Bold';
+  color: white;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+@media all and (max-width: 640px){
+  :root {
+    font-size: 2.5vw;
+  }
+}
+
+.childHover {
+  transition: linear 300ms;
+  bottom: 6rem;
+  right: 1.5rem;
+  opacity: 0;
+}
+
+.parentHover:hover > .childHover {
+  bottom: 7rem;
+  opacity: 100%;
+}
+
+.childHover:hover {
+  z-index: 5;
+  background-color: #1FDF64;
+  opacity: 80%;
+  transform: scale(1.1);
+}
+
+.notAllowed {
+  cursor: not-allowed;
+}

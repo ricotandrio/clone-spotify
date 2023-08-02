@@ -2,10 +2,12 @@ import React from 'react'
 import Sidebar from './Sidebar.jsx'
 import Content from './Content.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons'
-import '../index.css'
+import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import '../index.css';
 
 export default function Home() {
+
   return (
     <>
       <Sidebar />
@@ -17,11 +19,11 @@ export default function Home() {
               <FontAwesomeIcon icon={faChevronRight} className='notAllowed p-3 rounded-full'/>
             </div>
             <div className='absolute flex flex-row right-8'>
-              <div className='w-28 h-12 rounded-full flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-90 hover:opacity-100'>
-                <a href="">Sign Up</a>
+              <div className='w-28 h-12 rounded-full flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-80 hover:opacity-100'>
+                <Link to='/register'>Sign Up</Link>
               </div>
-              <div className='w-28 h-12 rounded-full bg-white text-black flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-100 hover:opacity-90'>
-                <a href="">Log in</a>
+              <div className='w-28 h-12 rounded-full bg-white text-black flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-100 hover:opacity-80'>
+                <Link to='/login'>Log in</Link>
               </div>
             </div>
           </div>
@@ -29,16 +31,6 @@ export default function Home() {
       </div>
       <Content />
 
-      <footer>
-        <div>
-          <h1>Company</h1>
-          <ul>
-            <li><a href="">About</a></li>
-            <li><a href="">Jobs</a></li>
-            <li><a href="">For the Record</a></li>
-          </ul>
-        </div>
-      </footer>
     </>
   )
 }

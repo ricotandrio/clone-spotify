@@ -87,3 +87,7 @@
 .notAllowed {
   cursor: not-allowed;
 }
+
+.resize-y {
+  resize: both;
+}

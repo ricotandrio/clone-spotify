@@ -8,6 +8,7 @@ import {
 
 import Home from './components/Home.jsx'
 import Error from './components/Error.jsx'
+import Login from './components/Login.jsx'
 
 export default function RouterRedirect() {
   const location = useLocation();
@@ -16,6 +17,7 @@ export default function RouterRedirect() {
       <Routes location={location} key={location.pathname}>
         <Route path='/' element={<Home />}/>
         <Route path='*' element={<Error />}/>
+        <Route path='/login' element={<Login />}/>
       </Routes>
     </>
   )

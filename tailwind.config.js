@@ -17,6 +17,7 @@ export default {
         'green': '#1FDF64',
         'lighterBlack': '#121212',
         'innerBlack': '#1E1E1E',
+        'gray': '#727272',
       },
       fontFamily: {
         'scb': 'Spotify Circular Black',

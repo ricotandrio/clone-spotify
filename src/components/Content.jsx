@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import SongData from '../../public/data.json'
-import SongSection from './SongSection.jsx';
+import SongData from '../../public/data'
+import SongSection from './SongSection.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import '../index.css'

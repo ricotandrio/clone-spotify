@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/Spotify_Logo_CMYK_White.png'
-import Spotify from '../assets/Spotify.png'
+import Spotify from '../assets/spotify.png'
 
 export default function Login() {
   return (

@@ -1,6 +1,7 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom'
 
 export default function SongSection(props) {
 
@@ -9,9 +10,9 @@ export default function SongSection(props) {
 
   return (
     <>
-      <div>
+      <Link to='/404'>
         <h1 className='opacity-80 text-white pl-6 pt-8 text-3xl ease-in-out duration-300 cursor-pointer inline-block hover:underline hover:underline-offset-8'>{props.title}</h1>
-      </div>
+      </Link>
       <div className='w-full pl-5 mt-5 pb-3 flex flex-row items-center justify-center gap-3 pr-5 overflow-hidden'>
         {
           props.data.slice(startIndex, endIndex).map((prop) => (

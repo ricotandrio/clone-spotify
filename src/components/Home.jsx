@@ -19,12 +19,18 @@ export default function Home() {
               <FontAwesomeIcon icon={faChevronRight} className='notAllowed p-3 rounded-full'/>
             </div>
             <div className='absolute flex flex-row right-8'>
-              <div className='w-28 h-12 rounded-full flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-80 hover:opacity-100'>
-                <Link to='/register'>Sign Up</Link>
-              </div>
+
+              <Link to='/register'>
+                <div className='w-28 h-12 rounded-full flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-80 hover:opacity-100'>
+                  Sign Up
+                </div>
+              </Link>
+
+              <Link to='/login'>
               <div className='w-28 h-12 rounded-full bg-white text-black flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-100 hover:opacity-80'>
-                <Link to='/login'>Log in</Link>
+                Log in
               </div>
+              </Link>
             </div>
           </div>
         </div>

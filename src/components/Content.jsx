@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import SongData from '../../public/data'
 import SongSection from './SongSection.jsx'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import '../index.css'
 
 import Twitter from '../assets/uil_twitter.png'
@@ -11,6 +9,8 @@ import Instagram from '../assets/bi_instagram.png'
 
 export default function Content() {
   const [countWidth, setCountWidth] = useState(screen.width >= '640' ? 4 : 3);
+  const [songDatas, setSongDatas] = useState({});
+  const [stillLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -22,12 +22,40 @@ export default function Content() {
     };
   }, []);
 
+  useEffect(() => {
+    fetch('../../public/datas.json')
+    .then(response => response.json())
+    .then(data => {
+      setSongDatas(data.playlists);
+      setLoading(false);
+    })
+    .catch(e => {
+      console.error(e)
+      setLoading(false);
+    });
+  }, []);
+
+  console.log(songDatas);
+
+  if(stillLoading == true){
+    return (
+      <>
+        <div className='relative w-full h-full'>
+          <div className='relative bg-gradient-to-b from-innerBlack to-lighterBlack w-full sm:w-3/4 ml-[3rem] sm:ml-[20rem] text-white font-sbbs'>
+            <div className='h-screen flex items-center justify-center'>
+              <h1 className='text-2xl'>LOADING ... </h1>
+            </div>
+          </div>
+        </div>
+      </>
+    )
+  }
   return (
     <>
       <div className='relative w-full h-full'>
         <div className='relative bg-gradient-to-b from-innerBlack to-lighterBlack w-full sm:w-3/4 ml-[3rem] sm:ml-[20rem] text-white font-sbbs'>
-          <SongSection data={SongData} title='Focus' start='0' end={0 + countWidth} />
-          <SongSection data={SongData} title='Your Playlist' start='4' end={4 + countWidth} />
+          <SongSection data={songDatas[0]} title='Focus' show={ countWidth } />
+          <SongSection data={songDatas[1]} title='Your Playlist' show={ countWidth } />
 
           <footer className='pb-24 p-2 mt-20'>
             <div className='p-2 flex flex-row items-start justify-between'>

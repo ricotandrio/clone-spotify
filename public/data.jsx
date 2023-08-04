@@ -10,7 +10,7 @@ import image9 from '../src/assets/repeat.png';
 
 const SongData = [
   {
-    "name": "Pop Mix",
+    "name": "Reading Adventure",
     "desc": "Scores and soundtracks for daring quests, epic journeys, and the greatest reading adventures.",
     "image": image1,
     "key": 1,

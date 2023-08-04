@@ -34,7 +34,7 @@ export default function Login() {
             </ul>
             <div className='w-3/4 border-t border-gray mt-10 mb-10'></div>
 
-            <form className='flex flex-col' onSubmit={() => navigate('/')}>
+            <form className='flex flex-col' onSubmit={() => navigate('/')} action=''>
               <div className='flex flex-col'>
                 <label htmlFor="username" className='pt-2 pb-2'>Email or username</label>
                 <input type="text" id='username'

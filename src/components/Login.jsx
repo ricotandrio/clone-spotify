@@ -1,11 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/Spotify_Logo_CMYK_White.png'
 import Spotify from '../assets/spotify.png'
 import Github from '../assets/bi_github.png'
 import Google from '../assets/flat-color-icons_google.png'
 
 export default function Login() {
+  const navigate = useNavigate();
+
   return (
     <>
       <div className='bg-gradient-to-b from-[#141414] from-40% to-black pb-10'>
@@ -31,7 +33,8 @@ export default function Login() {
               </li>
             </ul>
             <div className='w-3/4 border-t border-gray mt-10 mb-10'></div>
-            <form className='flex flex-col'>
+
+            <form className='flex flex-col' onSubmit={() => navigate('/')}>
               <div className='flex flex-col'>
                 <label htmlFor="username" className='pt-2 pb-2'>Email or username</label>
                 <input type="text" id='username'
@@ -52,7 +55,16 @@ export default function Login() {
               </label>
 
               <div className='flex flex-col justify-center items-center'>
-                <button className='w-full p-3 text-black mt-10 rounded-full bg-green transform hover:scale-105'>Log In</button>
+                <button type='submit' className='w-full p-3 text-black mt-10 rounded-full bg-green transform hover:scale-105'
+                  onClick={() => {
+                    if('success' == 'success'){
+                      localStorage.setItem('login', JSON.stringify({"status": "true", }));
+                    }
+                  }}
+                >
+                  Log In
+                </button>
+
                 <a href="" className='font-scl mt-5 underline underline-offset-2 hover:text-green'>Forgot your password ? </a>
               </div>
             </form>

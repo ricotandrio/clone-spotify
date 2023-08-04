@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faMagnifyingGlass, faPlus, faLinesLeaning, faBars, faX } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
 
-export default function Sidebar() {
+export default function Sidebar(props) {
   const [width, setWidth] = useState(screen.width);
   const [menu, setMenu] = useState(false);
 
@@ -17,6 +16,10 @@ export default function Sidebar() {
     };
   }, []);
 
+  useEffect(() => {
+    document.querySelector(`.${props.name}button`).style.opacity = '1';
+  }, []);
+
   return (
     <div style={{position: 'Relative', zIndex: '999',}}>
       {
@@ -24,11 +27,11 @@ export default function Sidebar() {
           <div className='fixed w-1/4 h-screen p-2 z-10' >
             <div className='h-1/5 p-2 pl-6 flex flex-col justify-center rounded-xl bg-lighterBlack'>
               <ul className='text-l'>
-                <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
+                <li className='homebutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'>
                   <FontAwesomeIcon icon={faHouse} />
                   <h1 className='ml-5 mt-1'>Home</h1>
                 </li>
-                <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
+                <li className='searchbutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                   <h1 className='ml-5 mt-1'>Search</h1>
                 </li>
@@ -47,10 +50,10 @@ export default function Sidebar() {
               </div>
 
               <div className='mt-5 mb-5 ml-3 flex flex-row items-center gap-2 '>
-                <div className='w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
+                <div className='cursor-not-allowed w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
                   <h1 className='text-sm opacity-95'>Playlists</h1>
                 </div>
-                <div className='w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
+                <div className='cursor-not-allowed w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
                   <h1 className='text-sm opacity-95'>Artists</h1>
                 </div>
               </div>

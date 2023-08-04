@@ -88,6 +88,16 @@
   cursor: not-allowed;
 }
 
-.resize-y {
-  resize: both;
+.hover-opacity-100 {
+  cursor: pointer;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  opacity: 0.8;
+  transition: ease-in-out 0.3s;
+}
+
+.hover-opacity-100:hover {
+  opacity: 1;
 }

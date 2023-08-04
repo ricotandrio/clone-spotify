@@ -12,7 +12,6 @@ export default function Error() {
             This project using React.js and Tailwind CSS to develop a Spotify clone app, with the goal of replicating Spotify's UI and UX. It's crucial to mention that the design elements (UI and UX) are the property of Spotify due to copyright ownership.
             Additionally, some icons used in this clone project are sourced from Font Awesome.
           </p>
-
           <Link to='/' className='absolute p-2 w-1/2 bottom-5 rounded-full text-white bg-black mt-6 hover:bg-white hover:text-black'>
             BACK
           </Link>

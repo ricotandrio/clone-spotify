@@ -45,7 +45,17 @@ export default function Sidebar() {
                   <a href="#"><FontAwesomeIcon icon={faPlus} /></a>
                 </div>
               </div>
+
+              <div className='mt-5 mb-5 ml-3 flex flex-row items-center gap-2 '>
+                <div className='w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
+                  <h1 className='text-sm opacity-95'>Playlists</h1>
+                </div>
+                <div className='w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
+                  <h1 className='text-sm opacity-95'>Artists</h1>
+                </div>
+              </div>
             </div>
+
           </div>
         ) : (
           <div className='fixed w-[3rem] opacity-80 h-screen'>

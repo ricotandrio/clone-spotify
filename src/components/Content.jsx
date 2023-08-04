@@ -5,6 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import '../index.css'
 
+import Twitter from '../assets/uil_twitter.png'
+import Facebook from '../assets/ic_twotone-facebook.png'
+import Instagram from '../assets/bi_instagram.png'
+
 export default function Content() {
   const [countWidth, setCountWidth] = useState(screen.width >= '640' ? 4 : 3);
 
@@ -54,13 +58,19 @@ export default function Content() {
               </div>
               <div className='flex flex-row gap-4'>
                 <div className='p-3 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray'>
-                  <FontAwesomeIcon icon={faHeart} />
+                  <a href="https://www.instagram.com/spotify/" target='_blank'>
+                    <img src={Instagram} alt="instagram" />
+                  </a>
                 </div>
                 <div className='p-3 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray'>
-                  <FontAwesomeIcon icon={faHeart} />
+                  <a href="https://twitter.com/spotify" target='_blank'>
+                    <img src={Twitter} alt="twitter" />
+                  </a>
                 </div>
                 <div className='p-3 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray'>
-                  <FontAwesomeIcon icon={faHeart} />
+                  <a href="https://www.facebook.com/Spotify" target='_blank'>
+                    <img src={Facebook} alt="facebook" />
+                  </a>
                 </div>
               </div>
             </div>

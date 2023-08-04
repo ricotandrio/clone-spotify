@@ -9,15 +9,18 @@ Vite.js template provides a minimal setup to get React working in Vite with HMR 
 To begin, clone this repository to your local machine and use npm to install the necessary modules.
 
 ```bash
-npm install
+$ git clone https://github.com/ricotandrio/clone-spotify.git
+$ cd clone-spotify
+$ npm install
 ```
 
 Now, run the development server with:
 
 ```bash
-npm run dev
+$ npm run dev
 ```
 
 Finally, open the provided localhost link in your browser to view the application.
 
 ## Live Demo
+You can access the live version of the website at https://s001-clonespotify.netlify.app

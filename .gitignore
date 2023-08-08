@@ -13,6 +13,7 @@ dist-ssr/
 # temporary lock datas.json
 datas.json
 *.local
+datas copy.json
 
 # Editor directories and files
 .vscode/*

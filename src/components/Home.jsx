@@ -3,11 +3,13 @@ import Sidebar from './Sidebar.jsx'
 import Content from './Content.jsx'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../index.css';
 
 export default function Home(props) {
   const [login, setLogin] = useState(false);
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
     if(localStorage.getItem('login')){
@@ -50,7 +52,8 @@ export default function Home(props) {
                   <div className='ease-in-out duration-200 full-rounded p-2 hover:scale-110 cursor-pointer'
                     onClick={() => {
                       localStorage.setItem('login', JSON.stringify({"status": "false", }));
-                      window.location.reload();
+                      navigate('/')
+                      // window.location.reload();
                     }}
                   >
                     <FontAwesomeIcon icon={faUser} size='lg'/>

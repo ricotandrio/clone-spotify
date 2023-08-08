@@ -7,11 +7,16 @@ import Google from '../assets/flat-color-icons_google.png'
 
 export default function Login(props) {
   const navigate = useNavigate();
-  const [user, setUser] = useState(props.userdata);
+  const [users, setUsers] = useState(props._userdata);
+
+  const [accName, setAccName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [warning, setWarning] = useState('');
 
   return (
     <>
-      <div className='bg-gradient-to-b from-[#141414] from-40% to-black pb-10'>
+      <div className='bg-gradient-to-b from-[#141414] from-40% to-black pb-1  0'>
         <div className='bg-black border border-black w-full h-30 top-8 left-10 pt-8 pl-12 pb-8'>
           <Link to='/'><img src={logo} alt="" className='w-22 h-8'/></Link>
         </div>
@@ -35,23 +40,44 @@ export default function Login(props) {
             </ul>
             <div className='w-3/4 border-t border-gray mt-10 mb-10'></div>
 
-            <form className='flex flex-col' onSubmit={() => {
-                setTimeout(() => window.location.reload(), 300);
-                navigate('/');
-              }}
+            <form
               action=''
+              autoComplete='off'
+              className='flex flex-col'
+              onSubmit={(e) => {
+                e.preventDefault();
+                let searchQuery = users.filter((curr) => (curr.name == accName || curr.email == accName) && curr.password == password);
+                if(searchQuery.length != 0){
+                  localStorage.setItem('login', JSON.stringify({"status": "true", }));
+                  window.scrollTo(0, 0);
+                  navigate('/');
+                } else {
+                  console.log('fail to login');
+                  localStorage.setItem('login', JSON.stringify({"status": "false", }));
+                  setWarning('account not found');
+                }
+              }}
             >
               <div className='flex flex-col'>
                 <label htmlFor="username" className='pt-2 pb-2'>Email or username</label>
-                <input type="text" id='username'
-                        className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray rounded-md hover:border-white placeholder:font-scbk'
-                        placeholder='Email or username'/>
+                <input type="text"
+                  id='username'
+                  className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray rounded-md hover:border-white placeholder:font-scbk'
+                  placeholder='Email or username'
+                  value={accName}
+                  onChange={(e) => setAccName(e.target.value)}
+                />
               </div>
+
               <div className='flex flex-col'>
                 <label htmlFor="password" className='pt-2 pb-2'>Password</label>
-                <input type="text" id='password'
-                        className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray rounded-md hover:border-white placeholder:font-scbk'
-                        placeholder='Password'/>
+                <input type="text"
+                  id='password'
+                  className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray rounded-md hover:border-white placeholder:font-scbk'
+                  placeholder='Password'
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
 
               <label className="relative inline-flex items-center cursor-pointer mt-6">
@@ -61,19 +87,14 @@ export default function Login(props) {
               </label>
 
               <div className='flex flex-col justify-center items-center'>
-                <button type='submit' className='w-full p-3 text-black mt-10 rounded-full bg-green transform hover:scale-105'
-                  onClick={() => {
-                    if('success' == 'success'){
-                      localStorage.setItem('login', JSON.stringify({"status": "true", }));
-                    }
-                  }}
-                >
+                <button type='submit' className='w-full p-3 text-black mt-10 rounded-full bg-green transform hover:scale-105'>
                   Log In
                 </button>
-
-                <a href="" className='font-scl mt-5 underline underline-offset-2 hover:text-green'>Forgot your password ? </a>
+                <h2 className='mt-5 text-red-500'>{warning}</h2>
+                <a href="" className='font-scl mt-3 underline underline-offset-2 hover:text-green'>Forgot your password ? </a>
               </div>
             </form>
+
             <div className='w-3/4 border-t border-gray mt-10 mb-10'></div>
             <div>
               <span className='opacity-80'>Don't have an account ?</span>

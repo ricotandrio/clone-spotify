@@ -20,25 +20,33 @@ export default function Register(props) {
   const [passwordwarning, setpasswordWarning] = useState('');
   const [namewarning, setnameWarning] = useState('');
 
-  const [waitHandle, setHandle] = useState(true);
   const handlenewuser = () => {
     const newuser = {
+      "id": users.length + 1,
       "name": name,
       "password": password,
       "email": email,
       "dob": day + month + year,
       "type": 'register'
     };
+    console.log(newuser);
 
-    fetch('../../public/data.json', {
+    fetch('http://localhost:3000/users', {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newuser)
-    }).then(() => {
-      setHandle(false);
-      console.log('success create new account');
-    }).catch((error) => {
-      console.log('fail to POSTS object');
+    }).then((e) => {
+      console.log(e);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 3500);
+
+      setTimeout(() => {
+        localStorage.setItem('login', JSON.stringify({"status": "true", }));
+        window.scrollTo(0, 0);
+        navigate('/');
+      }, 3000);
     })
   }
 
@@ -68,12 +76,6 @@ export default function Register(props) {
 
                 if(nameQuery.length == 0 && emailQuery.length == 0){
                   handlenewuser();
-
-                  if(waitHandle == false){
-                    localStorage.setItem('login', JSON.stringify({"status": "true", }));
-                    window.scrollTo(0, 0);
-                    navigate('/');
-                  }
                 }
               }
             }}
@@ -113,7 +115,7 @@ export default function Register(props) {
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  if(e.target.value.length <= 8){
+                  if(e.target.value.length < 8){
                     setpasswordWarning('password must consist of at least 8 characters');
                   } else {
                     setpasswordWarning('');

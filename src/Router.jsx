@@ -17,22 +17,32 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 export default function RouterRedirect() {
   const [songdatas, setSongDatas] = useState({});
   const [userdata, setUserData] = useState({});
-  const [stillLoading, setLoading] = useState(true);
+  const [stillLoadingSong, setLoadingSong] = useState(true);
+  const [stillLoadingAccount, setLoadingAccount] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    fetch('../../public/datas.json')
+    fetch('http://localhost:3000/users')
     .then(response => response.json())
     .then(data => {
-      setSongDatas(data.playlists);
-      setUserData(data.users);
-      setLoading(false);
+      setUserData(data);
+      setLoadingAccount(false);
+    })
+    .catch(e => { setErrorMessage(e) });
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/playlists')
+    .then(response => response.json())
+    .then(data => {
+      setSongDatas(data);
+      setLoadingSong(false);
     })
     .catch(e => { setErrorMessage(e) });
   }, []);
 
   const location = useLocation();
-  if(stillLoading == true){
+  if(stillLoadingSong == true || stillLoadingAccount == true){
     return (
       <>
         <div className='relative w-full h-full'>

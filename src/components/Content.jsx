@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import SongData from '../../public/data'
 import SongSection from './SongSection.jsx'
 import '../index.css'
 
 import Twitter from '../assets/uil_twitter.png'
 import Facebook from '../assets/ic_twotone-facebook.png'
 import Instagram from '../assets/bi_instagram.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
-export default function Content() {
+export default function Content(props) {
   const [countWidth, setCountWidth] = useState(screen.width >= '640' ? 4 : 3);
-  const [songDatas, setSongDatas] = useState({});
-  const [stillLoading, setLoading] = useState(true);
+  const [songDatas, setSongDatas] = useState(props._songdata);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -22,34 +22,6 @@ export default function Content() {
     };
   }, []);
 
-  useEffect(() => {
-    fetch('../../public/datas.json')
-    .then(response => response.json())
-    .then(data => {
-      setSongDatas(data.playlists);
-      setLoading(false);
-    })
-    .catch(e => {
-      console.error(e)
-      setLoading(false);
-    });
-  }, []);
-
-  console.log(songDatas);
-
-  if(stillLoading == true){
-    return (
-      <>
-        <div className='relative w-full h-full'>
-          <div className='relative bg-gradient-to-b from-innerBlack to-lighterBlack w-full sm:w-3/4 ml-[3rem] sm:ml-[20rem] text-white font-sbbs'>
-            <div className='h-screen flex items-center justify-center'>
-              <h1 className='text-2xl'>LOADING ... </h1>
-            </div>
-          </div>
-        </div>
-      </>
-    )
-  }
   return (
     <>
       <div className='relative w-full h-full'>

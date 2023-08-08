@@ -6,7 +6,7 @@ import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-s
 import { Link } from 'react-router-dom';
 import '../index.css';
 
-export default function Home() {
+export default function Home(props) {
   const [login, setLogin] = useState(false);
 
   useEffect(() => {
@@ -22,8 +22,8 @@ export default function Home() {
         <div className='relative bg-lighterBlack w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
-              <FontAwesomeIcon icon={faChevronLeft} className='notAllowed p-3 rounded-full' />
-              <FontAwesomeIcon icon={faChevronRight} className='notAllowed p-3 rounded-full'/>
+              <FontAwesomeIcon icon={faChevronLeft} className='cursor-not-allowed p-3 rounded-full' />
+              <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full'/>
             </div>
 
             <div className='absolute flex flex-row right-8'>
@@ -44,7 +44,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <div className='mr-8 p-2 pl-5 pr-5 flex items-center text-center rounded-full bg-white text-black hover:opacity-90 hover:scale-105'>
+                  <div className='cursor-pointer mr-8 p-2 pl-5 pr-5 flex items-center text-center rounded-full bg-white text-black hover:opacity-90 hover:scale-105'>
                     Explore Premium
                   </div>
                   <div className='ease-in-out duration-200 full-rounded p-2 hover:scale-110 cursor-pointer'
@@ -62,7 +62,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Content />
+      <Content _songdata={props._songdata}/>
 
     </>
   )

@@ -59,45 +59,12 @@
   background-color: black;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 @media all and (max-width: 640px){
   :root {
     font-size: 2.5vw;
   }
-}
-
-.childHover {
-  transition: linear 300ms;
-  bottom: 6rem;
-  right: 1.5rem;
-  opacity: 0;
-}
-
-.parentHover:hover > .childHover {
-  bottom: 7rem;
-  opacity: 100%;
-}
-
-.childHover:hover {
-  z-index: 5;
-  background-color: #1FDF64;
-  opacity: 80%;
-  transform: scale(1.1);
-}
-
-.notAllowed {
-  cursor: not-allowed;
-}
-
-.hover-opacity-100 {
-  cursor: pointer;
-  padding: 0.75rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  opacity: 0.8;
-  transition: ease-in-out 0.3s;
-}
-
-.hover-opacity-100:hover {
-  opacity: 1;
 }

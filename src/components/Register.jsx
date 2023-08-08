@@ -1,9 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import spotify_black from '../assets/Spotify_Logo_CMYK_Black.png'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-export default function Register() {
+export default function Register(props) {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
   return (
     <>
@@ -17,12 +22,17 @@ export default function Register() {
 
         <div className='w-full flex justify-center'>
 
-          <form action="" onSubmit={() => navigate('/')}
+          <form action=""
             className='w-1/3'
+            onSubmit={() => {
+              navigate('/')
+            }}
           >
             <div className='flex flex-col items-start m-2 mt-8'>
               <label htmlFor="email"
                 className='mb-2'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               >
                 What's your email?
               </label>
@@ -34,6 +44,8 @@ export default function Register() {
             <div className='flex flex-col items-start m-2 mt-8'>
               <label htmlFor="password" name='password'
                 className='mb-2'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               >
                 Create a password
               </label>
@@ -45,6 +57,8 @@ export default function Register() {
             <div className='flex flex-col items-start m-2 mt-8'>
               <label htmlFor="name"
                 className='mb-2'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               >
                 What should we call you?
                 </label>

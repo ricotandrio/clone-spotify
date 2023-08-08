@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../assets/Spotify_Logo_CMYK_White.png'
 import Spotify from '../assets/spotify.png'
 import Github from '../assets/bi_github.png'
 import Google from '../assets/flat-color-icons_google.png'
 
-export default function Login() {
+export default function Login(props) {
   const navigate = useNavigate();
+  const [user, setUser] = useState(props.userdata);
 
   return (
     <>
@@ -34,7 +35,12 @@ export default function Login() {
             </ul>
             <div className='w-3/4 border-t border-gray mt-10 mb-10'></div>
 
-            <form className='flex flex-col' onSubmit={() => navigate('/')} action=''>
+            <form className='flex flex-col' onSubmit={() => {
+                setTimeout(() => window.location.reload(), 300);
+                navigate('/');
+              }}
+              action=''
+            >
               <div className='flex flex-col'>
                 <label htmlFor="username" className='pt-2 pb-2'>Email or username</label>
                 <input type="text" id='username'

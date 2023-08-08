@@ -23,4 +23,4 @@ $ npm run dev
 Finally, open the provided localhost link in your browser to view the application.
 
 ## Live Demo
-You can access the live version of the website at https://s001-clonespotify.netlify.app
+You can access the live version of the website at https://project-clonespotify.netlify.app

@@ -60,6 +60,7 @@ export default function Register(props) {
           JSON.stringify({
             name,
             email,
+            "user_profile": "#",
             "user_playlists": [],
             "top_tracks": [],
             "top_artists": []

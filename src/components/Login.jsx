@@ -59,9 +59,10 @@ export default function Login(props) {
                     JSON.stringify({
                       "name": searchQuery[0].name,
                       "email": searchQuery[0].email,
-                      "user_playlists": searchQuery[0].user_playlists,
-                      "top_tracks": searchQuery[0].top_tracks,
-                      "top_artists": searchQuery[0].top_artists
+                      "user_profile": searchQuery[0].user_profile,
+                      "user_playlists": [searchQuery[0].user_playlists],
+                      "top_tracks": [searchQuery[0].top_tracks],
+                      "top_artists": [searchQuery[0].top_artists]
                     })
                   );
                   window.scrollTo(0, 0);

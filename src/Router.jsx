@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import Home from './components/Home.jsx'
-import Error from './components/parts/Error.jsx'
+import Error from './components/part_components/Error.jsx'
 import Login from './components/Login.jsx'
 import Register from './components/Register.jsx';
 

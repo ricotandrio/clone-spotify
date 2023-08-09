@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
-import UserOption from './parts/UserOption'
+import UserOption from './part_components/UserOption'
 import Content from './Content'
+import '../index.css'
 
 export default function Profile() {
   const [profileVisible, setProfileVisible] = useState(false);
@@ -17,7 +18,7 @@ export default function Profile() {
     <>
       <Sidebar name='home'/>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
-        <div className='relative bg-[#282828] w-full h-22 pt-2 rounded-t-xl'>
+        <div className='relative bg-[#484848] w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
               <FontAwesomeIcon icon={faChevronLeft} className='cursor-not-allowed p-3 rounded-full' />
@@ -41,15 +42,22 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className='bg-[#282828] w-full'>
-          <div className='border'>
-            <div>
-
+        <div className='bg-gradient-to-b from-[#484848] to-[#282828] w-full p-8'>
+          <div className='w-full flex flex-row'>
+            <div className='bg-[#282828] relative p-5 w-[20vw] h-[20vw] rounded-full flex items-center justify-center shadow-xl'>
+              <FontAwesomeIcon icon={faUser} size='4x' style={{color: 'gray'}}/>
             </div>
-            <div>
+            <div className='sm:pt-14 pl-5'>
               <h5>Profile</h5>
-              <h1>{}</h1>
+              <h1 className='text-8xl'>{currUser.name}</h1>
             </div>
+          </div>
+        </div>
+
+        <div className='bg-[#202020] w-full'>
+          <div>
+            <h1>Top artists this month</h1>
+            <h2>Only visible to you</h2>
           </div>
         </div>
       </div>

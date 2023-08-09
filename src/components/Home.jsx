@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import '../index.css';
-import UserOption from './parts/UserOption.jsx';
+import UserOption from './part_components/UserOption.jsx';
 
 export default function Home(props) {
   const [login, setLogin] = useState(false);
@@ -20,7 +20,7 @@ export default function Home(props) {
 
   return (
     <>
-      <Sidebar name='home'/>
+      <Sidebar/>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
         <div className='relative bg-lighterBlack w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>

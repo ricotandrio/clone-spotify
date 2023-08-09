@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faMagnifyingGlass, faPlus, faLinesLeaning, faBars, faX } from '@fortawesome/free-solid-svg-icons'
+import { useLocation, useNavigate } from 'react-router-dom';
 
-export default function Sidebar(props) {
+export default function Sidebar() {
   const [width, setWidth] = useState(screen.width);
   const [menu, setMenu] = useState(false);
+  const [path, setPath] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const updateWidth = () => {
@@ -17,9 +21,8 @@ export default function Sidebar(props) {
   }, []);
 
   useEffect(() => {
-    document.querySelector(`.${props.name}button`).style.opacity = '1';
-  }, []);
-
+    setPath(location.pathname);
+  })
   return (
     <div style={{position: 'Relative', zIndex: '999',}}>
       {
@@ -27,11 +30,21 @@ export default function Sidebar(props) {
           <div className='fixed w-1/4 h-screen p-2 z-10' >
             <div className='h-1/5 p-2 pl-6 flex flex-col justify-center rounded-xl bg-lighterBlack'>
               <ul className='text-l'>
-                <li className='homebutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'>
+                <li onClick={() => {navigate('/')}}
+                  className='homebutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
+                  style={{
+                    opacity: path == '/' ? '1' : '0.8',
+                  }}
+                >
                   <FontAwesomeIcon icon={faHouse} />
                   <h1 className='ml-5 mt-1'>Home</h1>
                 </li>
-                <li className='searchbutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'>
+                <li onClick={() => {navigate('/')}}
+                  className='searchbutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
+                  style={{
+                    opacity: path == '/' ? '0.8' : '1',
+                  }}
+                >
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                   <h1 className='ml-5 mt-1'>Search</h1>
                 </li>

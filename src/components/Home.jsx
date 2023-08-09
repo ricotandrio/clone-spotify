@@ -8,7 +8,7 @@ import '../index.css';
 
 export default function Home(props) {
   const [login, setLogin] = useState(false);
-  
+  const [profileVisible, setProfileVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -49,12 +49,9 @@ export default function Home(props) {
                   <div className='cursor-pointer mr-8 p-2 pl-5 pr-5 flex items-center text-center rounded-full bg-white text-black hover:opacity-90 hover:scale-105'>
                     Explore Premium
                   </div>
-                  <div className='ease-in-out duration-200 full-rounded p-2 hover:scale-110 cursor-pointer'
-                    onClick={() => {
-                      localStorage.setItem('login', JSON.stringify({"status": "false", }));
-                      navigate('/')
-                      // window.location.reload();
-                    }}
+                  <div
+                    className='ease-in-out duration-200 full-rounded p-2 hover:scale-110 cursor-pointer'
+                    onClick={() => { setProfileVisible(!profileVisible) }}
                   >
                     <FontAwesomeIcon icon={faUser} size='lg'/>
                   </div>
@@ -62,6 +59,31 @@ export default function Home(props) {
               )
             }
             </div>
+            {
+
+              profileVisible == true && (
+                <div className='absolute w-1/5 bg-black top-20 z-30 right-5'>
+                  <ul className='text-white p-1 font-scbk'>
+                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Account</li>
+                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Profile</li>
+                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Premium</li>
+                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Suportt</li>
+                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Download</li>
+                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Settings</li>
+                    <li
+                      className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'
+                      onClick={() => {
+                        setProfileVisible(false);
+                        localStorage.setItem('login', JSON.stringify({"status": "false", }));
+                        navigate('/');
+                      }}
+                    >
+                      Log out
+                    </li>
+                  </ul>
+                </div>
+              )
+            }
           </div>
         </div>
       </div>

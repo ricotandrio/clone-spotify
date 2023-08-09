@@ -5,6 +5,9 @@ import Spotify from '../assets/spotify.png'
 import Github from '../assets/bi_github.png'
 import Google from '../assets/flat-color-icons_google.png'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+
 export default function Login(props) {
   const navigate = useNavigate();
   const [users, setUsers] = useState(props._userdata);
@@ -13,6 +16,8 @@ export default function Login(props) {
   const [password, setPassword] = useState('');
 
   const [warning, setWarning] = useState('');
+
+  const [passwordType, setpasswordType] = useState('password');
 
   return (
     <>
@@ -71,13 +76,24 @@ export default function Login(props) {
 
               <div className='flex flex-col'>
                 <label htmlFor="password" className='pt-2 pb-2'>Password</label>
-                <input type="text"
-                  id='password'
-                  className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray rounded-md hover:border-white placeholder:font-scbk'
-                  placeholder='Password'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <div className='relative flex flex-row'>
+                  <input type={passwordType}
+                    id='password'
+                    className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray rounded-md hover:border-white placeholder:font-scbk'
+                    placeholder='Password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <div className='right-0 flex items-center p-4 z-20 absolute cursor-pointer hover:scale-105 opacity-80 hover:opacity-100'>
+                    {
+                      passwordType == 'text' ? (
+                          <FontAwesomeIcon icon={faEye} size='md' onClick={() => setpasswordType('password')} />
+                        ) : (
+                          <FontAwesomeIcon icon={faEyeSlash} size='md' onClick={() => setpasswordType('text')} />
+                      )
+                    }
+                  </div>
+                </div>
               </div>
 
               <label className="relative inline-flex items-center cursor-pointer mt-6">

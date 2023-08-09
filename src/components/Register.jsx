@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
 import spotify_black from '../assets/Spotify_Logo_CMYK_Black.png'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 export default function Register(props) {
   const navigate = useNavigate();
 
   const [users, setUsers] = useState(props._userdata);
+
+  const [passwordType, setpasswordType] = useState('password');
 
   // form
   const [email, setEmail] = useState('');
@@ -67,16 +72,19 @@ export default function Register(props) {
             className='w-1/3'
             onSubmit={(e) => {
               e.preventDefault();
-              if(name && email && password){
-                let nameQuery = users.filter((curr) => (curr.name == name));
-                let emailQuery = users.filter((curr) => (curr.email == email));
+              let nameQuery = users.filter((curr) => (curr.name == name));
+              let emailQuery = users.filter((curr) => (curr.email == email));
 
-                if(nameQuery.length != 0) setnameWarning('name already taken');
-                if(emailQuery.length != 0) setemailWarning('email already taken');
+              if(nameQuery.length != 0) setnameWarning('This email is already connected to an account. Log in instead.');
+              if(emailQuery.length != 0) setemailWarning('This email is already connected to an account. Log in instead.');
 
-                if(nameQuery.length == 0 && emailQuery.length == 0){
+              // An empty namewarning indicates that the name is in the correct format, similar to other state variables."
+              if(name && email && password
+                && namewarning == '' && passwordwarning == '' && emailwarning == ''
+                && nameQuery.length == 0 && emailQuery.length == 0){
+
                   handlenewuser();
-                }
+
               }
             }}
           >
@@ -95,34 +103,51 @@ export default function Register(props) {
                 onChange={(e) => {
                   setEmail(e.target.value);
                   if(e.target.value.includes('@') == false){
-                    setemailWarning('email must consist of the character @.');
+                    setemailWarning('This email is invalid. Make sure it\'s written like example@email.com');
                   } else {
                     setemailWarning('');
                   }
                 }}
               />
-              <h1 className='mt-3 text-red-500'>{emailwarning}</h1>
+              <div className='mt-3 text-red-500 text-xs font-scbk flex flex-row gap-2' style={{display: emailwarning == '' ? 'none' : 'flex'}}>
+                <FontAwesomeIcon icon={faCircleExclamation} style={{color: "#ff004c",}} />
+                <h1>{emailwarning}</h1>
+              </div>
             </div>
 
-            <div className='flex flex-col items-start m-2 mt-8'>
+            <div className='flex flex-col items-start m-2 mt-8 relative'>
               <label htmlFor="password" className='mb-2'>
                 Create a password
               </label>
-              <input type="password"
-                id='password'
-                placeholder='Create a password.'
-                className='w-full p-3 rounded-md border outline-black border-gray font-scbk'
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  if(e.target.value.length < 8){
-                    setpasswordWarning('password must consist of at least 8 characters');
-                  } else {
-                    setpasswordWarning('');
+              <div className='w-full flex flex-row'>
+                <input type={passwordType}
+                  id='password'
+                  placeholder='Create a password.'
+                  className='w-full p-3 rounded-md border outline-black border-gray font-scbk'
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if(e.target.value.length < 8){
+                      setpasswordWarning('Your password is too short.');
+                    } else {
+                      setpasswordWarning('');
+                    }
+                  }}
+                />
+                <div className='right-0 flex items-center p-3 z-20 absolute cursor-pointer hover:scale-105 opacity-80 hover:opacity-100'>
+                  {
+                    passwordType == 'text' ? (
+                      <FontAwesomeIcon icon={faEye} size='xl' onClick={() => setpasswordType('password')} />
+                      ) : (
+                      <FontAwesomeIcon icon={faEyeSlash} size='xl' onClick={() => setpasswordType('text')} />
+                    )
                   }
-                }}
-              />
-              <h1 className='mt-3 text-red-500'>{passwordwarning}</h1>
+                </div>
+              </div>
+              <div className='mt-3 text-red-500 text-xs font-scbk flex flex-row gap-2' style={{display: passwordwarning == '' ? 'none' : 'flex'}}>
+                <FontAwesomeIcon icon={faCircleExclamation} style={{color: "#ff004c",}} />
+                <h1>{passwordwarning}</h1>
+              </div>
             </div>
 
             <div className='flex flex-col items-start m-2 mt-8'>
@@ -136,14 +161,17 @@ export default function Register(props) {
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
-                  if(e.target.value.length <= 3){
-                    setnameWarning('name must consist at least 3 characters.');
+                  if(e.target.value.length < 3){
+                    setnameWarning('Enter a name for your profile at least 3 characters.');
                   } else {
                     setnameWarning('');
                   }
                 }}
               />
-              <h1 className='mt-3 text-red-500'>{namewarning}</h1>
+              <div className='mt-3 text-red-500 text-xs font-scbk flex flex-row gap-2' style={{display: namewarning == '' ? 'none' : 'flex'}}>
+                <FontAwesomeIcon icon={faCircleExclamation} style={{color: "#ff004c",}} />
+                <h1>{namewarning}</h1>
+              </div>
               <h3 className='font-scbk opacity-80 text-[0.8rem] mt-3 mb-6'>This appear on your profile.</h3>
             </div>
 

@@ -75,6 +75,7 @@ export default function Home(props) {
                       onClick={() => {
                         setProfileVisible(false);
                         localStorage.setItem('login', JSON.stringify({"status": "false", }));
+                        localStorage.setItem('whoislogin', JSON.stringify({ }));
                         navigate('/');
                       }}
                     >
@@ -88,7 +89,6 @@ export default function Home(props) {
         </div>
       </div>
       <Content _songdata={props._songdata}/>
-
     </>
   )
 }

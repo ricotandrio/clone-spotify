@@ -25,23 +25,27 @@ export default function Register(props) {
   const [passwordwarning, setpasswordWarning] = useState('');
   const [namewarning, setnameWarning] = useState('');
 
+  // load
+  const [isProgress, setProgress] = useState(false);
+
   const handlenewuser = () => {
     const newuser = {
       "id": users.length + 1,
-      "name": name,
-      "password": password,
-      "email": email,
-      "dob": day + month + year,
+      name,
+      password,
+      email,
+      "dob": `${day} ${month} ${year}`,
       "type": 'register'
     };
     console.log(newuser);
 
+    setProgress(true);
     fetch('http://localhost:3000/users', {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newuser)
-    }).then((e) => {
-      console.log(e);
+    }).then((response) => {
+      console.log(response);
 
       setTimeout(() => {
         window.location.reload();
@@ -49,15 +53,21 @@ export default function Register(props) {
 
       setTimeout(() => {
         localStorage.setItem('login', JSON.stringify({"status": "true", }));
+        localStorage.setItem('whoislogin', JSON.stringify({name, email}));
+
+        setProgress(false);
         window.scrollTo(0, 0);
         navigate('/');
       }, 3000);
+    }).catch((error) => {
+      console.log(error);
+      setProgress(false);
     })
   }
 
   return (
     <>
-      <div className='bg-white w-full pb-20 text-black'>
+      <div className='bg-white w-full h-screen xl:h-full pb-20 text-black'>
         <Link to='/' className='border-black p-8 flex items-center justify-center'>
           <img src={spotify_black} alt="spotify logo" className='w-32' />
         </Link>
@@ -69,7 +79,7 @@ export default function Register(props) {
 
           <form action=""
             autoComplete='off'
-            className='w-1/3'
+            className='w-1/2 sm:w-1/3'
             onSubmit={(e) => {
               e.preventDefault();
               let nameQuery = users.filter((curr) => (curr.name == name));
@@ -241,12 +251,13 @@ export default function Register(props) {
               </div>
 
               <button
+                disabled={isProgress}
                 type='submit'
-                className='w-1/3 p-4 pl-6 pr-6 rounded-full bg-green hover:scale-105 hover:opacity-90'
+                className='w-full sm:w-1/3 p-4 pl-6 pr-6 rounded-full bg-green hover:scale-105 hover:opacity-90'
               >
                 Sign Up
               </button>
-              <div className='mt-8 font-scbk'>Have an account ?
+              <div className='text-center mt-8 font-scbk'>Have an account ?
                 <Link to='/login' className='text-green underline underline-offset-2 font-scbk hover:opacity-70'> Login.</Link>
               </div>
             </div>

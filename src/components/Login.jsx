@@ -87,9 +87,9 @@ export default function Login(props) {
                   <div className='right-0 flex items-center p-4 z-20 absolute cursor-pointer hover:scale-105 opacity-80 hover:opacity-100'>
                     {
                       passwordType == 'text' ? (
-                          <FontAwesomeIcon icon={faEye} size='md' onClick={() => setpasswordType('password')} />
+                        <FontAwesomeIcon icon={faEye} size='1x' onClick={() => setpasswordType('password')} />
                         ) : (
-                          <FontAwesomeIcon icon={faEyeSlash} size='md' onClick={() => setpasswordType('text')} />
+                        <FontAwesomeIcon icon={faEyeSlash} size='1x' onClick={() => setpasswordType('text')} />
                       )
                     }
                   </div>

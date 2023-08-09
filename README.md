@@ -14,13 +14,14 @@ $ cd clone-spotify
 $ npm install
 ```
 
-Now, run the development server with:
+Now, run the development server and json-server with:
 
 ```bash
 $ npm run dev
+$ npx json-server --watch ./public/datas.json
 ```
 
-Finally, open the provided localhost link in your browser to view the application.
+Finally, open the provided localhost link in your browser to view the application. With Vite.js localhost will available at http://localhost:5173/ and json-server will available at http://localhost:3000/{name}
 
 ## Live Demo
-You can access the live version of the website at https://project-clonespotify.netlify.app
+You can access the live version of the website at ###

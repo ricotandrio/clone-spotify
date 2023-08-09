@@ -35,7 +35,10 @@ export default function Register(props) {
       password,
       email,
       "dob": `${day} ${month} ${year}`,
-      "type": 'register'
+      "type": 'register',
+      "user_playlists": [],
+      "top_tracks": [],
+      "top_artists": []
     };
     console.log(newuser);
 
@@ -52,8 +55,16 @@ export default function Register(props) {
       }, 3500);
 
       setTimeout(() => {
-        localStorage.setItem('login', JSON.stringify({"status": "true", }));
-        localStorage.setItem('whoislogin', JSON.stringify({name, email}));
+        localStorage.setItem('login', JSON.stringify({"status": "true" }));
+        localStorage.setItem('whoislogin',
+          JSON.stringify({
+            name,
+            email,
+            "user_playlists": [],
+            "top_tracks": [],
+            "top_artists": []
+          })
+        );
 
         setProgress(false);
         window.scrollTo(0, 0);

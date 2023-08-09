@@ -7,7 +7,7 @@ export default function SongSection(props) {
 
   const numOfShowing = parseInt(props.show);
   const arrayOfData = props.data;
-  console.log(arrayOfData)
+  // console.log(arrayOfData)
   return (
     <>
       <Link to='/404'>

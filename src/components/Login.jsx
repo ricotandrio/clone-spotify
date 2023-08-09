@@ -52,8 +52,18 @@ export default function Login(props) {
               onSubmit={(e) => {
                 e.preventDefault();
                 let searchQuery = users.filter((curr) => (curr.name == accName || curr.email == accName) && curr.password == password);
+                console.log(searchQuery);
                 if(searchQuery.length != 0){
                   localStorage.setItem('login', JSON.stringify({"status": "true", }));
+                  localStorage.setItem('whoislogin',
+                    JSON.stringify({
+                      "name": searchQuery[0].name,
+                      "email": searchQuery[0].email,
+                      "user_playlists": searchQuery[0].user_playlists,
+                      "top_tracks": searchQuery[0].top_tracks,
+                      "top_artists": searchQuery[0].top_artists
+                    })
+                  );
                   window.scrollTo(0, 0);
                   navigate('/');
                 } else {

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import '../index.css';
+import UserOption from './parts/UserOption.jsx';
 
 export default function Home(props) {
   const [login, setLogin] = useState(false);
@@ -60,30 +61,7 @@ export default function Home(props) {
             }
             </div>
             {
-
-              profileVisible == true && (
-                <div className='absolute w-1/5 bg-black top-20 z-30 right-5'>
-                  <ul className='text-white p-1 font-scbk'>
-                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Account</li>
-                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Profile</li>
-                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Premium</li>
-                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Suportt</li>
-                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Download</li>
-                    <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Settings</li>
-                    <li
-                      className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'
-                      onClick={() => {
-                        setProfileVisible(false);
-                        localStorage.setItem('login', JSON.stringify({"status": "false", }));
-                        localStorage.setItem('whoislogin', JSON.stringify({ }));
-                        navigate('/');
-                      }}
-                    >
-                      Log out
-                    </li>
-                  </ul>
-                </div>
-              )
+              profileVisible == true && ( <UserOption _setProfileVisible={setProfileVisible}/> )
             }
           </div>
         </div>

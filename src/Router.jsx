@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   BrowserRouter as Router,
   Route,
@@ -7,21 +7,22 @@ import {
 } from 'react-router-dom';
 
 import Home from './components/Home.jsx'
-import Error from './components/Error.jsx'
+import Error from './components/parts/Error.jsx'
 import Login from './components/Login.jsx'
 import Register from './components/Register.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-import getData from './getData.jsx';
+import fetchdata from './FetchData.jsx';
+import Profile from './components/Profile.jsx';
 
 export default function RouterRedirect() {
 
   const [userdatas, setuserData] = useState({data: [], isLoading: true, errorMessage: ''});
   const [songdatas, setsongData] = useState({data: [], isLoading: true, errorMessage: ''});
 
-  getData('http://localhost:3000/users', setuserData);
-  getData('http://localhost:3000/playlists', setsongData);
+  fetchdata('http://localhost:3000/users', setuserData);
+  fetchdata('http://localhost:3000/playlists', setsongData);
 
   // console.log(songdatas);
   // console.log(userdatas);
@@ -47,6 +48,7 @@ export default function RouterRedirect() {
         <Route path='*' element={<Error />}/>
         <Route path='/login' element={<Login _userdata={userdatas.data}/>}/>
         <Route path='/register' element={<Register _userdata={userdatas.data}/>}/>
+        <Route path='/profile' element={<Profile _userdata={userdatas.data}/>}/>
       </Routes>
     </>
   )

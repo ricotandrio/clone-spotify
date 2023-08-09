@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import SongSection from './SongSection.jsx'
+import SongSection from './parts/SongSection.jsx'
 import '../index.css'
 
 import Twitter from '../assets/uil_twitter.png'

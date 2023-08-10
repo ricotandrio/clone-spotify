@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Sidebar from './Sidebar.jsx'
 import Content from './Content.jsx'
@@ -10,7 +11,7 @@ import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-s
 
 import '../index.css';
 
-export default function Home(props) {
+export default function Home({_songdata}) {
   const [login, setLogin] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
   const navigate = useNavigate();
@@ -69,9 +70,19 @@ export default function Home(props) {
           </div>
         </div>
       </div>
-      <Content _songdata={props._songdata}/>
+      <Content _songdata={_songdata}/>
     </>
   )
 }
+
+Home.propTypes = {
+  _songdata: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      contents: PropTypes.array.isRequired
+    })
+  ).isRequired
+}
+
 
 

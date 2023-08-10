@@ -1,16 +1,16 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import '../../index.css';
 
-export default function SongSection(props) {
+export default function SongSection({data, show}) {
 
-  const numOfShowing = parseInt(props.show);
-  const arrayOfData = props.data;
+  const numOfShowing = parseInt(show);
+  const arrayOfData = data;
   // console.log(arrayOfData)
   return (
     <>
@@ -53,3 +53,7 @@ export default function SongSection(props) {
   )
 }
 
+SongSection.propTypes = {
+  data: PropTypes.object.isRequired,
+  show: PropTypes.number.isRequired
+}

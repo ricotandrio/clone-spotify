@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import SongSection from './part_components/SongSection.jsx';
+import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -10,9 +11,9 @@ import Instagram from '../assets/bi_instagram.png';
 
 import '../index.css';
 
-export default function Content(props) {
+export default function Content({_songdata}) {
   const [countWidth, setCountWidth] = useState(screen.width >= '640' ? 4 : 3);
-  const [songDatas, setSongDatas] = useState(props._songdata);
+  const [songDatas, setSongDatas] = useState(_songdata);
 
   useEffect(() => {
     const updateWidth = () => {
@@ -89,3 +90,11 @@ export default function Content(props) {
   )
 }
 
+Content.propTypes = {
+  _songdata: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      contents: PropTypes.array.isRequired
+    })
+  ).isRequired
+}

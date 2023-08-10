@@ -1,9 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import '../../index.css';
 
-export default function UserOption(props) {
+export default function UserOption({_setProfileVisible}) {
   const navigate = useNavigate();
 
   return (
@@ -14,7 +15,7 @@ export default function UserOption(props) {
           <li
             className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E] cursor-pointer'
             onClick={() => {
-              props._setProfileVisible(false);
+              _setProfileVisible(false);
               navigate('/profile');
             }}
           >
@@ -27,7 +28,7 @@ export default function UserOption(props) {
           <li
             className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E] cursor-pointer'
             onClick={() => {
-              props._setProfileVisible(false);
+              _setProfileVisible(false);
               localStorage.setItem('login', JSON.stringify({"status": "false", }));
               localStorage.setItem('whoislogin', JSON.stringify({ }));
               navigate('/');
@@ -39,4 +40,8 @@ export default function UserOption(props) {
       </div>
     </>
   )
+}
+
+UserOption.propTypes = {
+  _setProfileVisible: PropTypes.func.isRequired,
 }

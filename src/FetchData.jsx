@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-export default function getData(props, setData) {
+export default function getData(_props, _setData) {
 
   useEffect(() => {
-    fetch(props)
+    fetch(_props)
     .then(response => {
       if(!response.ok){
         throw new Error('Fail to fetch data');
@@ -11,14 +12,14 @@ export default function getData(props, setData) {
       return response.json();
     })
     .then(data => {
-      setData({
+      _setData({
         data,
         isLoading: false,
         errorMessage: ''
       });
     })
     .catch(error => {
-      setData({
+      _setData({
         data: [],
         isLoading: true,
         errorMessage: {error}
@@ -27,4 +28,8 @@ export default function getData(props, setData) {
   }, []);
 }
 
+getData.propTypes = {
+  _props: PropTypes.string.isRequired,
+  _setData: PropTypes.func.isRequired
+}
 

@@ -34,15 +34,15 @@ export default function SongSection({data, show}) {
                 <h1 className='pt-2'>{ prop.name }</h1>
                 <p className='line-clamp-2 opacity-80 text-sm pt-2 font-scbk'>{ prop.desc }</p>
               </div>
-              {
-                <div
-                  className='absolute w-12 h-12 bg-darkerGreen flex items-center justify-center rounded-full p-5 ease-linear duration-300 bottom-[6rem] right-[1.5rem] opacity-0
-                  hover:z-[5] hover:bg-green hover:opacity-80 hover:scale-110
-                  group-hover/button:bottom-[7rem] group-hover/button:opacity-100'
-                >
-                  <FontAwesomeIcon icon={faPlay} color='black' size='lg'/>
-                </div>
-              }
+
+              <div
+                className='absolute w-12 h-12 bg-darkerGreen flex items-center justify-center rounded-full p-5 bottom-[6rem] right-[1.5rem] opacity-0 ease-linear duration-300
+                hover:z-[5] hover:bg-green hover:opacity-80 hover:scale-110
+                group-hover/button:bottom-[7rem] group-hover/button:opacity-100'
+              >
+                <FontAwesomeIcon icon={faPlay} color='black' size='lg'/>
+              </div>
+
             </div>
           ))
         }

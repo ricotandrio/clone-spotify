@@ -30,7 +30,7 @@ export default function Sidebar() {
     <div style={{position: 'Relative', zIndex: '999',}}>
       {
         width >= '640' ? (
-          <div className='fixed w-1/4 h-screen p-2 z-10' >
+          <div className='fixed w-1/4 h-screen p-2 z-10 rounded-b-md' >
             <div className='h-1/5 p-2 pl-6 flex flex-col justify-center rounded-xl bg-lighterBlack'>
               <ul className='text-l'>
                 <li onClick={() => {navigate('/')}}

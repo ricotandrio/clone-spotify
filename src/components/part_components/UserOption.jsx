@@ -11,7 +11,7 @@ export default function UserOption({_setProfileVisible}) {
     <>
       <div className='absolute w-1/5 bg-black top-20 z-30 right-5'>
         <ul className='text-white p-1 font-scbk'>
-          <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Account</li>
+          <li className='p-2 opacity-80 bg-[#282828] cursor-not-allowed'>Account</li>
           <li
             className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E] cursor-pointer'
             onClick={() => {
@@ -21,10 +21,10 @@ export default function UserOption({_setProfileVisible}) {
           >
             Profile
           </li>
-          <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Premium</li>
-          <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Suportt</li>
-          <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Download</li>
-          <li className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E]'>Settings</li>
+          <li className='p-2 opacity-80 bg-[#282828] cursor-not-allowed'>Premium</li>
+          <li className='p-2 opacity-80 bg-[#282828] cursor-not-allowed'>Support</li>
+          <li className='p-2 opacity-80 bg-[#282828] cursor-not-allowed'>Download</li>
+          <li className='p-2 opacity-80 bg-[#282828] cursor-not-allowed'>Settings</li>
           <li
             className='p-2 opacity-80 bg-[#282828] hover:opacity-100 hover:bg-[#3E3E3E] cursor-pointer'
             onClick={() => {

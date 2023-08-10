@@ -6,17 +6,17 @@ import UserOption from './part_components/UserOption';
 import Content from './Content';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 import '../index.css';
+import Footer from './Footer';
 
 export default function Profile() {
   const [profileVisible, setProfileVisible] = useState(false);
   const [currUser, setcurrUser] = useState(JSON.parse(localStorage.getItem('whoislogin')));
 
-  // console.log(currUser)
-
+  console.log(currUser.top_artists[0])
   return (
     <>
       <Sidebar name='home'/>
@@ -57,11 +57,88 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className='bg-[#202020] w-full'>
-          <div>
-            <h1>Top artists this month</h1>
-            <h2>Only visible to you</h2>
+        <div className='bg-lighterBlack w-full rounded-b-md mb-3'>
+          <div className='p-5'>
+            <h1 className='text-2xl'>Top artists this month</h1>
+            <h2 className='font-scbk opacity-80 text-sm'>Only visible to you</h2>
           </div>
+          <div className='p-5 w-full flex flex-row items-center'>
+            {
+              currUser.top_artists[0] == null && (
+                <div>
+                  <h1 className='text-2xl opacity-80'>... no data</h1>
+                </div>
+              )
+            }
+            {
+              currUser.top_artists[0] != null && currUser.top_artists[0].map((artist) => (
+                <div key={artist.id}
+                className='w-1/4 m-2 flex flex-col items-center justify-center relative cursor-pointer bg-lighterBlack rounded-xl ease-in-out duration-300
+                hover:bg-[#282828] group/button'
+                >
+                  <div className='w-3/4 m-4 h-40 rounded-full overflow-hidden flex items-center justify-center'>
+                    <img src={artist.artist_img} alt={artist.artist_img} className=''/>
+                  </div>
+                  <div className='mt-2 mb-8 w-3/4'>
+                    <h1 className=''>{artist.name}</h1>
+                    <h2 className='text-md font-scbk opacity-80'>Artist</h2>
+                  </div>
+
+                  <div
+                    className='absolute w-12 h-12 bg-darkerGreen flex items-center justify-center rounded-full p-5 bottom-[6rem] right-[1.5rem] opacity-0 ease-linear duration-300
+                    hover:z-[5] hover:bg-green hover:opacity-80 hover:scale-110
+                    group-hover/button:bottom-[7rem] group-hover/button:opacity-100'
+                  >
+                    <FontAwesomeIcon icon={faPlay} color='black' size='lg'/>
+                  </div>
+                </div>
+
+              ))
+            }
+          </div>
+
+          <div className='p-5'>
+            <h1 className='text-2xl'>Top tracks this month</h1>
+            <h2 className='font-scbk opacity-80 text-sm'>Only visible to you</h2>
+          </div>
+          <div className=''>
+            {
+              currUser.top_tracks[0] == null && (
+                <div className='ml-5 mt-3'>
+                  <h1 className='text-2xl opacity-80'>... no data</h1>
+                </div>
+              )
+            }
+            {
+              currUser.top_tracks[0] != null && currUser.top_tracks[0].map((track) => (
+                <div key={track.id}
+                className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-lighterBlack hover:bg-[#282828]'
+                >
+                  <div className='w-12 flex items-center justify-center h-full opacity-80'>
+                    {track.id}
+                  </div>
+                  <div className='w-14 p-2 h-full'>
+                    <img src={track.track_img} alt={track.track_img} className=''/>
+                  </div>
+                  <div className='w-1/2'>
+                    <h1 className='font-scbk text-md'>{track.title}</h1>
+                    <h2 className='font-scbk text-sm opacity-80'>{track.artists}</h2>
+                  </div>
+
+                  <div className='w-1/4 text-sm opacity-80 font-scbk'>
+                    {track.album_name}
+                  </div>
+
+                  <div className='text-sm opacity-80 font-scbk'>
+                    {track.duration}
+                  </div>
+                </div>
+
+              ))
+            }
+          </div>
+
+          <Footer />
         </div>
       </div>
     </>

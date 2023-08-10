@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+
 import Sidebar from './Sidebar.jsx'
 import Content from './Content.jsx'
+import UserOption from './part_components/UserOption.jsx';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from 'react-router-dom';
+
 import '../index.css';
-import UserOption from './part_components/UserOption.jsx';
 
 export default function Home(props) {
   const [login, setLogin] = useState(false);

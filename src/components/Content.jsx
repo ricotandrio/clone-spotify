@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import SongSection from './part_components/SongSection.jsx'
-import '../index.css'
+import React, { useState, useEffect } from 'react';
+import SongSection from './part_components/SongSection.jsx';
 
-import Twitter from '../assets/uil_twitter.png'
-import Facebook from '../assets/ic_twotone-facebook.png'
-import Instagram from '../assets/bi_instagram.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+
+import Twitter from '../assets/uil_twitter.png';
+import Facebook from '../assets/ic_twotone-facebook.png';
+import Instagram from '../assets/bi_instagram.png';
+
+import '../index.css';
 
 export default function Content(props) {
   const [countWidth, setCountWidth] = useState(screen.width >= '640' ? 4 : 3);

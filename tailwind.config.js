@@ -6,6 +6,7 @@ export default {
     "./*html",
     "./src/*jsx",
     "./src/components/*jsx",
+    "./src/components/part_components/*jsx",
     "*jsx"
   ],
   theme: {

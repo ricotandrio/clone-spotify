@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../index.css'
+
+import '../../index.css';
 
 export default function UserOption(props) {
   const navigate = useNavigate();

@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import logo from '../assets/Spotify_Logo_CMYK_White.png'
-import Spotify from '../assets/spotify.png'
-import Github from '../assets/bi_github.png'
-import Google from '../assets/flat-color-icons_google.png'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import logo from '../assets/Spotify_Logo_CMYK_White.png';
+import Spotify from '../assets/spotify.png';
+import Github from '../assets/bi_github.png';
+import Google from '../assets/flat-color-icons_google.png';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
-export default function Login(props) {
+export default function Login({_userdata}) {
   const navigate = useNavigate();
-  const [users, setUsers] = useState(props._userdata);
+
+  const [users, setUsers] = useState(_userdata);
 
   const [accName, setAccName] = useState('');
   const [password, setPassword] = useState('');
@@ -136,3 +139,19 @@ export default function Login(props) {
   )
 }
 
+Login.propTypes = {
+  _userdata: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      password: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      dob: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      user_profile: PropTypes.string.isRequired,
+      user_playlists: PropTypes.array.isRequired,
+      top_tracks: PropTypes.array.isRequired,
+      top_artists: PropTypes.array.isRequired
+    })
+  ).isRequired
+}

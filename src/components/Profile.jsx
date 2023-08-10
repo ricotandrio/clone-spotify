@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
-import Sidebar from './Sidebar'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { Link } from 'react-router-dom'
-import { faUser } from '@fortawesome/free-regular-svg-icons'
-import UserOption from './part_components/UserOption'
-import Content from './Content'
-import '../index.css'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import Sidebar from './Sidebar';
+import UserOption from './part_components/UserOption';
+import Content from './Content';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
+
+import '../index.css';
 
 export default function Profile() {
   const [profileVisible, setProfileVisible] = useState(false);

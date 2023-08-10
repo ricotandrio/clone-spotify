@@ -1,14 +1,19 @@
-import React, { useState } from 'react'
-import spotify_black from '../assets/Spotify_Logo_CMYK_Black.png'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-export default function Register(props) {
+import spotify_black from '../assets/Spotify_Logo_CMYK_Black.png';
+
+import '../index.css';
+
+export default function Register({_userdata}) {
   const navigate = useNavigate();
 
-  const [users, setUsers] = useState(props._userdata);
+  const [users, setUsers] = useState(_userdata);
 
   const [passwordType, setpasswordType] = useState('password');
 
@@ -282,3 +287,19 @@ export default function Register(props) {
   )
 }
 
+Register.propTypes = {
+  _userdata: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      password: PropTypes.string.isRequired,
+      email: PropTypes.string.isRequired,
+      dob: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      user_profile: PropTypes.string.isRequired,
+      user_playlists: PropTypes.array.isRequired,
+      top_tracks: PropTypes.array.isRequired,
+      top_artists: PropTypes.array.isRequired
+    })
+  ).isRequired
+}

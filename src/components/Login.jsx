@@ -41,7 +41,13 @@ export default function Login({_userdata}) {
                 <img src={Github} alt="spotify" className='absolute top-2 sm:top-3 left-10 w-7 h-7 mr-5 border-1 sm:border-2 bg-white rounded-full' />
                 Continue with Github
               </li>
-              <li className='relative flex flex-row items-center border-2 cursor-pointer border-white border-opacity-80 pt-3 pb-3 pl-24 pr-24 rounded-full m-3 hover:border-opacity-100 text-xs sm:text-lg'>
+              <li
+                className='relative flex flex-row items-center border-2 cursor-pointer border-white border-opacity-80 pt-3 pb-3 pl-24 pr-24 rounded-full m-3 hover:border-opacity-100 text-xs sm:text-lg'
+                onClick={() => {
+                  window.alert('The feature to log in with Spotify is not available. Please try using your account instead.');
+                  window.alert('You can also use these default account credentials: {name: \'user\', password: \'user\'}.');
+                }}
+              >
                 <img src={Spotify} alt="spotify" className='absolute left-10 w-6 h-6 mr-5' />
                 Continue with Spotify
               </li>

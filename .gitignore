@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules/
 dist/
 dist-ssr/
+css/
+
 # temporary lock datas.json
 datas.json
 *.local

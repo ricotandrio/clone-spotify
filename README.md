@@ -14,11 +14,12 @@ $ cd clone-spotify
 $ npm install
 ```
 
-Now, run the development server and json-server with:
+Now, run the development server, json-server, and tailwind css output with:
 
 ```bash
 $ npm run dev
 $ npx json-server --watch ./public/datas.json
+$ npx tailwindcss -i ./src/index.css -o ./css/output.css
 ```
 
 Finally, open the provided localhost link in your browser to view the application. With Vite.js localhost will available at http://localhost:5173/ and json-server will available at http://localhost:3000/{name}

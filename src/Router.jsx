@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import {
-  BrowserRouter as Router,
   Route,
   Routes,
-  useLocation,
 } from 'react-router-dom';
 
 import Home from './components/Home.jsx'
@@ -27,7 +25,6 @@ export default function RouterRedirect() {
   // console.log(songdatas);
   // console.log(userdatas);
 
-  const location = useLocation();
   if(userdatas.isLoading == true || songdatas.isLoading == true){
     return (
       <>
@@ -43,7 +40,7 @@ export default function RouterRedirect() {
   }
   return (
     <>
-      <Routes location={location} key={location.pathname}>
+      <Routes location=''>
         <Route path='/' element={<Home _songdata={songdatas.data}/>}/>
         <Route path='*' element={<Error />}/>
         <Route path='/login' element={<Login _userdata={userdatas.data}/>}/>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import '../../index.css';
+import '../../public/index.css';
 
 export default function UserOption({_setProfileVisible}) {
   const navigate = useNavigate();

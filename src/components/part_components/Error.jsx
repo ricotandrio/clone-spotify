@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import '../../index.css';
+import '../../public/index.css';
 
 export default function Error() {
   return (

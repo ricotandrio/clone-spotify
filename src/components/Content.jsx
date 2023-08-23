@@ -4,13 +4,6 @@ import PropTypes from 'prop-types';
 
 import Footer from './Footer.jsx';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-
-import Twitter from '../assets/uil_twitter.png';
-import Facebook from '../assets/ic_twotone-facebook.png';
-import Instagram from '../assets/bi_instagram.png';
-
 import '../index.css';
 
 export default function Content({_songdata}) {

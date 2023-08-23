@@ -14,8 +14,6 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import fetchdata from './FetchData.jsx';
 import Profile from './components/Profile.jsx';
 
-import '../public/index.css'
-
 export default function RouterRedirect() {
 
   const [userdatas, setuserData] = useState({data: [], isLoading: true, errorMessage: ''});

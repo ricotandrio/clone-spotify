@@ -9,7 +9,7 @@ import UserOption from './part_components/UserOption.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import '../../public/index.css';
+import '../index.css';
 
 export default function Home({_songdata}) {
   const [login, setLogin] = useState(false);

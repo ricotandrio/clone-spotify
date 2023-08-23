@@ -8,7 +8,7 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 import spotify_black from '../assets/Spotify_Logo_CMYK_Black.png';
 
-import '../../public/index.css';
+import '../index.css';
 
 export default function Register({_userdata}) {
   const navigate = useNavigate();

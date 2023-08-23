@@ -10,8 +10,6 @@ import Google from '../assets/flat-color-icons_google.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
-import '../../public/index.css';
-
 export default function Login({_userdata}) {
   const navigate = useNavigate();
 

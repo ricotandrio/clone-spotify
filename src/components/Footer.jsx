@@ -4,7 +4,7 @@ import Twitter from '../assets/uil_twitter.png';
 import Facebook from '../assets/ic_twotone-facebook.png';
 import Instagram from '../assets/bi_instagram.png';
 
-import '../../public/index.css';
+import '../index.css'
 
 export default function Footer() {
   return (

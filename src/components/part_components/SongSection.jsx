@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
-import '../../public/index.css';
+import '../../index.css';
 
 export default function SongSection({data, show}) {
 

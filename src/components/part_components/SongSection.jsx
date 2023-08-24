@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +12,9 @@ export default function SongSection({data, show}) {
   const numOfShowing = parseInt(show);
   const arrayOfData = data;
   // console.log(arrayOfData)
+
+  const navigate = useNavigate();
+
   return (
     <>
       <Link to='/404'>
@@ -22,9 +25,13 @@ export default function SongSection({data, show}) {
       <div className='w-full pl-5 mt-5 pb-3 flex flex-row items-center justify-center gap-3 pr-5 overflow-hidden'>
         {
           arrayOfData.contents.slice(0, numOfShowing).map((prop) => (
-            <div key={ prop.key }
+            <div
+              key={ prop.key }
               className='relative cursor-pointer w-1/3 sm:w-1/4 bg-innerBlack flex flex-col items-center p-4 rounded-xl ease-in-out duration-300
               hover:bg-[#282828] group/button'
+              onClick={() => {
+                navigate(`/playlist/${encodeURIComponent(prop.name)}`);
+              }}
             >
 
               <div className='w-full  shadow-white drop-shadow-lg'>

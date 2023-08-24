@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faPause, faPlay, faSpinner, faTruckLoading } from '@fortawesome/free-solid-svg-icons';
 
 import { fetchingData } from '../src/Test';
 import '../src/index.css';
@@ -11,6 +11,7 @@ import '../src/index.css';
 const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   const audio = useRef(null);
   const [played, setPlayed] = useState(false);
+  const [isHovered, setHovered] = useState(false);
 
   const handleMusic = () => {
     if(played == false){
@@ -39,19 +40,26 @@ const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   }
 
   return (
-    <div className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-lighterBlack hover:bg-[#282828]'>
-      <div className='absolute w-10 left-2 p-2 bg-[#00000080] aspect-square flex items-center justify-center opacity-100 cursor-pointer'
+    <div
+      className='cursor-pointer relative flex flex-row items-center h-20 gap-2 m-2 ml-5 mr-5 pl-3 bg-lighterBlack hover:bg-[#282828] rounded-md'
+      onClick={ handleMusic }
+    >
+      <div className='absolute w-12 p-2 left-5 bg-[#00000080] aspect-square flex items-center justify-center cursor-pointer'
         onClick={ handleMusic }
+        onMouseOver={() => setHovered(true) }
+        onMouseLeave={() => setHovered(false) }
+        style={{ opacity: played || isHovered ? 1 : 0 }}
       >
         <audio ref={audio} src={track.preview_url} />
-        <FontAwesomeIcon icon={played == true ? faPause : faPlay} size='lg' className='text-white opacity-100'/>
+        <FontAwesomeIcon icon={played == true ? faPause : faPlay} size='lg' className='text-white'/>
       </div>
-      <div className='w-14 p-2 aspect-square'>
+      <div className='w-16 p-2 aspect-square'>
         <img src={track.album.images[0].url} alt={track.track_img} className=''/>
       </div>
-      <div className='w-1/2'>
-        <h1 className='font-scbk text-md cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>{track.name}</h1>
-        <h2 className='font-scbk text-sm opacity-80 cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>{track.artists[0].name}</h2>
+      <div className='w-1/2 pt-2'>
+        <h1 className='inline-block font-scbk text-md cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>{track.name}</h1>
+        <br />
+        <h2 className='inline-block font-scbk text-sm opacity-80 cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>{track.artists[0].name}</h2>
       </div>
 
       <div className='w-1/4 text-sm opacity-80 font-scbk cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>
@@ -91,6 +99,7 @@ export default function ShowQuery({ token, _setQuery }) {
       }, `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&include_external=audio`
       ).then((response) => {
         setTracks(response.tracks.items);
+        console.log(response.tracks.items[0]);
         setCurrentlyPlaying(null);
         setLoading(false);
       })
@@ -115,8 +124,10 @@ export default function ShowQuery({ token, _setQuery }) {
 
             {
               isLoading == true && (
-                <div>
-                  <h1 className='pl-3 text-xl pt-5'>Loading ...</h1>
+                <div className='flex flex-row items-center pl-3 mt-5'>
+                  <FontAwesomeIcon icon={faCircle} size='2xs' className='mr-2'fade/>
+                  <FontAwesomeIcon icon={faCircle} size='2xs' className='mr-2'fade/>
+                  <FontAwesomeIcon icon={faCircle} size='2xs' className='mr-2'fade/>
                 </div>
               )
             }

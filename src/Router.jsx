@@ -21,6 +21,7 @@ import DefaultQuery from '../search/DefaultQuery.jsx';
 
 import { fetchingData } from './Test.jsx';
 import key from '../public/key.jsx';
+import Playlist from './components/part_components/Playlist.jsx';
 
 export default function RouterRedirect() {
 
@@ -57,7 +58,7 @@ export default function RouterRedirect() {
           <div className='h-screen flex flex-col items-center justify-center'>
             <FontAwesomeIcon icon={faSpinner} spin className='mb-5' size='xl' />
             <h1 className='text-2xl'>LOADING</h1>
-            <h2 className='mb-10 font-scl'>{songdatas.errorMessage}/{userdatas.errorMessage}</h2>
+            <h2 className='mb-10 font-scl'>{songdatas.errorMessage}{userdatas.errorMessage}</h2>
           </div>
         </div>
       </>
@@ -71,6 +72,8 @@ export default function RouterRedirect() {
         <Route path='/login' element={<Login _userdata={userdatas.data}/>}/>
         <Route path='/register' element={<Register _userdata={userdatas.data}/>}/>
         <Route path='/profile' element={<Profile _userdata={userdatas.data}/>}/>
+
+        <Route path='/playlist/:name' element={<Playlist _songdata={songdatas.data} />}/>
 
         <Route path='/search' element={<Search _query={ query } _setQuery={ setQuery }/>}>
           <Route index element={<DefaultQuery/>}/>

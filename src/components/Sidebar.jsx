@@ -26,6 +26,7 @@ export default function Sidebar() {
   useEffect(() => {
     setPath(location.pathname);
   })
+
   return (
     <div style={{position: 'Relative', zIndex: '999',}}>
       {
@@ -36,16 +37,16 @@ export default function Sidebar() {
                 <li onClick={() => {navigate('/')}}
                   className='homebutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
                   style={{
-                    opacity: path == '/' ? '1' : '0.8',
+                    opacity: path == '/' && '1',
                   }}
                 >
                   <FontAwesomeIcon icon={faHouse} />
                   <h1 className='ml-5 mt-1'>Home</h1>
                 </li>
-                <li onClick={() => {navigate('/')}}
+                <li onClick={() => {navigate('/search')}}
                   className='searchbutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
                   style={{
-                    opacity: path == '/' ? '0.8' : '1',
+                    opacity: path == '/search' && '1',
                   }}
                 >
                   <FontAwesomeIcon icon={faMagnifyingGlass} />

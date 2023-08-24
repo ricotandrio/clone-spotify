@@ -8,7 +8,7 @@ import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
 import spotify_black from '../assets/Spotify_Logo_CMYK_Black.png';
 
-import '../index.css';
+import '../../index.css';
 
 export default function Register({_userdata}) {
   const navigate = useNavigate();
@@ -287,19 +287,19 @@ export default function Register({_userdata}) {
   )
 }
 
-Register.propTypes = {
-  _userdata: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      password: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      dob: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-      user_profile: PropTypes.string.isRequired,
-      user_playlists: PropTypes.array.isRequired,
-      top_tracks: PropTypes.array.isRequired,
-      top_artists: PropTypes.array.isRequired
-    })
-  ).isRequired
-}
+// Register.propTypes = {
+//   _userdata: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       id: PropTypes.number.isRequired,
+//       name: PropTypes.string.isRequired,
+//       password: PropTypes.string.isRequired,
+//       email: PropTypes.string.isRequired,
+//       dob: PropTypes.string.isRequired,
+//       type: PropTypes.string.isRequired,
+//       user_profile: PropTypes.string.isRequired,
+//       user_playlists: PropTypes.array.isRequired,
+//       top_tracks: PropTypes.array.isRequired,
+//       top_artists: PropTypes.array.isRequired
+//     })
+//   ).isRequired
+// }

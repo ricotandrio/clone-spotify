@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Sidebar from './Sidebar';
-import UserOption from './part_components/UserOption';
-import Content from './Content';
+import Sidebar from '../Sidebar';
+import UserOption from '../part_components/UserOption';
+import Content from '../Content';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 
-import '../index.css';
-import Footer from './Footer';
+import '../../index.css';
+import Footer from '../Footer';
 
 export default function Profile() {
   const [profileVisible, setProfileVisible] = useState(false);
@@ -112,7 +112,7 @@ export default function Profile() {
             {
               currUser.top_tracks[0] != null && currUser.top_tracks[0].map((track) => (
                 <div key={track.id}
-                className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-lighterBlack hover:bg-[#282828]'
+                  className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-lighterBlack hover:bg-[#282828]'
                 >
                   <div className='w-12 flex items-center justify-center h-full opacity-80'>
                     {track.id}

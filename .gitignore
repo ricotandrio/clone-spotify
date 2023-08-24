@@ -45,3 +45,4 @@ src/Test.jsx
 src/FetchSpotify.jsx
 src/main.jsx
 src/Router.jsx
+public/key.jsx

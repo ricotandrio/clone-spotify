@@ -5,6 +5,8 @@ export default {
   content: [
     "./*html",
     "./src/**/*.jsx",
+    "./pages/**.jsx",
+    "./search/**.jsx",
   ],
   theme: {
     extend: {

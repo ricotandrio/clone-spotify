@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import '../index.css';
+import PopupPlay from './part_components/PopupPlay.jsx';
 
-export default function Home({_songdata}) {
+export default function Home({ _songdata }) {
   const [login, setLogin] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
   const navigate = useNavigate();
@@ -70,7 +71,9 @@ export default function Home({_songdata}) {
           </div>
         </div>
       </div>
-      <Content _songdata={_songdata}/>
+      <Content _songdata={ _songdata }/>
+
+      <PopupPlay/>
     </>
   )
 }

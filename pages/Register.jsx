@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-import spotify_black from '../assets/Spotify_Logo_CMYK_Black.png';
+import spotify_black from '../src/assets/Spotify_Logo_CMYK_Black.png';
 
-import '../../index.css';
+import '../src/index.css';
 
 export default function Register({_userdata}) {
   const navigate = useNavigate();

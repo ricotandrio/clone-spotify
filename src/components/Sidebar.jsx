@@ -28,7 +28,7 @@ export default function Sidebar() {
   })
 
   return (
-    <div style={{position: 'Relative', zIndex: '999',}}>
+    <div className='z-[990]' style={{position: 'Relative', }}>
       {
         width >= '640' ? (
           <div className='fixed w-1/4 h-screen p-2 z-10 rounded-b-md' >
@@ -46,7 +46,7 @@ export default function Sidebar() {
                 <li onClick={() => {navigate('/search')}}
                   className='searchbutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
                   style={{
-                    opacity: path == '/search' && '1',
+                    opacity: path.slice(0, 7) == '/search' && '1',
                   }}
                 >
                   <FontAwesomeIcon icon={faMagnifyingGlass} />

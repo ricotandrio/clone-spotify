@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Route,
   Routes,
@@ -7,30 +7,48 @@ import {
 
 import Home from './components/Home.jsx'
 import Error from './components/part_components/Error.jsx'
-import Login from './components/pages/Login.jsx'
-import Register from './components/pages/Register.jsx';
+import Login from '../pages/Login.jsx'
+import Register from '../pages/Register.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import fetchdata from './FetchData.jsx';
-import Profile from './components/pages/Profile.jsx';
-import Search from './components/search/Search.jsx';
-import ShowQuery from './components/search/ShowQuery.jsx';
-import DefaultQuery from './components/search/DefaultQuery.jsx';
+import Profile from '../pages/Profile.jsx';
+import Search from '../search/Search.jsx';
+import ShowQuery from '../search/ShowQuery.jsx';
+import DefaultQuery from '../search/DefaultQuery.jsx';
+
+import { fetchingData } from './Test.jsx';
+import key from '../public/key.jsx';
 
 export default function RouterRedirect() {
 
   const [userdatas, setuserData] = useState({data: [], isLoading: true, errorMessage: ''});
   const [songdatas, setsongData] = useState({data: [], isLoading: true, errorMessage: ''});
-  const [tracks, setTracks] = useState({data: [], isLoading: true, errorMessage: ''});
+  const [query, setQuery] = useState();
 
   fetchdata('http://localhost:3000/users', setuserData);
   fetchdata('http://localhost:3000/playlists', setsongData);
-  fetchdata('http://localhost:3000/tracks', setTracks);
 
-  const [query, setQuery] = useState();
+  const [token, setToken] = useState('');
+  const [isLoading, setLoading] = useState();
+  useEffect(() => {
+    fetchingData(
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Basic ' + btoa(key.CLIENT_ID + ':' + key.CLIENT_SECRET),
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'grant_type=client_credentials',
+      }, 'https://accounts.spotify.com/api/token'
+    ).then((response) => {
+      setToken(response.access_token);
+      setLoading(false);
+    })
+  }, []);
 
-  if(userdatas.isLoading == true || songdatas.isLoading == true || tracks.isLoading == true){
+  if(userdatas.isLoading == true || songdatas.isLoading == true || isLoading == true){
     return (
       <>
         <div className='relative w-full h-full'>
@@ -46,7 +64,7 @@ export default function RouterRedirect() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home _songdata={songdatas.data}/>}/>
+        <Route path='/' element={<Home _songdata={songdatas.data} />}/>
         <Route path='*' element={<Error />}/>
         <Route path='/login' element={<Login _userdata={userdatas.data}/>}/>
         <Route path='/register' element={<Register _userdata={userdatas.data}/>}/>
@@ -54,7 +72,7 @@ export default function RouterRedirect() {
 
         <Route path='/search' element={<Search _query={ query } _setQuery={ setQuery }/>}>
           <Route index element={<DefaultQuery/>}/>
-          <Route path=':query' element={<ShowQuery _tracksdata={tracks} />}/>
+          <Route path=':query' element={<ShowQuery token={token} />}/>
         </Route>
 
       </Routes>

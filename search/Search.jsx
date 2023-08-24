@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Link, Outlet, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Sidebar from '../Sidebar.jsx'
-import Footer from '../Footer.jsx'
-import UserOption from '../part_components/UserOption.jsx';
+import Sidebar from '../src/components/Sidebar.jsx'
+import Footer from '../src/components/Footer.jsx'
+import UserOption from '../src/components/part_components/UserOption.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser, faDownload, faSearch } from '@fortawesome/free-solid-svg-icons';
 
-import '../../index.css';
+import '../src/index.css';
 
 export default function Search({ _query, _setQuery }) {
   const [profileVisible, setProfileVisible] = useState(false);

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function getData(_props, _setData) {
-
   useEffect(() => {
     fetch(_props)
     .then(response => {

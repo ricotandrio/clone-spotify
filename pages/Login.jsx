@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import logo from '../../assets/Spotify_Logo_CMYK_White.png';
-import Spotify from '../../assets/spotify.png';
-import Github from '../../assets/bi_github.png';
-import Google from '../../assets/flat-color-icons_google.png';
+import logo from '../src/assets/Spotify_Logo_CMYK_White.png';
+import Spotify from '../src/assets/spotify.png';
+import Github from '../src/assets/bi_github.png';
+import Google from '../src/assets/flat-color-icons_google.png';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
-import '../../index.css';
+import '../src/index.css';
 
 export default function Login({_userdata}) {
   const navigate = useNavigate();

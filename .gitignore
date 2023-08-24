@@ -39,8 +39,6 @@ datas copy.json
 *.xlsx
 *.csv
 
-src/main.jsx
-src/Router.jsx
 src/Test.jsx
 src/FetchSpotify.jsx
 src/main.jsx

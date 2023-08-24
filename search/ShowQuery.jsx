@@ -8,41 +8,43 @@ import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { fetchingData } from '../src/Test';
 import '../src/index.css';
 
-const AudioCard = ({ track }) => {
+const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   const audio = useRef(null);
   const [played, setPlayed] = useState(false);
 
-  useEffect(() => {
-    console.log(audio)
-    if(played == true){
+  const handleMusic = () => {
+    if(played == false){
+      if(currentlyPlaying != null){
+        // pause the song that is currently playing before play new song
+        currentlyPlaying.ref.current.pause();
+        currentlyPlaying._setPlayed(false);
+      }
       audio.current.play();
+      setTimeout(() => { setPlayed(false) }, 30000); // used to reset the play icon logo to pause after the preview song ends.
+      setPlayed(true);
+      setCurrentlyPlaying({ref: audio, name: track.name, _setPlayed: setPlayed});
     } else {
       audio.current.pause();
+      setPlayed(false);
+      setCurrentlyPlaying(null);
     }
-  }, [played]);
+  }
 
   const convertMsToMMSS = (ms) => {
     const totalSeconds = Math.floor(ms / 1000);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
 
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
-
-    return `${formattedMinutes}:${formattedSeconds}`;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 
   return (
-    <div key={track.id}
-      className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-lighterBlack hover:bg-[#282828]'
-    >
-      <div className='absolute w-10 left-2 p-2 bg-[#00000080] aspect-square flex items-center justify-center opacity-100 hover:opacity-100 cursor-pointer'
-        onClick={() => setPlayed(!played) }
+    <div className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-lighterBlack hover:bg-[#282828]'>
+      <div className='absolute w-10 left-2 p-2 bg-[#00000080] aspect-square flex items-center justify-center opacity-100 cursor-pointer'
+        onClick={ handleMusic }
       >
-        <audio ref={audio}>
-          <source src={track.preview_url} type='audio/mpeg'/>
-        </audio>
-        <FontAwesomeIcon icon={played == false ? faPlay : faPause} size='lg' className='text-white opacity-100'/>
+        <audio ref={audio} src={track.preview_url} />
+        <FontAwesomeIcon icon={played == true ? faPause : faPlay} size='lg' className='text-white opacity-100'/>
       </div>
       <div className='w-14 p-2 aspect-square'>
         <img src={track.album.images[0].url} alt={track.track_img} className=''/>
@@ -63,11 +65,21 @@ const AudioCard = ({ track }) => {
   )
 }
 
-export default function ShowQuery({ token }) {
+export default function ShowQuery({ token, _setQuery }) {
   const { query } = useParams();
   const [_tracksdata, setTracks] = useState();
   const [isLoading, setLoading] = useState(true);
 
+  // this use state must be in format {ref: useRef(), name: song_title, _setPlayed: function to setplayed to false}
+  const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
+
+  // output song that currently playing
+  useEffect(() => { console.log(currentlyPlaying) }, [currentlyPlaying]);
+
+  // update song query when user searches via param
+  useEffect(() => { _setQuery(query) }, []);
+
+  // make a 'GET' API call to retrieve a list of songs from Spotify
   useEffect(() => {
     setLoading(true);
     fetchingData(
@@ -77,10 +89,11 @@ export default function ShowQuery({ token }) {
           'Authorization': `Bearer ${token}`,
         },
       }, `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&include_external=audio`
-    ).then((response) => {
-      setTracks(response.tracks.items);
-      setLoading(false);
-    })
+      ).then((response) => {
+        setTracks(response.tracks.items);
+        setCurrentlyPlaying(null);
+        setLoading(false);
+      })
   }, [query]);
 
   return (
@@ -94,7 +107,7 @@ export default function ShowQuery({ token }) {
               isLoading == false && (
                 <div>{
                   _tracksdata.map((track) => (
-                    <AudioCard key={track.id} track={track} />
+                    <AudioCard key={track.id} track={track} currentlyPlaying={currentlyPlaying} setCurrentlyPlaying={setCurrentlyPlaying}/>
                   ))
                 }</div>
               )
@@ -107,7 +120,6 @@ export default function ShowQuery({ token }) {
                 </div>
               )
             }
-
         </div>
       </div>
     </>

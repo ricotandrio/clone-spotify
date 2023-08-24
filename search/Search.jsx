@@ -13,8 +13,15 @@ import '../src/index.css';
 
 export default function Search({ _query, _setQuery }) {
   const [profileVisible, setProfileVisible] = useState(false);
+  const [login, setLogin] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if(localStorage.getItem('login')){
+      setLogin(JSON.parse(localStorage.getItem('login')).status);
+    }
+  });
 
   return (
     <>
@@ -35,12 +42,13 @@ export default function Search({ _query, _setQuery }) {
                 <FontAwesomeIcon icon={faSearch} />
               </label>
               <input
+                disabled={login == "true" ? false : true}
                 autoComplete='off'
                 id='search-bar'
                 type="text"
                 name='search'
                 className='p-3 rounded-full ml-5 pl-14 w-full bg-innerBlack placeholder:text-sm placeholder:opacity-90'
-                placeholder='What do you want to listen to?'
+                placeholder={login == "true" ? 'What do you want to listen to? ' : 'Login to access the search feature !'}
                 value={ _query || '' }
                 onChange={(e) => {
                   _setQuery(e.target.value);
@@ -52,17 +60,38 @@ export default function Search({ _query, _setQuery }) {
                 }}
               />
             </form>
+
             <div className='absolute flex flex-row items-center right-8'>
-              <div className='cursor-pointer mr-3 p-2 pl-5 pr-5 flex items-center text-center hover:opacity-90 hover:scale-105'>
-                <FontAwesomeIcon icon={faDownload} size='sm' className='border rounded-full p-2 mr-2'/>
-                Install App
-              </div>
-              <div
-                className='ease-in-out duration-200 full-rounded p-2 hover:scale-110 cursor-pointer'
-                onClick={() => { setProfileVisible(!profileVisible) }}
-              >
-                <FontAwesomeIcon icon={faUser} size='lg'/>
-              </div>
+              {
+                login == "false" ? (
+                  <>
+                    <Link to='/register'>
+                      <div className='w-28 h-12 rounded-full flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-80 hover:opacity-100'>
+                        Sign Up
+                      </div>
+                    </Link>
+
+                    <Link to='/login'>
+                      <div className='w-28 h-12 rounded-full bg-white text-black flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-100 hover:opacity-80'>
+                        Log in
+                      </div>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <div className='cursor-not-allowed mr-3 p-2 pl-5 pr-5 flex items-center text-center hover:opacity-90 hover:scale-105'>
+                      <FontAwesomeIcon icon={faDownload} size='sm' className='border rounded-full p-2 mr-2'/>
+                      Install App
+                    </div>
+                    <div
+                      className='ease-in-out duration-200 full-rounded p-2 hover:scale-110 cursor-pointer'
+                      onClick={() => { setProfileVisible(!profileVisible) }}
+                    >
+                      <FontAwesomeIcon icon={faUser} size='lg'/>
+                    </div>
+                  </>
+                )
+              }
             </div>
             {
               profileVisible == true && ( <UserOption _setProfileVisible={setProfileVisible}/> )

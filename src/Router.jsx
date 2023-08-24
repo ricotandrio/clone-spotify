@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {
   Route,
   Routes,
+  useParams,
   useSearchParams,
 } from 'react-router-dom';
 
@@ -25,6 +26,7 @@ export default function RouterRedirect() {
 
   const [userdatas, setuserData] = useState({data: [], isLoading: true, errorMessage: ''});
   const [songdatas, setsongData] = useState({data: [], isLoading: true, errorMessage: ''});
+
   const [query, setQuery] = useState();
 
   fetchdata('http://localhost:3000/users', setuserData);
@@ -72,7 +74,7 @@ export default function RouterRedirect() {
 
         <Route path='/search' element={<Search _query={ query } _setQuery={ setQuery }/>}>
           <Route index element={<DefaultQuery/>}/>
-          <Route path=':query' element={<ShowQuery token={token} />}/>
+          <Route path=':query' element={<ShowQuery token={token} _setQuery={ setQuery }/>}/>
         </Route>
 
       </Routes>

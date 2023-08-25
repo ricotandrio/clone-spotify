@@ -32,7 +32,7 @@ export default function Sidebar() {
       {
         width >= '640' ? (
           <div className='fixed w-1/4 h-screen p-2 z-10 rounded-b-md' >
-            <div className='h-1/5 p-2 pl-6 flex flex-col justify-center rounded-xl bg-lighterBlack'>
+            <div className='h-1/5 p-2 pl-6 flex flex-col justify-center rounded-xl bg-black-1'>
               <ul className='text-l'>
                 <li onClick={() => {navigate('/')}}
                   className='homebutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
@@ -55,7 +55,7 @@ export default function Sidebar() {
               </ul>
             </div>
 
-            <div className='h-screen bg-lighterBlack rounded-xl mt-2 flex flex-col'>
+            <div className='h-screen bg-black-1 rounded-xl mt-2 flex flex-col'>
               <div className='mt-6 ml-6 font-scbb flex flex-row items-center'>
                 <div className='cursor-pointer opacity-80 ease-in-out duration-300 hover:opacity-100 flex flex-row gap-5 items-center'>
                   <FontAwesomeIcon icon={faLinesLeaning} size='xl'/>

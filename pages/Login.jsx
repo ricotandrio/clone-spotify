@@ -54,7 +54,7 @@ export default function Login({_userdata}) {
                 Continue with Spotify
               </li>
             </ul>
-            <div className='w-3/4 border-t border-gray mt-10 mb-10'></div>
+            <div className='w-3/4 border-t border-gray-1 mt-10 mb-10'></div>
 
             <form
               action=''
@@ -89,7 +89,7 @@ export default function Login({_userdata}) {
                 <label htmlFor="username" className='pt-2 pb-2'>Email or username</label>
                 <input type="text"
                   id='username'
-                  className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray rounded-md hover:border-white placeholder:font-scbk'
+                  className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray-1 rounded-md hover:border-white placeholder:font-scbk'
                   placeholder='Email or username'
                   value={accName}
                   onChange={(e) => setAccName(e.target.value)}
@@ -101,7 +101,7 @@ export default function Login({_userdata}) {
                 <div className='relative flex flex-row'>
                   <input type={passwordType}
                     id='password'
-                    className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray rounded-md hover:border-white placeholder:font-scbk'
+                    className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray-1 rounded-md hover:border-white placeholder:font-scbk'
                     placeholder='Password'
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -120,7 +120,7 @@ export default function Login({_userdata}) {
 
               <label className="relative inline-flex items-center cursor-pointer mt-6">
                 <input type="checkbox" value="" className="sr-only peer" />
-                <div className="w-8 h-4 bg-gray rounded-full peer peer-checked:after:translate-x-4 after:absolute after:top-[0.6vw] sm:after:top-[0.3vw] after:left-[0.2vw] after:bg-black after:border after:border-black after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green"></div>
+                <div className="w-8 h-4 bg-gray-1 rounded-full peer peer-checked:after:translate-x-4 after:absolute after:top-[0.6vw] sm:after:top-[0.3vw] after:left-[0.2vw] after:bg-black after:border after:border-black after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green"></div>
                 <span className="ml-3 text-sm font-scbk">Remember Me</span>
               </label>
 
@@ -133,7 +133,7 @@ export default function Login({_userdata}) {
               </div>
             </form>
 
-            <div className='w-3/4 border-t border-gray mt-10 mb-10'></div>
+            <div className='w-3/4 border-t border-gray-1 mt-10 mb-10'></div>
             <div>
               <span className='opacity-80'>Don't have an account ?</span>
               <Link to='/register' className='underline underline-offset-2 hover:text-green font-scl font-white ml-1'>Sign Up for Spotify</Link>

@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import Home from './components/Home.jsx'
-import Error from './components/part_components/Error.jsx'
+import Error from './sub_components/Error.jsx'
 import Login from '../pages/Login.jsx'
 import Register from '../pages/Register.jsx';
 
@@ -21,7 +21,8 @@ import DefaultQuery from '../search/DefaultQuery.jsx';
 
 import { fetchingData } from './Test.jsx';
 import key from '../public/key.jsx';
-import Playlist from './components/part_components/Playlist.jsx';
+import Playlist from './sub_components/Playlist.jsx';
+import Loading from '../reusable/Loading.jsx';
 
 export default function RouterRedirect() {
 
@@ -33,8 +34,9 @@ export default function RouterRedirect() {
   fetchdata('http://localhost:3000/users', setuserData);
   fetchdata('http://localhost:3000/playlists', setsongData);
 
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(''); // spotify web api token
   const [isLoading, setLoading] = useState();
+
   useEffect(() => {
     fetchingData(
       {
@@ -53,17 +55,12 @@ export default function RouterRedirect() {
 
   if(userdatas.isLoading == true || songdatas.isLoading == true || isLoading == true){
     return (
-      <>
-        <div className='relative w-full h-full'>
-          <div className='h-screen flex flex-col items-center justify-center'>
-            <FontAwesomeIcon icon={faSpinner} spin className='mb-5' size='xl' />
-            <h1 className='text-2xl'>LOADING</h1>
-            <h2 className='mb-10 font-scl'>{songdatas.errorMessage}{userdatas.errorMessage}</h2>
-          </div>
-        </div>
-      </>
+      <div className='relative w-full h-screen flex flex-col items-center justify-center'>
+        <Loading />
+      </div>
     )
   }
+
   return (
     <>
       <Routes>

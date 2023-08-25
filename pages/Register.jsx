@@ -125,7 +125,7 @@ export default function Register({_userdata}) {
                 id='email'
                 placeholder='Enter your mail.'
                 name='email'
-                className='w-full p-3 rounded-md border outline-black border-gray font-scbk'
+                className='w-full p-3 rounded-md border outline-black border-gray-1 font-scbk'
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -150,7 +150,7 @@ export default function Register({_userdata}) {
                 <input type={passwordType}
                   id='password'
                   placeholder='Create a password.'
-                  className='w-full p-3 rounded-md border outline-black border-gray font-scbk'
+                  className='w-full p-3 rounded-md border outline-black border-gray-1 font-scbk'
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -184,7 +184,7 @@ export default function Register({_userdata}) {
               <input type="text"
                 id='name'
                 placeholder='Enter a profile name.' name='name'
-                className='w-full p-3 rounded-md border outline-black border-gray font-scbk'
+                className='w-full p-3 rounded-md border outline-black border-gray-1 font-scbk'
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -214,7 +214,7 @@ export default function Register({_userdata}) {
                     id='ddob'
                     placeholder='DD'
                     name='day'
-                    className='border-[0.1em] border-gray w-full p-3 rounded-md'
+                    className='border-[0.1em] border-gray-1 w-full p-3 rounded-md'
                     value={day}
                     onChange={(e) => setDay(e.target.value)}
                   />
@@ -227,7 +227,7 @@ export default function Register({_userdata}) {
                     id='mob'
                     placeholder='Month'
                     name='month'
-                    className='border-[0.1em] border-gray w-full h-full opacity-60 p-2 rounded-md'
+                    className='border-[0.1em] border-gray-1 w-full h-full opacity-60 p-2 rounded-md'
                     value={month}
                     onChange={(e) => setMonth(e.target.value)}
                   >
@@ -253,7 +253,7 @@ export default function Register({_userdata}) {
                     id='yob'
                     placeholder='YYYY'
                     name='year'
-                    className='border-[0.1em] border-gray w-full p-3 rounded-md'
+                    className='border-[0.1em] border-gray-1 w-full p-3 rounded-md'
                     value={year}
                     onChange={(e) => setYear(e.target.value)}
                   />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SongSection from './part_components/SongSection.jsx';
+import SongSection from '../sub_components/SongSection.jsx';
 import PropTypes from 'prop-types';
 
 import Footer from './Footer.jsx';
@@ -23,7 +23,7 @@ export default function Content({_songdata}) {
   return (
     <>
       <div className='relative w-full h-full'>
-        <div className='relative bg-gradient-to-b from-innerBlack to-lighterBlack w-full sm:w-3/4 ml-[3rem] sm:ml-[20rem] text-white font-sbbs'>
+        <div className='relative bg-gradient-to-b from-black-2 to-black-1 w-full sm:w-3/4 ml-[3rem] sm:ml-[20rem] text-white font-sbbs'>
           <SongSection data={songDatas[0]} title='Focus' show={ countWidth } />
           <SongSection data={songDatas[1]} title='Your Playlist' show={ countWidth } />
           <Footer/>

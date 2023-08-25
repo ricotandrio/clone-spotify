@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
-import '../../index.css';
+import '../index.css';
 
 export default function SongSection({data, show}) {
 
@@ -28,7 +28,7 @@ export default function SongSection({data, show}) {
             <div
               key={ prop.key }
               className='relative cursor-pointer w-1/3 sm:w-1/4 bg-innerBlack flex flex-col items-center p-4 rounded-xl ease-in-out duration-300
-              hover:bg-[#282828] group/button'
+              hover:bg-black-3 group/button'
               onClick={() => {
                 navigate(`/playlist/${encodeURIComponent(prop.name)}`);
               }}

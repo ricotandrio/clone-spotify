@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Sidebar from '../src/components/Sidebar.jsx';
-import UserOption from '../src/components/part_components/UserOption.jsx';
+import UserOption from '../src/sub_components/UserOption.jsx';
 import Content from '../src/components/Content.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -57,7 +57,7 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className='bg-lighterBlack w-full rounded-b-md mb-3'>
+        <div className='bg-black-1 w-full rounded-b-md mb-3'>
           <div className='p-5'>
             <h1 className='text-2xl'>Top artists this month</h1>
             <h2 className='font-scbk opacity-80 text-sm'>Only visible to you</h2>
@@ -73,7 +73,7 @@ export default function Profile() {
             {
               currUser.top_artists[0] != null && currUser.top_artists[0].map((artist) => (
                 <div key={artist.id}
-                className='w-1/4 m-2 flex flex-col items-center justify-center relative cursor-pointer bg-lighterBlack rounded-xl ease-in-out duration-300
+                className='w-1/4 m-2 flex flex-col items-center justify-center relative cursor-pointer bg-black-1 rounded-xl ease-in-out duration-300
                 hover:bg-[#282828] group/button'
                 >
                   <div className='w-3/4 m-4 h-40 rounded-full overflow-hidden flex items-center justify-center'>
@@ -112,7 +112,7 @@ export default function Profile() {
             {
               currUser.top_tracks[0] != null && currUser.top_tracks[0].map((track) => (
                 <div key={track.id}
-                  className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-lighterBlack hover:bg-[#282828]'
+                  className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-black-1 hover:bg-[#282828]'
                 >
                   <div className='w-12 flex items-center justify-center h-full opacity-80'>
                     {track.id}

@@ -8,6 +8,9 @@ import { faCircle, faPause, faPlay, faSpinner, faTruckLoading } from '@fortaweso
 import { fetchingData } from '../src/Test';
 import '../src/index.css';
 
+import Loading from '../reusable/Loading';
+import { convertMsToMMSS } from '../reusable/ConvertMMSS';
+
 const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   const audio = useRef(null);
   const [played, setPlayed] = useState(false);
@@ -31,17 +34,9 @@ const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
     }
   }
 
-  const convertMsToMMSS = (ms) => {
-    const totalSeconds = Math.floor(ms / 1000);
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
-
   return (
     <div
-      className='cursor-pointer relative flex flex-row items-center h-20 gap-2 m-2 ml-5 mr-5 pl-3 bg-lighterBlack hover:bg-[#282828] rounded-md'
+      className='cursor-pointer relative flex flex-row items-center h-20 gap-2 m-2 ml-5 mr-5 pl-3 bg-black-1 hover:bg-black-3 rounded-md'
       onClick={ handleMusic }
     >
       <div className='absolute w-12 p-2 left-5 bg-[#00000080] aspect-square flex items-center justify-center cursor-pointer'
@@ -112,6 +107,8 @@ export default function ShowQuery({ token, _setQuery }) {
           <div>
             <h1 className='text-xl pl-3 pt-3'>Result for query { query }</h1>
           </div>
+            { isLoading == true && ( <Loading /> ) }
+
             {
               isLoading == false && (
                 <div>{
@@ -119,16 +116,6 @@ export default function ShowQuery({ token, _setQuery }) {
                     <AudioCard key={track.id} track={track} currentlyPlaying={currentlyPlaying} setCurrentlyPlaying={setCurrentlyPlaying}/>
                   ))
                 }</div>
-              )
-            }
-
-            {
-              isLoading == true && (
-                <div className='flex flex-row items-center pl-3 mt-5'>
-                  <FontAwesomeIcon icon={faCircle} size='2xs' className='mr-2'fade/>
-                  <FontAwesomeIcon icon={faCircle} size='2xs' className='mr-2'fade/>
-                  <FontAwesomeIcon icon={faCircle} size='2xs' className='mr-2'fade/>
-                </div>
               )
             }
         </div>

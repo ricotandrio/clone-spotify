@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import Sidebar from '../src/components/Sidebar.jsx'
 import Footer from '../src/components/Footer.jsx'
-import UserOption from '../src/components/part_components/UserOption.jsx';
+import UserOption from '../src/sub_components/UserOption.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser, faDownload, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -27,7 +27,7 @@ export default function Search({ _query, _setQuery }) {
     <>
       <Sidebar />
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
-        <div className='relative bg-lighterBlack w-full h-22 pt-2 rounded-t-xl'>
+        <div className='relative bg-black-1 w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
               <FontAwesomeIcon icon={faChevronLeft} className='cursor-not-allowed p-3 rounded-full' />
@@ -47,7 +47,7 @@ export default function Search({ _query, _setQuery }) {
                 id='search-bar'
                 type="text"
                 name='search'
-                className='p-3 rounded-full ml-5 pl-14 w-full bg-innerBlack placeholder:text-sm placeholder:opacity-90'
+                className='p-3 rounded-full ml-5 pl-14 w-full bg-black-2 placeholder:text-sm placeholder:opacity-90'
                 placeholder={login == "true" ? 'What do you want to listen to? ' : 'Login to access the search feature !'}
                 value={ _query || '' }
                 onChange={(e) => {

@@ -1,15 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircle, faPause, faPlay, faSpinner, faTruckLoading } from '@fortawesome/free-solid-svg-icons';
-
-import { fetchingData } from '../src/Test';
-import '../src/index.css';
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import Loading from '../reusable/Loading';
+import { FetchSpotify } from '../reusable/Spotify';
 import { convertMsToMMSS } from '../reusable/ConvertMMSS';
+import { QueryContext } from '../src/context/QueryContext';
+
+import '../src/index.css';
+import { LoginContext } from '../src/context/LoginContext';
 
 const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   const audio = useRef(null);
@@ -68,36 +70,50 @@ const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   )
 }
 
-export default function ShowQuery({ token, _setQuery }) {
-  const { query } = useParams();
-  const [_tracksdata, setTracks] = useState();
-  const [isLoading, setLoading] = useState(true);
+AudioCard.propTypes = {
+  track: PropTypes.object.isRequired,
+  currentlyPlaying: PropTypes.object.isRequired,
+  setCurrentlyPlaying: PropTypes.func.isRequired,
+}
 
+export default function ShowQuery() {
+  const { query } = useParams();
+  const [tracksdata, setTracks] = useState();
+  const [isLoading, setLoading] = useState(true);
+  const { setQuery } = useContext(QueryContext);
+  const { token } = useContext(LoginContext);
+  
   // this use state must be in format {ref: useRef(), name: song_title, _setPlayed: function to setplayed to false}
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
 
   // output song that currently playing
-  useEffect(() => { console.log(currentlyPlaying) }, [currentlyPlaying]);
+  useEffect(() => {
+    console.log(currentlyPlaying);
+  }, [currentlyPlaying]);
 
   // update song query when user searches via param
-  useEffect(() => { _setQuery(query) }, []);
+  useEffect(() => {
+    setQuery(query);
+  });
 
   // make a 'GET' API call to retrieve a list of songs from Spotify
   useEffect(() => {
     setLoading(true);
-    fetchingData(
+    FetchSpotify(
       {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
         },
-      }, `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&include_external=audio`
-      ).then((response) => {
+      }, `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=20`
+    ).then((response) => {
+      console.log(response);
+      if(response != null){
         setTracks(response.tracks.items);
-        console.log(response.tracks.items[0]);
         setCurrentlyPlaying(null);
         setLoading(false);
-      })
+      }
+    })
   }, [query]);
 
   return (
@@ -112,7 +128,7 @@ export default function ShowQuery({ token, _setQuery }) {
             {
               isLoading == false && (
                 <div>{
-                  _tracksdata.map((track) => (
+                  tracksdata.map((track) => (
                     <AudioCard key={track.id} track={track} currentlyPlaying={currentlyPlaying} setCurrentlyPlaying={setCurrentlyPlaying}/>
                   ))
                 }</div>

@@ -1,8 +1,6 @@
-import React from 'react'
+import banners from '../public/banners';
 
 import '../src/index.css';
-
-import banners from '../public/banners';
 
 export default function DefaultQuery() {
 

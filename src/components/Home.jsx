@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react'
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Sidebar from './Sidebar.jsx'
 import Content from './Content.jsx'
 import UserOption from '../sub_components/UserOption.jsx';
+import PopupPlay from '../sub_components/PopupPlay.jsx';
+import { LoginContext } from '../context/LoginContext.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import '../index.css';
-import PopupPlay from '../sub_components/PopupPlay.jsx';
+
+Home.propTypes = {
+  _songdata: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      contents: PropTypes.array.isRequired
+    })
+  ).isRequired
+}
 
 export default function Home({ _songdata }) {
-  const [login, setLogin] = useState(false);
   const [profileVisible, setProfileVisible] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if(localStorage.getItem('login')){
-      setLogin(JSON.parse(localStorage.getItem('login')).status);
-    }
-  });
+  const { login } = useContext(LoginContext);
 
   return (
     <>
@@ -71,20 +74,12 @@ export default function Home({ _songdata }) {
           </div>
         </div>
       </div>
+      
       <Content _songdata={ _songdata }/>
 
       <PopupPlay/>
     </>
   )
-}
-
-Home.propTypes = {
-  _songdata: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      contents: PropTypes.array.isRequired
-    })
-  ).isRequired
 }
 
 

@@ -1,15 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import RouterRedirect from './Router.jsx';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 
-import './index.css';
+import './index.css'
+import Router from './router/Router.jsx';
 
-export default function App() {
-  return (
-    <>
-      <Router>
-        <RouterRedirect />
-      </Router>
-    </>
-  );
-};
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <Router />
+    {/* <Test /> */}
+  </React.StrictMode>,
+)

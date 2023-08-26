@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,10 +10,25 @@ import spotify_black from '../src/assets/Spotify_Logo_CMYK_Black.png';
 
 import '../src/index.css';
 
-export default function Register({_userdata}) {
-  const navigate = useNavigate();
+Register.propTypes = {
+  _userdata: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      password: PropTypes.string,
+      email: PropTypes.string,
+      dob: PropTypes.string,
+      type: PropTypes.string,
+      user_profile: PropTypes.string,
+      user_playlists: PropTypes.array,
+      top_tracks: PropTypes.array,
+      top_artists: PropTypes.array
+    })
+  ).isRequired
+}
 
-  const [users, setUsers] = useState(_userdata);
+export default function Register({_userdata: users}) {
+  const navigate = useNavigate();
 
   const [passwordType, setpasswordType] = useState('password');
 
@@ -119,7 +134,7 @@ export default function Register({_userdata}) {
               <label htmlFor="email"
                 className='mb-2'
                 >
-                What's your email?
+                {`What's your email?`}
               </label>
               <input type="text"
                 id='email'
@@ -204,7 +219,7 @@ export default function Register({_userdata}) {
 
             <div className='p-2 flex flex-col'>
               <h1 className=''>
-                What's your date of birth?
+                {`What's your date of birth?`}
               </h1>
 
               <div className='flex flex-row w-full'>
@@ -263,7 +278,7 @@ export default function Register({_userdata}) {
 
             <div className='flex flex-col justify-center p-8 items-center'>
               <div className='font-scl text-[0.6rem] text-center mb-5'>
-                <h6 className='mb-3'>By clicking on sign-up, you agree to Spotify's <a href='#' className='text-green underline'>Terms and Conditions of Use.</a></h6>
+                <h6 className='mb-3'>{`By clicking on sign-up, you agree to Spotify's`}<a href='#' className='text-green underline'>Terms and Conditions of Use.</a></h6>
                 <h6>By clicking on sign-up, you agree to the <a href='#' className='text-green underline'>Spotify Privacy Policy.</a></h6>
               </div>
 
@@ -286,20 +301,3 @@ export default function Register({_userdata}) {
     </>
   )
 }
-
-// Register.propTypes = {
-//   _userdata: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       name: PropTypes.string.isRequired,
-//       password: PropTypes.string.isRequired,
-//       email: PropTypes.string.isRequired,
-//       dob: PropTypes.string.isRequired,
-//       type: PropTypes.string.isRequired,
-//       user_profile: PropTypes.string.isRequired,
-//       user_playlists: PropTypes.array.isRequired,
-//       top_tracks: PropTypes.array.isRequired,
-//       top_artists: PropTypes.array.isRequired
-//     })
-//   ).isRequired
-// }

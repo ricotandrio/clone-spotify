@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+import { LoginContext } from '../src/context/LoginContext';
 
 import logo from '../src/assets/Spotify_Logo_CMYK_White.png';
 import Spotify from '../src/assets/spotify.png';
@@ -12,10 +14,26 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 import '../src/index.css';
 
-export default function Login({_userdata}) {
-  const navigate = useNavigate();
+Login.propTypes = {
+  _userdata: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+      password: PropTypes.string,
+      email: PropTypes.string,
+      dob: PropTypes.string,
+      type: PropTypes.string,
+      user_profile: PropTypes.string,
+      user_playlists: PropTypes.array,
+      top_tracks: PropTypes.array,
+      top_artists: PropTypes.array
+    })
+  ).isRequired
+}
 
-  const [users, setUsers] = useState(_userdata);
+export default function Login({ _userdata: users }) {
+  const navigate = useNavigate();
+  const { setLogin } = useContext(LoginContext);
 
   const [accName, setAccName] = useState('');
   const [password, setPassword] = useState('');
@@ -77,6 +95,7 @@ export default function Login({_userdata}) {
                     })
                   );
                   window.scrollTo(0, 0);
+                  setLogin("true");
                   navigate('/');
                 } else {
                   console.log('fail to login');
@@ -135,31 +154,13 @@ export default function Login({_userdata}) {
 
             <div className='w-3/4 border-t border-gray-1 mt-10 mb-10'></div>
             <div>
-              <span className='opacity-80'>Don't have an account ?</span>
+              <span className='opacity-80'>{`Don't have an account ?`}</span>
               <Link to='/register' className='underline underline-offset-2 hover:text-green font-scl font-white ml-1'>Sign Up for Spotify</Link>
             </div>
           </div>
-
         </div>
-
       </div>
     </>
   )
 }
 
-// Login.propTypes = {
-//   _userdata: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       name: PropTypes.string.isRequired,
-//       password: PropTypes.string.isRequired,
-//       email: PropTypes.string.isRequired,
-//       dob: PropTypes.string.isRequired,
-//       type: PropTypes.string.isRequired,
-//       user_profile: PropTypes.string.isRequired,
-//       user_playlists: PropTypes.array.isRequired,
-//       top_tracks: PropTypes.array.isRequired,
-//       top_artists: PropTypes.array.isRequired
-//     })
-//   ).isRequired
-// }

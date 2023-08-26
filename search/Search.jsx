@@ -1,27 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { Link, Outlet, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useContext, useState } from 'react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
-import Sidebar from '../src/components/Sidebar.jsx'
-import Footer from '../src/components/Footer.jsx'
+import Sidebar from '../src/components/Sidebar.jsx';
+import Footer from '../src/components/Footer.jsx';
 import UserOption from '../src/sub_components/UserOption.jsx';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { LoginContext } from '../src/context/LoginContext.jsx';
+import { QueryContext } from '../src/context/QueryContext.jsx';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faUser, faDownload, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import '../src/index.css';
 
-export default function Search({ _query, _setQuery }) {
+export default function Search() {
   const [profileVisible, setProfileVisible] = useState(false);
-  const [login, setLogin] = useState(false);
-
+  const { login } = useContext(LoginContext);
+  const { query, setQuery } = useContext(QueryContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if(localStorage.getItem('login')){
-      setLogin(JSON.parse(localStorage.getItem('login')).status);
-    }
-  });
 
   return (
     <>
@@ -49,9 +45,9 @@ export default function Search({ _query, _setQuery }) {
                 name='search'
                 className='p-3 rounded-full ml-5 pl-14 w-full bg-black-2 placeholder:text-sm placeholder:opacity-90'
                 placeholder={login == "true" ? 'What do you want to listen to? ' : 'Login to access the search feature !'}
-                value={ _query || '' }
+                value={ query || '' }
                 onChange={(e) => {
-                  _setQuery(e.target.value);
+                  setQuery(e.target.value);
                   if(e.target.value == ''){
                     navigate('/search');
                   } else {

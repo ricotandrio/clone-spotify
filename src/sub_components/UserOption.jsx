@@ -1,11 +1,18 @@
-import React from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { LoginContext } from '../context/LoginContext';
+
 import '../index.css';
+
+UserOption.propTypes = {
+  _setProfileVisible: PropTypes.func.isRequired,
+}
 
 export default function UserOption({_setProfileVisible}) {
   const navigate = useNavigate();
+  const { setLogin } = useContext(LoginContext);
 
   return (
     <>
@@ -31,6 +38,7 @@ export default function UserOption({_setProfileVisible}) {
               _setProfileVisible(false);
               localStorage.setItem('login', JSON.stringify({"status": "false", }));
               localStorage.setItem('whoislogin', JSON.stringify({ }));
+              setLogin("false");
               navigate('/');
             }}
           >
@@ -42,6 +50,3 @@ export default function UserOption({_setProfileVisible}) {
   )
 }
 
-UserOption.propTypes = {
-  _setProfileVisible: PropTypes.func.isRequired,
-}

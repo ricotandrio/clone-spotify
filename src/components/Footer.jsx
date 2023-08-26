@@ -1,5 +1,3 @@
-import React from 'react'
-
 import Twitter from '../assets/uil_twitter.png';
 import Facebook from '../assets/ic_twotone-facebook.png';
 import Instagram from '../assets/bi_instagram.png';
@@ -9,7 +7,7 @@ import '../index.css'
 export default function Footer() {
   return (
     <>
-      <footer className='pb-24 p-2 mt-20'>
+      <footer className='pb-32 p-2 mt-20'>
         <div className='p-2 flex flex-row items-start justify-between'>
           <div className='p-2'>
             <h1 className='mb-2'>Company</h1>
@@ -38,17 +36,17 @@ export default function Footer() {
           </div>
           <div className='flex flex-row gap-4'>
             <div className='p-3 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-1'>
-              <a href="https://www.instagram.com/spotify/" target='_blank'>
+              <a href="https://www.instagram.com/spotify/" target='_blank' rel='noreferrer'>
                 <img src={Instagram} alt="instagram" />
               </a>
             </div>
             <div className='p-3 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-1'>
-              <a href="https://twitter.com/spotify" target='_blank'>
+              <a href="https://twitter.com/spotify" target='_blank'  rel='noreferrer'>
                 <img src={Twitter} alt="twitter" />
               </a>
             </div>
             <div className='p-3 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-1'>
-              <a href="https://www.facebook.com/Spotify" target='_blank'>
+              <a href="https://www.facebook.com/Spotify" target='_blank'  rel='noreferrer'>
                 <img src={Facebook} alt="facebook" />
               </a>
             </div>

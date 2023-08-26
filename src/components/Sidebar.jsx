@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,9 +9,10 @@ import '../index.css';
 export default function Sidebar() {
   const [width, setWidth] = useState(screen.width);
   const [menu, setMenu] = useState(false);
-  const [path, setPath] = useState('');
+
   const navigate = useNavigate();
   const location = useLocation();
+  const path = location.pathname;
 
   useEffect(() => {
     const updateWidth = () => {
@@ -22,10 +23,6 @@ export default function Sidebar() {
       window.removeEventListener('resize', updateWidth);
     };
   }, []);
-
-  useEffect(() => {
-    setPath(location.pathname);
-  })
 
   return (
     <div className='z-[990]' style={{position: 'Relative', }}>

@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Sidebar from './Sidebar.jsx'
 import Content from './Content.jsx'
 import UserOption from '../sub_components/UserOption.jsx';
-import PopupPlay from '../sub_components/PopupPlay.jsx';
 import { LoginContext } from '../context/LoginContext.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -33,8 +32,8 @@ export default function Home({ _songdata }) {
         <div className='relative bg-black-1 w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
-              <FontAwesomeIcon icon={faChevronLeft} className='cursor-not-allowed p-3 rounded-full' />
-              <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full'/>
+              <FontAwesomeIcon icon={faChevronLeft} className='cursor-not-allowed p-3 rounded-full opacity-80' />
+              <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full opacity-80'/>
             </div>
 
             <div className='absolute flex flex-row right-8'>
@@ -74,10 +73,8 @@ export default function Home({ _songdata }) {
           </div>
         </div>
       </div>
-      
-      <Content _songdata={ _songdata }/>
 
-      <PopupPlay/>
+      <Content _songdata={ _songdata }/>
     </>
   )
 }

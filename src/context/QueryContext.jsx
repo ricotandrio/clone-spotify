@@ -11,7 +11,7 @@ export default function QueryProvider({ children }){
   const [query, setQuery] = useState(false);
 
   return(
-    <QueryContext.Provider value={{ query, setQuery}}>
+    <QueryContext.Provider value={{ query, setQuery }}>
       { children }
     </QueryContext.Provider>
   )

@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
@@ -17,18 +16,22 @@ import { extractYearMonthDay } from '../../reusable/ConvertDate.jsx';
 import '../index.css';
 
 export default function Playlist() {
+  // popup play
+  const reference = useRef(null);
+  const [playIcon, setPlayIcon] = useState(false);
+  const [playedSong, setPlayedSong] = useState(null);
 
+  // fetch data from spotify web api
   const [isLoading, setLoading] = useState(true);
-
-  const [currPlay, setCurrPlay] = useState();
-  const location = useLocation();
-  const currPlaylists = location.state.prop;
   const [tracks, setTracks] = useState();
-  // console.log(location.state.prop);
-
   const { token } = useContext(LoginContext);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currPlaylists = location.state.prop;
+
   useEffect(() => {
+    scrollTo(0, 0);
     FetchSpotify(
       {
         method: 'GET',
@@ -51,8 +54,8 @@ export default function Playlist() {
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
         <nav className='relative bg-gradient-to-b from-[#484848] to-black w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
-            <FontAwesomeIcon icon={faChevronLeft} className='cursor-not-allowed p-3 rounded-full pr-9' />
-            <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full'/>
+            <FontAwesomeIcon onClick={() => navigate('/')} icon={faChevronLeft} className='cursor-pointer p-3 rounded-full pr-9' />
+            <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full opacity-80'/>
           </div>
           <div className='flex flex-row p-2 pb-5'>
             <section className='w-1/4 aspect-square ml-3 mt-3 shadow-black shadow-xl'>
@@ -101,7 +104,11 @@ export default function Playlist() {
                             key={track.track.id}
                             className='group cursor-pointer w-[96%] flex flex-row m-1 p-2 items-center hover:bg-black-3'
                             onClick={() => {
-                              setCurrPlay(track.track);
+                              if(playedSong){
+                                reference.current.pause();
+                              }
+                              setPlayedSong(track.track);
+                              setPlayIcon(false);
                             }}
                           >
                             <div className='w-[3%] flex items-center justify-center mr-2'>
@@ -142,7 +149,7 @@ export default function Playlist() {
         </main>
         <Footer />
       </div>
-      <PopupPlay _song={currPlay}/>
+      <PopupPlay _song={playedSong} _play={playIcon} _setPlay={setPlayIcon} reference={reference}/>
     </>
   )
 }

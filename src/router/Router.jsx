@@ -21,6 +21,7 @@ import Loading from '../../reusable/Loading.jsx';
 
 import UserProvider from '../context/UserContext.jsx';
 import QueryProvider from '../context/QueryContext.jsx';
+import Sidebar from '../components/Sidebar.jsx';
 
 export default function RouterRedirect() {
 
@@ -44,24 +45,26 @@ export default function RouterRedirect() {
               </div>
             ) : (
               <Routes>
-                <Route path='/' element={<Home />}/>
-                <Route path='/playlist/:name' element={<Playlist />}/>
+                <Route path='/' element={<Sidebar />}>
+                  <Route index element={<Home />}/>
+                  <Route path='/album/:name' element={<Playlist />}/>
 
-                <Route path='*' element={<Error />}/>
+                  <Route path='/profile' element={<Profile _userdata={userdatas.data}/>}/>
+                  <Route path='/search'
+                    element={
+                      <QueryProvider>
+                        <Search/>
+                      </QueryProvider>
+                    }
+                    >
+                    <Route index element={<DefaultQuery/>}/>
+                    <Route path=':query' element={<ShowQuery/>}/>
+                  </Route>
+                </Route>
+
                 <Route path='/login' element={<Login _userdata={userdatas.data}/>}/>
                 <Route path='/register' element={<Register _userdata={userdatas.data}/>}/>
-                <Route path='/profile' element={<Profile _userdata={userdatas.data}/>}/>
-
-                <Route path='/search'
-                  element={
-                    <QueryProvider>
-                      <Search/>
-                    </QueryProvider>
-                  }
-                >
-                  <Route index element={<DefaultQuery/>}/>
-                  <Route path=':query' element={<ShowQuery/>}/>
-                </Route>
+                <Route path='*' element={<Error />}/>
               </Routes>
             )
           }

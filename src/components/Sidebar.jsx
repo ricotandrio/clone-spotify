@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faMagnifyingGlass, faPlus, faLinesLeaning, faBars, faX } from '@fortawesome/free-solid-svg-icons';
@@ -24,107 +25,107 @@ export default function Sidebar() {
     };
   }, []);
 
+  const NavLinkStyle = ({ isActive }) => {
+    return {
+      opacity: isActive ? 1 : 0.8,
+    }
+  }
+
   return (
-    <div className='z-[990]' style={{position: 'Relative', }}>
-      {
-        width >= '640' ? (
-          <div className='fixed w-1/4 h-screen p-2 z-10 rounded-b-md' >
-            <div className='h-1/5 p-2 pl-6 flex flex-col justify-center rounded-xl bg-black-1'>
-              <ul className='text-l'>
-                <li onClick={() => {navigate('/')}}
-                  className='homebutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
-                  style={{
-                    opacity: path == '/' && '1',
-                  }}
-                >
-                  <FontAwesomeIcon icon={faHouse} />
-                  <h1 className='ml-5 mt-1'>Home</h1>
-                </li>
-                <li
-                  onClick={() => {
-                    setTimeout(() => {
-                      scrollTo(0, 0)
-                    }, 100);
-                    navigate('/search')
-                  }}
-                  className='searchbutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
-                  style={{
-                    opacity: path.slice(0, 7) == '/search' && '1',
-                  }}
-                >
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
-                  <h1 className='ml-5 mt-1'>Search</h1>
-                </li>
-              </ul>
-            </div>
+    <>
+      <div className='z-[990] relative'>
+        {
+          width >= '640' ? (
+            <div className='fixed w-1/4 h-screen p-2 z-10 rounded-b-md' >
+              <div className='h-1/5 p-2 pl-6 flex flex-col justify-center rounded-xl bg-black-1'>
+                <ul className='text-l'>
+                  <NavLink
+                    to='/'
+                    className='homebutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
+                    style={ NavLinkStyle }
+                  >
+                    <FontAwesomeIcon icon={faHouse} />
+                    <h1 className='ml-5 mt-1'>Home</h1>
+                  </NavLink>
+                  <NavLink
+                    to='/search'
+                    className='searchbutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
+                    style={ NavLinkStyle }
+                  >
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    <h1 className='ml-5 mt-1'>Search</h1>
+                  </NavLink>
+                </ul>
+              </div>
 
-            <div className='h-screen bg-black-1 rounded-xl mt-2 flex flex-col'>
-              <div className='mt-6 ml-6 font-scbb flex flex-row items-center'>
-                <div className='cursor-pointer opacity-80 ease-in-out duration-300 hover:opacity-100 flex flex-row gap-5 items-center'>
-                  <FontAwesomeIcon icon={faLinesLeaning} size='xl'/>
-                  <h1 className='block text-l'>Your Library</h1>
+              <div className='h-screen bg-black-1 rounded-xl mt-2 flex flex-col'>
+                <div className='mt-6 ml-6 font-scbb flex flex-row items-center'>
+                  <div className='cursor-pointer opacity-80 ease-in-out duration-300 hover:opacity-100 flex flex-row gap-5 items-center'>
+                    <FontAwesomeIcon icon={faLinesLeaning} size='xl'/>
+                    <h1 className='block text-l'>Your Library</h1>
+                  </div>
+                  <div className='hidden sm:block sm:absolute sm:right-10 cursor-pointer opacity-80 ease-in-out duration-300 hover:opacity-100'>
+                    <a href="#"><FontAwesomeIcon icon={faPlus} /></a>
+                  </div>
                 </div>
-                <div className='hidden sm:block sm:absolute sm:right-10 cursor-pointer opacity-80 ease-in-out duration-300 hover:opacity-100'>
-                  <a href="#"><FontAwesomeIcon icon={faPlus} /></a>
+
+                <div className='mt-5 mb-5 ml-3 flex flex-row items-center gap-2 '>
+                  <div className='cursor-not-allowed w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
+                    <h1 className='text-sm opacity-95'>Playlists</h1>
+                  </div>
+                  <div className='cursor-not-allowed w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
+                    <h1 className='text-sm opacity-95'>Artists</h1>
+                  </div>
                 </div>
               </div>
 
-              <div className='mt-5 mb-5 ml-3 flex flex-row items-center gap-2 '>
-                <div className='cursor-not-allowed w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
-                  <h1 className='text-sm opacity-95'>Playlists</h1>
-                </div>
-                <div className='cursor-not-allowed w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
-                  <h1 className='text-sm opacity-95'>Artists</h1>
-                </div>
+            </div>
+          ) : (
+            <div className='fixed w-[3rem] opacity-80 h-screen'>
+              <div className='flex items-center justify-center p-3'>
+                <FontAwesomeIcon icon={faBars} size='xl' onClick={ () => setMenu(true) }/>
               </div>
-            </div>
+              <div className='flex items-center justify-center p-3'>
+                <FontAwesomeIcon icon={faHouse} size='1x' />
+              </div>
+              <div className='flex items-center justify-center p-3'>
+                <FontAwesomeIcon icon={faMagnifyingGlass} size='1x' />
+              </div>
+              <div className='flex items-center justify-center p-3'>
+                <FontAwesomeIcon icon={faLinesLeaning} size='1x' />
+              </div>
 
-          </div>
-        ) : (
-          <div className='fixed w-[3rem] opacity-80 h-screen'>
-            <div className='flex items-center justify-center p-3'>
-              <FontAwesomeIcon icon={faBars} size='xl' onClick={ () => setMenu(true) }/>
-            </div>
-            <div className='flex items-center justify-center p-3'>
-              <FontAwesomeIcon icon={faHouse} size='1x' />
-            </div>
-            <div className='flex items-center justify-center p-3'>
-              <FontAwesomeIcon icon={faMagnifyingGlass} size='1x' />
-            </div>
-            <div className='flex items-center justify-center p-3'>
-              <FontAwesomeIcon icon={faLinesLeaning} size='1x' />
-            </div>
+              {
+                menu == true && (
+                  <div className='fixed z-[9999] top-0 left-0 w-full h-full bg-black flex items-center justify-center'>
+                    <div className='absolute top-5 left-5 flex items-center justify-center p-3'>
+                      <FontAwesomeIcon icon={faX} size='xl' onClick={ () => setMenu(false) }/>
+                    </div>
 
-            {
-              menu == true && (
-                <div className='fixed z-[9999] top-0 left-0 w-full h-full bg-black flex items-center justify-center'>
-                  <div className='absolute top-5 left-5 flex items-center justify-center p-3'>
-                    <FontAwesomeIcon icon={faX} size='xl' onClick={ () => setMenu(false) }/>
+                    <div className=''>
+                      <ul className='text-l'>
+                        <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
+                          <FontAwesomeIcon icon={faHouse} />
+                          <h1 className='ml-5 mt-2'>Home</h1>
+                        </li>
+                        <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
+                          <FontAwesomeIcon icon={faMagnifyingGlass} />
+                          <h1 className='ml-5 mt-1'>Search</h1>
+                        </li>
+                        <div className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
+                          <FontAwesomeIcon icon={faLinesLeaning} size='lg'/>
+                          <h1 className='ml-5 mt-1'>Your Library</h1>
+                        </div>
+                      </ul>
+                    </div>
                   </div>
-
-                  <div className=''>
-                    <ul className='text-l'>
-                      <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
-                        <FontAwesomeIcon icon={faHouse} />
-                        <h1 className='ml-5 mt-2'>Home</h1>
-                      </li>
-                      <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
-                        <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        <h1 className='ml-5 mt-1'>Search</h1>
-                      </li>
-                      <div className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
-                        <FontAwesomeIcon icon={faLinesLeaning} size='lg'/>
-                        <h1 className='ml-5 mt-1'>Your Library</h1>
-                      </div>
-                    </ul>
-                  </div>
-                </div>
-              )
-            }
-          </div>
-
-        )
-      }
-    </div>
+                )
+              }
+            </div>
+          )
+        }
+      </div>
+      <Outlet />
+    </>
   )
 }

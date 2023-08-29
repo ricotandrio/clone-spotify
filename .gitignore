@@ -12,10 +12,7 @@ dist/
 dist-ssr/
 css/
 
-# temporary lock datas.json
-datas.json
 *.local
-datas copy.json
 
 # Editor directories and files
 .vscode/*
@@ -39,8 +36,7 @@ datas copy.json
 *.xlsx
 *.csv
 
-src/Test.jsx
-src/FetchSpotify.jsx
-src/main.jsx
-src/Router.jsx
+# temporary lock file
 public/key.jsx
+public/todo.txt
+public/datas.json

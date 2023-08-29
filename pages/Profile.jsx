@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Sidebar from '../src/components/Sidebar.jsx';
 import UserOption from '../src/sub_components/UserOption.jsx';
@@ -14,7 +15,7 @@ export default function Profile() {
   const [profileVisible, setProfileVisible] = useState(false);
   const currUser = JSON.parse(localStorage.getItem('whoislogin'));
 
-  console.log(currUser.top_artists[0]);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -23,8 +24,8 @@ export default function Profile() {
         <div className='relative bg-[#484848] w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
-              <FontAwesomeIcon icon={faChevronLeft} className='cursor-not-allowed p-3 rounded-full' />
-              <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full'/>
+              <FontAwesomeIcon onClick={() => navigate('/')} icon={faChevronLeft} className='cursor-pointer p-3 rounded-full' />
+              <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full opacity-80'/>
             </div>
 
             <div className='absolute flex flex-row right-8'>

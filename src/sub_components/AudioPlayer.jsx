@@ -11,10 +11,6 @@ export default function AudioPlayer() {
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    // console.log(state.elapseDuration);
-  }, [state]);
-
-  useEffect(() => {
     let interval;
     if(state.audioSource && state.isPlaying){
       interval = setInterval(() => {
@@ -94,6 +90,7 @@ export default function AudioPlayer() {
                 <FontAwesomeIcon icon={state.volume > 0.2 ? faVolumeHigh : faVolumeMute}/>
               </div>
               <input
+                className='w-[80%] sm:w-full'
                 type="range"
                 value={state.volume * 100}
                 onChange={

@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import { UserContext } from '../context/UserContext.jsx';
 import { FetchSpotify } from '../../reusable/Spotify.jsx';
-import Sidebar from './Sidebar.jsx'
 import UserOption from '../sub_components/UserOption.jsx';
 import Loading from '../../reusable/Loading.jsx';
 import SongSection from '../sub_components/SongSection.jsx';
@@ -41,7 +40,6 @@ export default function Home() {
 
   return (
     <>
-      <Sidebar/>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
         <div className='relative bg-black-1 w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>

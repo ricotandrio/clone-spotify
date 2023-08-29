@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
-import Sidebar from '../src/components/Sidebar.jsx';
 import Footer from '../src/components/Footer.jsx';
 import UserOption from '../src/sub_components/UserOption.jsx';
 
@@ -18,10 +17,10 @@ export default function Search() {
   const { login } = useContext(UserContext);
   const { query, setQuery } = useContext(QueryContext);
   const navigate = useNavigate();
-
+  scrollTo(0, 0);
+  
   return (
     <>
-      <Sidebar />
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
         <div className='relative bg-black-1 w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
@@ -18,12 +18,12 @@ import '../index.css';
 export default function Playlist() {
   // fetch data from spotify web api
   const [isLoading, setLoading] = useState(true);
-  const [tracks, setTracks] = useState();
+  const [tracks, setTracks] = useState({});
+
   const { token } = useContext(UserContext);
+  const { name } = useParams();
 
   const navigate = useNavigate();
-  const location = useLocation();
-  const currPlaylists = location.state.prop;
 
   useEffect(() => {
     scrollTo(0, 0);
@@ -33,9 +33,9 @@ export default function Playlist() {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
-      }, currPlaylists.tracks.href
+      }, `https://api.spotify.com/v1/playlists/${name}`
     ).then((response) => {
-      // console.log(response);
+      console.log(response);
       if(response != null){
         setTracks(response);
         setLoading(false);
@@ -44,7 +44,7 @@ export default function Playlist() {
   }, []);
 
   // audio player
-  const { state, dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(UserContext);
 
   return (
     <>
@@ -56,13 +56,27 @@ export default function Playlist() {
             <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full opacity-80'/>
           </div>
           <div className='flex flex-row p-2 pb-5'>
-            <section className='w-1/4 aspect-square ml-3 mt-3 shadow-black shadow-xl'>
-              <img src={currPlaylists.images[0].url} alt={currPlaylists.name} className='w-full h-full' />
+            <section className='w-1/4 aspect-square ml-3 mt-3 shadow-black shadow-xl flex items-center justify-center'>
+              {
+                isLoading == true ? (
+                  <Loading />
+                ) : (
+                  <img src={tracks?.images[0]?.url} alt={tracks?.name} className='w-full h-full' />
+                )
+              }
             </section>
             <section className='p-2 ml-5 w-[68%]'>
               <h2 className='pt-16 font-scbk'>Playlist</h2>
-              <h1 className='text-6xl mb-6'>{currPlaylists.name}</h1>
-              <p className='text-sm opacity-80 line-clamp-4 text-justify'>{currPlaylists.description}</p>
+              {
+                isLoading == true ? (
+                  <Loading />
+                ) : (
+                  <>
+                    <h1 className='text-6xl mb-6'>{tracks?.name}</h1>
+                    <p className='text-sm opacity-80 line-clamp-4 text-justify'>{tracks?.description}</p>
+                  </>
+                )
+              }
             </section>
           </div>
         </nav>
@@ -93,54 +107,50 @@ export default function Playlist() {
               isLoading == true ? (
                 <Loading />
               ) : (
-                <>
+                <div className='w-[97%]'>
                   {
-                    isLoading == false && (
-                      <div className='w-[97%]'>{
-                        tracks.items.map((track, index) => (
-                          <div
-                            key={track.track.id}
-                            className='group cursor-pointer w-[96%] flex flex-row m-1 p-2 items-center hover:bg-black-3'
-                            onClick={() => {
-                              console.log('get in toggle');
-                              dispatch({
-                                type: AudioAction.SET_AUDIO_SOURCE,
-                                payload: { src: track.track }
-                              })
-                            }}
-                          >
-                            <div className='w-[3%] flex items-center justify-center mr-2'>
-                              <h1 className='group-hover:hidden opacity-80'>{index + 1}</h1>
-                              <FontAwesomeIcon icon={faPlay} className='hidden group-hover:block' />
-                            </div>
-                            <div className='w-[30%] flex flex-row items-center'>
-                              <div className='w-[15%] aspect-square mr-3'>
-                                <img src={track.track.album.images[0].url} alt="" className='w-full h-full' />
-                              </div>
-                              <div className='w-full'>
-                                <h1 className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current font-scbk line-clamp-1'>{track.track.name}</h1>
-                                <p className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current opacity-80 text-sm font-scbk'>{track.track.artists[0].name}</p>
-                              </div>
-                            </div>
-                            <div className='w-[30%]'>
-                              <h1 className='text-sm line-clamp-1 underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current opacity-80 pl-3 font-scbk'>
-                                {track.track.album.name}
-                              </h1>
-                            </div>
-                            <div className='w-[22%]'>
-                              <h1 className='font-scbk line-clamp-1 text-sm opacity-80 pl-9'>
-                                {extractYearMonthDay(track.added_at)}
-                              </h1>
-                            </div>
-                            <div className='w-[15%] pl-3 opacity-80 font-scbk text-sm text-center'>
-                              {convertMsToMMSS(track.track.duration_ms)}
-                            </div>
+                    tracks.tracks.items.map((track, index) => (
+                      <div
+                        key={track.track.id}
+                        className='group cursor-pointer w-[96%] flex flex-row m-1 p-2 items-center hover:bg-black-3'
+                        onClick={() => {
+                          console.log('get in toggle');
+                          dispatch({
+                            type: AudioAction.SET_AUDIO_SOURCE,
+                            payload: { src: track.track }
+                          })
+                        }}
+                      >
+                        <div className='w-[3%] flex items-center justify-center mr-2'>
+                          <h1 className='group-hover:hidden opacity-80'>{index + 1}</h1>
+                          <FontAwesomeIcon icon={faPlay} className='hidden group-hover:block' />
+                        </div>
+                        <div className='w-[30%] flex flex-row items-center'>
+                          <div className='w-[15%] aspect-square mr-3'>
+                            <img src={track.track.album.images[0].url} alt="" className='w-full h-full' />
                           </div>
-                        ))
-                      }</div>
-                    )
+                          <div className='w-full'>
+                            <h1 className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current font-scbk line-clamp-1'>{track.track.name}</h1>
+                            <p className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current opacity-80 text-sm font-scbk'>{track.track.artists[0].name}</p>
+                          </div>
+                        </div>
+                        <div className='w-[30%]'>
+                          <h1 className='text-sm line-clamp-1 underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current opacity-80 pl-3 font-scbk'>
+                            {track.track.album.name}
+                          </h1>
+                        </div>
+                        <div className='w-[22%]'>
+                          <h1 className='font-scbk line-clamp-1 text-sm opacity-80 pl-9'>
+                            {extractYearMonthDay(track.added_at)}
+                          </h1>
+                        </div>
+                        <div className='w-[15%] pl-3 opacity-80 font-scbk text-sm text-center'>
+                          {convertMsToMMSS(track.track.duration_ms)}
+                        </div>
+                      </div>
+                    ))
                   }
-                </>
+                </div>
               )
             }
           </section>

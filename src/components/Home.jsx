@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { UserContext } from '../context/UserContext.jsx';
 import { FetchSpotify } from '../../reusable/Spotify.jsx';

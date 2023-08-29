@@ -29,7 +29,7 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
               className='relative cursor-pointer w-[31%] sm:w-[24%] bg-innerBlack flex flex-col items-center p-3 rounded-xl ease-in-out duration-300
               hover:bg-black-3 group/button'
               onClick={() => {
-                navigate(`/album/${encodeURIComponent(prop.id)}`, {state:{prop}});
+                navigate(`/album/${encodeURIComponent(prop.id)}`);
               }}
             >
 

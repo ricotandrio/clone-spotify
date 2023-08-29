@@ -90,7 +90,7 @@ export default function AudioPlayer() {
                 <FontAwesomeIcon icon={state.volume > 0.2 ? faVolumeHigh : faVolumeMute}/>
               </div>
               <input
-                className='w-[80%] sm:w-full'
+                className='w-[80%] sm:w-auto'
                 type="range"
                 value={state.volume * 100}
                 onChange={

@@ -11,7 +11,7 @@ import { convertMsToMMSS } from '../reusable/ConvertMMSS';
 import { QueryContext } from '../src/context/QueryContext';
 
 import '../src/index.css';
-import { LoginContext } from '../src/context/LoginContext';
+import { UserContext } from '../src/context/UserContext';
 
 const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   const audio = useRef(null);
@@ -81,8 +81,8 @@ export default function ShowQuery() {
   const [tracksdata, setTracks] = useState();
   const [isLoading, setLoading] = useState(true);
   const { setQuery } = useContext(QueryContext);
-  const { token } = useContext(LoginContext);
-  
+  const { token } = useContext(UserContext);
+
   // this use state must be in format {ref: useRef(), name: song_title, _setPlayed: function to setplayed to false}
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
 

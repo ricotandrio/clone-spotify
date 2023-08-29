@@ -8,16 +8,12 @@ import '../index.css';
 
 SongSection.propTypes = {
   data: PropTypes.array.isRequired,
-  show: PropTypes.number.isRequired,
   playlists_name: PropTypes.string.isRequired
 }
 
-export default function SongSection({data: arrayOfData, show, playlists_name}) {
-  const numOfShowing = parseInt(show);
-
+export default function SongSection({data: arrayOfData, playlists_name}) {
   const navigate = useNavigate();
 
-  console.log(arrayOfData);
   return (
     <>
       <Link to='/404'>
@@ -25,12 +21,12 @@ export default function SongSection({data: arrayOfData, show, playlists_name}) {
           { playlists_name }
         </h1>
       </Link>
-      <div className='w-full pl-5 mt-5 pb-3 flex flex-row items-center justify-center gap-3 pr-5 overflow-hidden'>
+      <div className='w-full pl-5 mt-5 pb-3 flex flex-row flex-wrap items-center justify-start gap-2 pr-5 overflow-hidden'>
         {
-          arrayOfData.slice(0, numOfShowing).map((prop) => (
+          arrayOfData.map((prop) => (
             <div
               key={ prop.id }
-              className='relative cursor-pointer w-1/3 sm:w-1/4 bg-innerBlack flex flex-col items-center p-4 rounded-xl ease-in-out duration-300
+              className='relative cursor-pointer w-[31%] sm:w-[24%] bg-innerBlack flex flex-col items-center p-3 rounded-xl ease-in-out duration-300
               hover:bg-black-3 group/button'
               onClick={() => {
                 navigate(`/playlist/${encodeURIComponent(prop.id)}`, {state:{prop}});
@@ -57,7 +53,6 @@ export default function SongSection({data: arrayOfData, show, playlists_name}) {
           ))
         }
       </div>
-
 
     </>
   )

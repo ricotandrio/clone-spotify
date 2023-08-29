@@ -40,7 +40,13 @@ export default function Sidebar() {
                   <FontAwesomeIcon icon={faHouse} />
                   <h1 className='ml-5 mt-1'>Home</h1>
                 </li>
-                <li onClick={() => {navigate('/search')}}
+                <li
+                  onClick={() => {
+                    setTimeout(() => {
+                      scrollTo(0, 0)
+                    }, 100);
+                    navigate('/search')
+                  }}
                   className='searchbutton cursor-pointer p-3 flex flex-row items-center ease-in-out duration-300 opacity-80 hover:opacity-100'
                   style={{
                     opacity: path.slice(0, 7) == '/search' && '1',

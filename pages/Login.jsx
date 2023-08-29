@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { LoginContext } from '../src/context/LoginContext';
+import { UserContext } from '../src/context/UserContext';
 
 import logo from '../src/assets/Spotify_Logo_CMYK_White.png';
 import Spotify from '../src/assets/spotify.png';
@@ -33,7 +33,7 @@ Login.propTypes = {
 
 export default function Login({ _userdata: users }) {
   const navigate = useNavigate();
-  const { setLogin } = useContext(LoginContext);
+  const { setLogin } = useContext(UserContext);
 
   const [accName, setAccName] = useState('');
   const [password, setPassword] = useState('');

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { LoginContext } from '../context/LoginContext';
+import { UserContext } from '../context/UserContext';
 
 import '../index.css';
 
@@ -12,7 +12,7 @@ UserOption.propTypes = {
 
 export default function UserOption({_setProfileVisible}) {
   const navigate = useNavigate();
-  const { setLogin } = useContext(LoginContext);
+  const { setLogin } = useContext(UserContext);
 
   return (
     <>

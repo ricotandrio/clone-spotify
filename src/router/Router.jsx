@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   BrowserRouter,
   Route,
@@ -19,38 +19,39 @@ import DefaultQuery from '../../search/DefaultQuery.jsx';
 import Playlist from '../sub_components/Playlist.jsx';
 import Loading from '../../reusable/Loading.jsx';
 
-import LoginProvider from '../context/LoginContext.jsx';
+import UserProvider from '../context/UserContext.jsx';
 import QueryProvider from '../context/QueryContext.jsx';
 
 export default function RouterRedirect() {
 
   // local json-server data
   const [userdatas, setuserData] = useState({data: [], isLoading: true, errorMessage: ''});
-  const [songdatas, setsongData] = useState({data: [], isLoading: true, errorMessage: ''});
+  // const [songdatas, setsongData] = useState({data: [], isLoading: true, errorMessage: ''});
 
   fetchdata('http://localhost:3000/users', setuserData);
-  fetchdata('http://localhost:3000/playlists', setsongData);
+  // fetchdata('http://localhost:3000/playlists', setsongData);
 
   const [isLoading, setLoading] = useState(true);
 
   return (
     <>
       <BrowserRouter>
-        <LoginProvider _setLoading={ setLoading }>
+        <UserProvider _setLoading={ setLoading }>
           {
-            userdatas.isLoading == true || songdatas.isLoading == true || isLoading == true ? (
+            userdatas.isLoading == true || isLoading == true ? (
               <div className='relative w-full h-screen flex flex-col items-center justify-center'>
                 <Loading />
               </div>
             ) : (
               <Routes>
-                <Route path='/' element={<Home _songdata={songdatas.data} />}/>
+                <Route path='/' element={<Home />}/>
+                <Route path='/playlist/:name' element={<Playlist />}/>
+
                 <Route path='*' element={<Error />}/>
                 <Route path='/login' element={<Login _userdata={userdatas.data}/>}/>
                 <Route path='/register' element={<Register _userdata={userdatas.data}/>}/>
                 <Route path='/profile' element={<Profile _userdata={userdatas.data}/>}/>
 
-                <Route path='/playlist/:name' element={<Playlist _songdata={songdatas.data} />}/>
                 <Route path='/search'
                   element={
                     <QueryProvider>
@@ -64,7 +65,7 @@ export default function RouterRedirect() {
               </Routes>
             )
           }
-        </LoginProvider>
+        </UserProvider>
       </BrowserRouter>
     </>
   )

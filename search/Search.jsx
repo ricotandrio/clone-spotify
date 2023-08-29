@@ -5,7 +5,7 @@ import Sidebar from '../src/components/Sidebar.jsx';
 import Footer from '../src/components/Footer.jsx';
 import UserOption from '../src/sub_components/UserOption.jsx';
 
-import { LoginContext } from '../src/context/LoginContext.jsx';
+import { UserContext } from '../src/context/UserContext.jsx';
 import { QueryContext } from '../src/context/QueryContext.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +15,7 @@ import '../src/index.css';
 
 export default function Search() {
   const [profileVisible, setProfileVisible] = useState(false);
-  const { login } = useContext(LoginContext);
+  const { login } = useContext(UserContext);
   const { query, setQuery } = useContext(QueryContext);
   const navigate = useNavigate();
 

@@ -1,29 +1,43 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { UserContext } from '../context/UserContext.jsx';
+import { FetchSpotify } from '../../reusable/Spotify.jsx';
 import Sidebar from './Sidebar.jsx'
-import Content from './Content.jsx'
 import UserOption from '../sub_components/UserOption.jsx';
-import { LoginContext } from '../context/LoginContext.jsx';
+import Loading from '../../reusable/Loading.jsx';
+import SongSection from '../sub_components/SongSection.jsx';
+import Footer from './Footer.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import '../index.css';
 
-Home.propTypes = {
-  _songdata: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      contents: PropTypes.array.isRequired
-    })
-  ).isRequired
-}
-
-export default function Home({ _songdata }) {
+export default function Home() {
   const [profileVisible, setProfileVisible] = useState(false);
-  const { login } = useContext(LoginContext);
+  const { login, token } = useContext(UserContext);
+
+  const [isLoading, setLoading] = useState(true);
+  const [featuredPlaylists, setFeaturedPlaylists] = useState();
+
+  useEffect(() => {
+    FetchSpotify(
+      {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }, `https://api.spotify.com/v1/browse/featured-playlists`
+    ).then((response) => {
+      // console.log(response);
+      if(response != null){
+        setFeaturedPlaylists(response);
+        setLoading(false);
+      }
+    })
+  }, []);
 
   return (
     <>
@@ -72,9 +86,21 @@ export default function Home({ _songdata }) {
             }
           </div>
         </div>
+        <div className='relative bg-gradient-to-b from-black-2 to-black-1 w-full text-white font-sbbs'>
+          {
+            isLoading == true ? (
+              <div className='w-full p-10 pb-16 flex items-center justify-center'>
+                <Loading />
+              </div>
+            ) : (
+              <>
+                <SongSection data={featuredPlaylists.playlists.items} playlists_name={featuredPlaylists.message} />
+                <Footer/>
+              </>
+            )
+          }
+        </div>
       </div>
-
-      <Content _songdata={ _songdata }/>
     </>
   )
 }

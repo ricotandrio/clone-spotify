@@ -25,7 +25,7 @@ export default [
   },
   {
     'index': 5,
-    'name': 'Psop',
+    'name': 'Pop',
     'color': '#148A08',
     'images': 'https://cdn.discordapp.com/attachments/1136999199888654407/1137000934556323930/santaisejenak.png',
   },
@@ -37,31 +37,31 @@ export default [
   },
   {
     'index': 7,
-    'name': 'Livse Events',
+    'name': 'Books',
     'color': '#7358FF',
     'images': 'https://cdn.discordapp.com/attachments/1136999199888654407/1137000934556323930/santaisejenak.png',
   },
   {
     'index': 8,
-    'name': 'Mades For You',
+    'name': 'Just for You',
     'color': '#1E3264',
     'images': 'https://cdn.discordapp.com/attachments/1136999199888654407/1137000934556323930/santaisejenak.png',
   },
   {
     'index': 9,
-    'name': 'Nesw releases',
+    'name': 'Calm',
     'color': '#E8115B',
     'images': 'https://cdn.discordapp.com/attachments/1136999199888654407/1137000934556323930/santaisejenak.png',
   },
   {
     'index': 10,
-    'name': 'New realeases',
+    'name': '2000s',
     'color': '#E8115B',
     'images': 'https://cdn.discordapp.com/attachments/1136999199888654407/1137000934556323930/santaisejenak.png',
   },
   {
     'index': 11,
-    'name': 'Poap',
+    'name': 'Sleep',
     'color': '#148A08',
     'images': 'https://cdn.discordapp.com/attachments/1136999199888654407/1137000934556323930/santaisejenak.png',
   }

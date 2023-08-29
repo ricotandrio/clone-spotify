@@ -1,30 +1,25 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
 import Sidebar from '../components/Sidebar.jsx'
-import PopupPlay from './PopupPlay.jsx';
+import AudioPlayer from './AudioPlayer.jsx';
 import Footer from '../components/Footer.jsx';
 import Loading from '../../reusable/Loading.jsx';
 import { convertMsToMMSS } from '../../reusable/ConvertMMSS.jsx';
 import { FetchSpotify } from '../../reusable/Spotify.jsx';
-import { LoginContext } from '../context/LoginContext.jsx';
+import { AudioAction, UserContext } from '../context/UserContext.jsx';
 import { extractYearMonthDay } from '../../reusable/ConvertDate.jsx';
 
 import '../index.css';
 
 export default function Playlist() {
-  // popup play
-  const reference = useRef(null);
-  const [playIcon, setPlayIcon] = useState(false);
-  const [playedSong, setPlayedSong] = useState(null);
-
   // fetch data from spotify web api
   const [isLoading, setLoading] = useState(true);
   const [tracks, setTracks] = useState();
-  const { token } = useContext(LoginContext);
+  const { token } = useContext(UserContext);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,13 +35,16 @@ export default function Playlist() {
         },
       }, currPlaylists.tracks.href
     ).then((response) => {
-      console.log(response);
+      // console.log(response);
       if(response != null){
         setTracks(response);
         setLoading(false);
       }
     })
   }, []);
+
+  // audio player
+  const { state, dispatch } = useContext(UserContext);
 
   return (
     <>
@@ -104,11 +102,11 @@ export default function Playlist() {
                             key={track.track.id}
                             className='group cursor-pointer w-[96%] flex flex-row m-1 p-2 items-center hover:bg-black-3'
                             onClick={() => {
-                              if(playedSong){
-                                reference.current.pause();
-                              }
-                              setPlayedSong(track.track);
-                              setPlayIcon(false);
+                              console.log('get in toggle');
+                              dispatch({
+                                type: AudioAction.SET_AUDIO_SOURCE,
+                                payload: { src: track.track }
+                              })
                             }}
                           >
                             <div className='w-[3%] flex items-center justify-center mr-2'>
@@ -149,7 +147,7 @@ export default function Playlist() {
         </main>
         <Footer />
       </div>
-      <PopupPlay _song={playedSong} _play={playIcon} _setPlay={setPlayIcon} reference={reference}/>
+      <AudioPlayer/>
     </>
   )
 }

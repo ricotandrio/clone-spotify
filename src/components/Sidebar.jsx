@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faMagnifyingGlass, faPlus, faLinesLeaning, faBars, faX } from '@fortawesome/free-solid-svg-icons';
 
 import '../index.css';
+
+Sidebar.propTypes = {
+  _favorite: PropTypes.object,
+}
 
 export default function Sidebar({ _favorite }) {
   const [width, setWidth] = useState(screen.width);

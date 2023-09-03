@@ -16,7 +16,7 @@ import Search from '../../search/Search.jsx';
 import ShowQuery from '../../search/ShowQuery.jsx';
 import DefaultQuery from '../../search/DefaultQuery.jsx';
 
-import Playlist from '../sub_components/Playlist.jsx';
+import Playlist from '../../pages/Playlist.jsx';
 import Loading from '../../reusable/Loading.jsx';
 
 import UserProvider from '../context/UserContext.jsx';
@@ -30,9 +30,8 @@ export default function RouterRedirect() {
 
   fetchdata('http://localhost:3000/users', setuserData);
 
-  const [isLoading, setLoading] = useState(true);
+  // favorite data
   const [favorite, setFavorite] = useState([]);
-
   const handleFavoriteButton = (isLoading, tracks) => {
     if(isLoading === false){
       const found = favorite.filter((curr) => curr.name === tracks.name);
@@ -45,6 +44,9 @@ export default function RouterRedirect() {
       }
     }
   }
+
+  // set loading for user provider
+  const [isLoading, setLoading] = useState(true);
 
   return (
     <>

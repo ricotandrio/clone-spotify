@@ -26,8 +26,7 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
           arrayOfData.map((prop) => (
             <div
               key={ prop.id }
-              className='relative cursor-pointer w-[31%] sm:w-[24%] bg-innerBlack flex flex-col items-center p-3 rounded-xl ease-in-out duration-300
-              hover:bg-black-3 group/button'
+              className=' group/button relative cursor-pointer w-[31%] sm:w-[24%] bg-innerBlack flex flex-col items-center p-3 rounded-xl ease-in-out duration-300hover:bg-black-3'
               onClick={() => {
                 navigate(`/album/${encodeURIComponent(prop.id)}`);
               }}

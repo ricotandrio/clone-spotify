@@ -7,6 +7,5 @@ import Router from './router/Router.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router />
-    {/* <Test /> */}
   </React.StrictMode>,
 )

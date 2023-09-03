@@ -7,6 +7,7 @@ import UserOption from '../sub_components/UserOption.jsx';
 import Loading from '../../reusable/Loading.jsx';
 import SongSection from '../sub_components/SongSection.jsx';
 import Footer from './Footer.jsx';
+import AudioPlayer from '../sub_components/AudioPlayer.jsx'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -107,6 +108,7 @@ export default function Home() {
           }
         </div>
       </div>
+      <AudioPlayer/>
     </>
   )
 }

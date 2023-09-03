@@ -3,6 +3,7 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Footer from '../src/components/Footer.jsx';
 import UserOption from '../src/sub_components/UserOption.jsx';
+import AudioPlayer from '../src/sub_components/AudioPlayer.jsx';
 
 import { UserContext } from '../src/context/UserContext.jsx';
 import { QueryContext } from '../src/context/QueryContext.jsx';
@@ -105,6 +106,7 @@ export default function Search() {
 
         <Footer />
       </div>
+      <AudioPlayer />
     </>
   )
 }

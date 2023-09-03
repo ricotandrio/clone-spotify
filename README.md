@@ -18,10 +18,7 @@ Now, run the development server, json-server, and tailwind css output with:
 
 ```bash
 $ npm run dev
-$ npx json-server --watch ./public/datas.json
 ```
-
-Finally, open the provided localhost link in your browser to view the application. With Vite.js localhost will available at http://localhost:5173/ and json-server will available at http://localhost:3000/{name}
 
 ## Live Demo
 You can access the live version of the website at ###

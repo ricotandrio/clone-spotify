@@ -4,15 +4,15 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
-import AudioPlayer from './AudioPlayer.jsx';
-import Footer from '../components/Footer.jsx';
-import Loading from '../../reusable/Loading.jsx';
-import { convertMsToMMSS } from '../../reusable/ConvertMMSS.jsx';
-import { FetchSpotify } from '../../reusable/Spotify.jsx';
-import { AudioAction, UserContext } from '../context/UserContext.jsx';
-import { extractYearMonthDay } from '../../reusable/ConvertDate.jsx';
+import AudioPlayer from '../src/sub_components/AudioPlayer.jsx';
+import Footer from '../src/components/Footer.jsx';
+import Loading from '../reusable/Loading.jsx';
+import { convertMsToMMSS } from '../reusable/ConvertMMSS.jsx';
+import { FetchSpotify } from '../reusable/Spotify.jsx';
+import { AudioAction, UserContext } from '../src/context/UserContext.jsx';
+import { extractYearMonthDay } from '../reusable/ConvertDate.jsx';
 
-import '../index.css';
+import '../src/index.css';
 
 export default function Playlist({ _handleFavoriteButton, _favorite }) {
   // fetch data from spotify web api

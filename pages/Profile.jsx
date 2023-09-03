@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import UserOption from '../src/sub_components/UserOption.jsx';
@@ -16,14 +16,26 @@ export default function Profile() {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
         <div className='relative bg-[#484848] w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
-              <FontAwesomeIcon onClick={() => navigate('/')} icon={faChevronLeft} className='cursor-pointer p-3 rounded-full' />
-              <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full opacity-80'/>
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                className='p-3 rounded-full cursor-pointer'
+                onClick={() => navigate(-1) }
+              />
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className='p-3 rounded-full cursor-pointer'
+                onClick={() => navigate(1) }
+              />
             </div>
 
             <div className='absolute flex flex-row right-8'>
@@ -117,7 +129,12 @@ export default function Profile() {
                         <img src={track.track_img} alt={track.track_img} className=''/>
                       </div>
                       <div className='w-1/2'>
-                        <h1 className='font-scbk text-md'>{track.title}</h1>
+                        <h1
+                          className='font-scbk text-md cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-current'
+                          onClick={() => navigate(`/search/${encodeURIComponent(track.title)}`)}
+                        >
+                          {track.title}
+                        </h1>
                         <h2 className='font-scbk text-sm opacity-80'>{track.artists}</h2>
                       </div>
 

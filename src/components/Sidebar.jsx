@@ -7,13 +7,10 @@ import { faHouse, faMagnifyingGlass, faPlus, faLinesLeaning, faBars, faX } from 
 
 import '../index.css';
 
-export default function Sidebar() {
+export default function Sidebar({ _favorite }) {
   const [width, setWidth] = useState(screen.width);
   const [menu, setMenu] = useState(false);
-
   const navigate = useNavigate();
-  const location = useLocation();
-  const path = location.pathname;
 
   useEffect(() => {
     const updateWidth = () => {
@@ -29,6 +26,10 @@ export default function Sidebar() {
     return {
       opacity: isActive ? 1 : 0.8,
     }
+  }
+
+  if(_favorite != null){
+    console.log(_favorite);
   }
 
   return (
@@ -77,8 +78,32 @@ export default function Sidebar() {
                     <h1 className='text-sm opacity-95'>Artists</h1>
                   </div>
                 </div>
-              </div>
 
+                {
+                  _favorite != null && (
+                    <div>
+                      {
+                        _favorite.map((curr) => (
+                          <div
+                            key={curr.id}
+                            className='cursor-pointer m-2 rounded-md p-1 flex flex-row items-center hover:bg-black-2'
+                            onClick={() => {
+                              navigate(`/album/${curr.id}`, { key: Math.random() % 2 })
+                            }}
+                          >
+                            <img src={curr.images} alt="" className='aspect-square w-14 mr-3 rounded-lg'/>
+                            <div>
+                              <h1 className='mb-1 line-clamp-1'>{JSON.parse(localStorage.getItem('whoislogin'))?.name}</h1>
+                              <h2 className='opacity-80 font-scbk text-sm line-clamp-1'>Playlists • user</h2>
+                            </div>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  )
+                }
+
+              </div>
             </div>
           ) : (
             <div className='fixed w-[3rem] opacity-80 h-screen'>

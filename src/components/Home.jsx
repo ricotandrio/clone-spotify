@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { UserContext } from '../context/UserContext.jsx';
 import { FetchSpotify } from '../../reusable/Spotify.jsx';
@@ -37,14 +37,23 @@ export default function Home() {
     })
   }, []);
 
+  const navigate = useNavigate();
   return (
     <>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
         <div className='relative bg-black-1 w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
-              <FontAwesomeIcon icon={faChevronLeft} className='cursor-not-allowed p-3 rounded-full opacity-80' />
-              <FontAwesomeIcon icon={faChevronRight} className='cursor-not-allowed p-3 rounded-full opacity-80'/>
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                className='p-3 rounded-full cursor-pointer'
+                onClick={() => navigate(-1) }
+              />
+              <FontAwesomeIcon
+                icon={faChevronRight}
+                className='p-3 rounded-full cursor-pointer'
+                onClick={() => navigate(1) }
+              />
             </div>
 
             <div className='absolute flex flex-row right-8'>

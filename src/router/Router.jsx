@@ -31,6 +31,20 @@ export default function RouterRedirect() {
   fetchdata('http://localhost:3000/users', setuserData);
 
   const [isLoading, setLoading] = useState(true);
+  const [favorite, setFavorite] = useState([]);
+
+  const handleFavoriteButton = (isLoading, tracks) => {
+    if(isLoading === false){
+      const found = favorite.filter((curr) => curr.name === tracks.name);
+      if(found.length == 1){
+        setFavorite(favorite.filter((curr) => curr.name !== tracks.name));
+      } else if(favorite.length > 3){
+        window.alert(`You've reached the maximum limit of 4 favorite playlists`);
+      } else if(found.length == 0 && favorite.length <= 3){
+        setFavorite([...favorite, { "name": tracks.name, "id": tracks.id, "images": tracks.images[0].url } ]);
+      }
+    }
+  }
 
   return (
     <>
@@ -43,9 +57,9 @@ export default function RouterRedirect() {
               </div>
             ) : (
               <Routes>
-                <Route path='/' element={<Sidebar />}>
+                <Route path='/' element={<Sidebar _favorite={favorite} />}>
                   <Route index element={<Home />}/>
-                  <Route path='/album/:name' element={<Playlist />}/>
+                  <Route path='/album/:name' element={<Playlist _handleFavoriteButton={handleFavoriteButton} _favorite={favorite} />}/>
 
                   <Route path='/profile' element={<Profile _userdata={userdatas.data}/>}/>
                   <Route path='/search'

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -17,6 +17,7 @@ const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   const audio = useRef(null);
   const [played, setPlayed] = useState(false);
   const [isHovered, setHovered] = useState(false);
+  const navigate = useNavigate();
 
   const handleMusic = () => {
     if(played == false){
@@ -39,32 +40,39 @@ const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   return (
     <div
       className='cursor-pointer relative flex flex-row items-center h-20 gap-2 m-2 ml-5 mr-5 pl-3 bg-black-1 hover:bg-black-3 rounded-md'
-      onClick={ handleMusic }
+      // onClick={ handleMusic }
+      onMouseOver={() => setHovered(true) }
+      onMouseLeave={() => setHovered(false) }
     >
       <div className='absolute w-12 p-2 left-5 bg-[#00000080] aspect-square flex items-center justify-center cursor-pointer'
         onClick={ handleMusic }
-        onMouseOver={() => setHovered(true) }
-        onMouseLeave={() => setHovered(false) }
         style={{ opacity: played || isHovered ? 1 : 0 }}
       >
-        <audio ref={audio} src={track.preview_url} />
+        <audio ref={audio} src={track?.preview_url} />
         <FontAwesomeIcon icon={played == true ? faPause : faPlay} size='lg' className='text-white'/>
       </div>
       <div className='w-16 p-2 aspect-square'>
-        <img src={track.album.images[0].url} alt={track.track_img} className=''/>
+        <img src={track?.album?.images[0].url} alt={track?.track_img} className=''/>
       </div>
       <div className='w-1/2 pt-2'>
-        <h1 className='inline-block font-scbk text-md cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>{track.name}</h1>
+        <h1 className='inline-block font-scbk text-md cursor-not-allowed line-clamp-1'>
+          {track?.name}
+        </h1>
         <br />
-        <h2 className='inline-block font-scbk text-sm opacity-80 cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>{track.artists[0].name}</h2>
+        <h2
+          className='inline-block font-scbk text-sm opacity-80 cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1 z-20'
+          onClick={() => navigate(`/artist/${track?.artists[0]?.id}`)}
+        >
+          {track?.artists[0]?.name}
+        </h2>
       </div>
 
       <div className='w-1/4 text-sm opacity-80 font-scbk cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>
-        {track.album.name}
+        {track?.album?.name}
       </div>
 
       <div className='text-sm opacity-80 font-scbk'>
-        {convertMsToMMSS(track.duration_ms)}
+        {convertMsToMMSS(track?.duration_ms)}
       </div>
     </div>
   )
@@ -129,7 +137,7 @@ export default function ShowQuery() {
               isLoading == false && (
                 <div>{
                   tracksdata.map((track) => (
-                    <AudioCard key={track.id} track={track} currentlyPlaying={currentlyPlaying} setCurrentlyPlaying={setCurrentlyPlaying}/>
+                    <AudioCard key={track?.id} track={track} currentlyPlaying={currentlyPlaying} setCurrentlyPlaying={setCurrentlyPlaying}/>
                   ))
                 }</div>
               )

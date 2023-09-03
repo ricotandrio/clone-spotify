@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackward, faForward, faPause, faPlay, faVolumeHigh, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
 
 import '../index.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function AudioPlayer() {
   const { state, dispatch } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let interval;
@@ -44,8 +46,15 @@ export default function AudioPlayer() {
                 <img src={state.audioSource.album.images[0].url} alt="" />
               </div>
               <div className='flex flex-col justify-center'>
-                <h2 className='cursor-pointer text-sm line-clamp-1 underline underline-offset-2 decoration-transparent hover:decoration-current'>{state.audioSource.name}</h2>
-                <h1 className='cursor-pointer text-xs opacity-80 underline underline-offset-2 decoration-transparent hover:decoration-current'>{state.audioSource.artists[0].name}</h1>
+                <h2 className='cursor-not-allowed text-sm line-clamp-1 underline underline-offset-2 decoration-transparent'>
+                  {state.audioSource.name}
+                </h2>
+                <h1
+                  className='cursor-pointer text-xs opacity-80 underline underline-offset-2 decoration-transparent hover:decoration-current'
+                  onClick={() => navigate(`/artist/${state.audioSource.artists[0].id}`)}
+                >
+                  {state.audioSource.artists[0].name}
+                </h1>
               </div>
             </section>
 

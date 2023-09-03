@@ -22,6 +22,7 @@ import Loading from '../../reusable/Loading.jsx';
 import UserProvider from '../context/UserContext.jsx';
 import QueryProvider from '../context/QueryContext.jsx';
 import Sidebar from '../components/Sidebar.jsx';
+import Artists from '../../pages/Artists.jsx';
 
 export default function RouterRedirect() {
 
@@ -64,16 +65,19 @@ export default function RouterRedirect() {
                   <Route path='/album/:name' element={<Playlist _handleFavoriteButton={handleFavoriteButton} _favorite={favorite} />}/>
 
                   <Route path='/profile' element={<Profile _userdata={userdatas.data}/>}/>
-                  <Route path='/search'
+                  <Route
+                    path='/search'
                     element={
                       <QueryProvider>
                         <Search/>
                       </QueryProvider>
                     }
-                    >
+                  >
                     <Route index element={<DefaultQuery/>}/>
                     <Route path=':query' element={<ShowQuery/>}/>
                   </Route>
+
+                  <Route path='/artist/:id' element={<Artists />}/>
                 </Route>
 
                 <Route path='/login' element={<Login _userdata={userdatas.data}/>}/>

@@ -17,9 +17,13 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
   return (
     <>
       <Link to='/404'>
-        <h1 className='opacity-80 text-white pl-6 pt-8 text-3xl ease-in-out duration-300 cursor-pointer inline-block hover:underline hover:underline-offset-8'>
-          { playlists_name }
-        </h1>
+        {
+          playlists_name != '' && (
+            <h1 className='opacity-80 text-white pl-6 pt-8 text-3xl ease-in-out duration-300 cursor-pointer inline-block hover:underline hover:underline-offset-8'>
+              { playlists_name }
+            </h1>
+          )
+        }
       </Link>
       <div className='w-full pl-5 mt-5 pb-3 flex flex-row flex-wrap items-center justify-start gap-2 pr-5 overflow-hidden'>
         {
@@ -36,7 +40,7 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
                 <img src={ prop.images[0].url } alt={ prop.name } className='w-full h-full relative rounded-lg' />
               </div>
                 <div className='w-48 pt-2 pl-2 sm:pl-0'>
-                <h1 className='pt-2'>{ prop.name }</h1>
+                <h1 className='pt-2 line-clamp-1'>{ prop.name }</h1>
                 <p className='line-clamp-2 opacity-80 text-sm pt-2 font-scbk'>{ prop.description }</p>
               </div>
 

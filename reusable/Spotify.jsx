@@ -7,7 +7,7 @@ export async function FetchSpotify(authOptions, link) {
       return response.json();
     })
     .catch((error) => {
-      setTimeout(() => { window.location.reload() }, 5000);
+      // setTimeout(() => { window.location.reload() }, 5000);
       console.log(`Error => ${error}`);
       return null;
   });

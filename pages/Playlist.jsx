@@ -129,7 +129,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                           console.log('get in toggle');
                           dispatch({
                             type: AudioAction.SET_AUDIO_SOURCE,
-                            payload: { src: track.track }
+                            payload: { src: track?.track }
                           })
                         }}
                       >
@@ -142,8 +142,18 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                             <img src={track?.track?.album?.images[0]?.url} alt="" className='w-full h-full' />
                           </div>
                           <div className='w-full'>
-                            <h1 className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current font-scbk line-clamp-1'>{track?.track?.name}</h1>
-                            <p className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current opacity-80 text-sm font-scbk'>{track?.track?.artists[0]?.name}</p>
+                            <h1
+                              className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current font-scbk line-clamp-1'
+                              onClick={() => navigate(`/search/${encodeURIComponent(track?.track?.name)}`)}
+                            >
+                              {track?.track?.name}
+                            </h1>
+                            <p
+                              className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current opacity-80 text-sm font-scbk'
+                              onClick={() => navigate(`/artist/${track?.track?.artists[0]?.id}`)}
+                            >
+                              {track?.track?.artists[0]?.name}
+                            </p>
                           </div>
                         </div>
                         <div className='w-[30%]'>

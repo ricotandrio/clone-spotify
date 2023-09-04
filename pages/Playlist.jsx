@@ -15,6 +15,7 @@ import { AudioAction, UserContext } from '../src/context/UserContext.jsx';
 import { extractYearMonthDay } from '../reusable/ConvertDate.jsx';
 
 import '../src/index.css';
+import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
 
 
 Playlist.propTypes = {
@@ -39,8 +40,8 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
   const location = useLocation();
   const stateLocation = location.state == '/' ? "playlists" : "albums";
 
+  scrollTo(0, 0);
   useEffect(() => {
-    scrollTo(0, 0);
     setLoading(true);
     FetchSpotify(
       {
@@ -62,29 +63,9 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
     <>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
         <nav className='relative bg-gradient-to-b from-[#484848] to-black w-full h-22 pt-2 rounded-t-xl'>
-          <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
-            <FontAwesomeIcon
-              icon={faChevronLeft}
-              className='p-3 pr-9 rounded-full cursor-pointer'
-              onClick={() => {
-                if(window.history.state && window.history.state.idx > 0){
-                  navigate(-1)
-                }
-              }}
-              style={{
-                opacity: window.history.state && window.history.state.idx > 0 ? 1 : 0.8,
-                cursor: window.history.state && window.history.state.idx > 0 ? 'pointer' : 'not-allowed'
-              }}
-            />
-            <FontAwesomeIcon
-              icon={faChevronRight}
-              className='p-3 rounded-full cursor-pointer'
-              onClick={() => navigate(1) }
-              style={{
-                opacity: window.history.state && window.history.state.idx == window.history.length ? 1 : 0.8,
-                cursor: window.history.state && window.history.state.idx == window.history.length ? 'pointer' : 'not-allowed'
-              }}
-            />
+          <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center gap-6'>
+            <ButtonStylePrev />
+            <ButtonStyleNext />
           </div>
           <div className='flex flex-row p-2 pb-5'>
             <section className='w-1/4 aspect-square ml-3 mt-3 shadow-black shadow-xl flex items-center justify-center'>

@@ -13,6 +13,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import '../index.css';
+import { ButtonStyleNext, ButtonStylePrev } from '../../reusable/ForwardBackwardButton.jsx';
+
+export const ButtonStyleNexts = () => {
+  return {
+    opacity: window.history.state && window.history.state.idx == window.history.length ? 0.8 : 1,
+    cursor: window.history.state && window.history.state.idx == window.history.length - 3 ? 'not-allowed' : 'pointer'
+  }
+}
+
 
 export default function Home() {
   const [profileVisible, setProfileVisible] = useState(false);
@@ -46,28 +55,8 @@ export default function Home() {
         <div className='relative bg-black-1 w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
-              <FontAwesomeIcon
-                icon={faChevronLeft}
-                className='p-3 rounded-full cursor-pointer'
-                onClick={() => {
-                  if(window.history.state && window.history.state.idx > 0){
-                    navigate(-1)
-                  }
-                }}
-                style={{
-                  opacity: window.history.state && window.history.state.idx > 0 ? 1 : 0.8,
-                  cursor: window.history.state && window.history.state.idx > 0 ? 'pointer' : 'not-allowed'
-                }}
-              />
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className='p-3 rounded-full cursor-pointer'
-                onClick={() => navigate(1) }
-                style={{
-                  opacity: window.history.state && window.history.state.idx == window.history.length ? 1 : 0.8,
-                  cursor: window.history.state && window.history.state.idx == window.history.length ? 'pointer' : 'not-allowed'
-                }}
-              />
+              <ButtonStylePrev/>
+              <ButtonStyleNext />
             </div>
 
             <div className='absolute flex flex-row right-8'>

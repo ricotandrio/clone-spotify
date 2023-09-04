@@ -9,6 +9,7 @@ import { faChevronLeft, faChevronRight, faPlay } from '@fortawesome/free-solid-s
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 import '../src/index.css';
+import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
 
 export default function Profile() {
   const [profileVisible, setProfileVisible] = useState(false);
@@ -26,16 +27,8 @@ export default function Profile() {
         <div className='relative bg-[#484848] w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
-              <FontAwesomeIcon
-                icon={faChevronLeft}
-                className='p-3 rounded-full cursor-pointer'
-                onClick={() => navigate(-1) }
-              />
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className='p-3 rounded-full cursor-pointer'
-                onClick={() => navigate(1) }
-              />
+              <ButtonStylePrev/>
+              <ButtonStyleNext />
             </div>
 
             <div className='absolute flex flex-row right-8'>

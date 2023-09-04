@@ -15,6 +15,7 @@ import { extractYearMonthDay } from '../reusable/ConvertDate.jsx';
 import '../src/index.css';
 import UserOption from '../src/sub_components/UserOption.jsx';
 import SongSection from '../src/sub_components/SongSection.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
 
 export default function Artists() {
   const [profileVisible, setProfileVisible] = useState(false);
@@ -78,28 +79,8 @@ export default function Artists() {
         <nav className='relative bg-black-1 w-full h-22 pt-1 rounded-t-xl'>
           <div className='w-3/4 h-16 pl-8 pr-2 pb-2 flex items-center fixed justify-between top-4'>
             <div className='gap-6 flex relative'>
-              <FontAwesomeIcon
-                icon={faChevronLeft}
-                className='p-3 rounded-full cursor-pointer'
-                onClick={() => {
-                  if(window.history.state && window.history.state.idx > 0){
-                    navigate(-1)
-                  }
-                }}
-                style={{
-                  opacity: window.history.state && window.history.state.idx > 0 ? 1 : 0.8,
-                  cursor: window.history.state && window.history.state.idx > 0 ? 'pointer' : 'not-allowed'
-                }}
-              />
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className='p-3 rounded-full cursor-pointer'
-                onClick={() => navigate(1) }
-                style={{
-                  opacity: window.history.state && window.history.state.idx == window.history.length ? 1 : 0.8,
-                  cursor: window.history.state && window.history.state.idx == window.history.length ? 'pointer' : 'not-allowed'
-                }}
-              />
+              <ButtonStylePrev/>
+              <ButtonStyleNext />
             </div>
 
             <div className='relative flex flex-row right-8'>

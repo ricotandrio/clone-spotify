@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faPlay, faHeart, faClock, faUser } from '@fortawesome/free-solid-svg-icons';
@@ -62,7 +62,7 @@ export default function Artists() {
       }
     })
 
-  }, [id]);
+  }, [id, token]);
 
   if(isLoading == true){
     return (
@@ -81,12 +81,24 @@ export default function Artists() {
               <FontAwesomeIcon
                 icon={faChevronLeft}
                 className='p-3 rounded-full cursor-pointer'
-                onClick={() => navigate(-1) }
+                onClick={() => {
+                  if(window.history.state && window.history.state.idx > 0){
+                    navigate(-1)
+                  }
+                }}
+                style={{
+                  opacity: window.history.state && window.history.state.idx > 0 ? 1 : 0.8,
+                  cursor: window.history.state && window.history.state.idx > 0 ? 'pointer' : 'not-allowed'
+                }}
               />
               <FontAwesomeIcon
                 icon={faChevronRight}
                 className='p-3 rounded-full cursor-pointer'
                 onClick={() => navigate(1) }
+                style={{
+                  opacity: window.history.state && window.history.state.idx == window.history.length ? 1 : 0.8,
+                  cursor: window.history.state && window.history.state.idx == window.history.length ? 'pointer' : 'not-allowed'
+                }}
               />
             </div>
 
@@ -138,7 +150,7 @@ export default function Artists() {
               <h1 className='text-xl font-scbk'>
                 Followers: {artist?.followers?.total}
               </h1>
-              <div className='absolute w-14 h-14 bg-darkerGreen flex items-center justify-center rounded-full p-5 cursor-pointer hover:scale-105 mt-5' >
+              <div className='absolute w-14 h-14 bg-darkerGreen flex items-center justify-center rounded-full p-5 cursor-not-allowed hover:scale-105 mt-5' >
                 <FontAwesomeIcon icon={faPlay} color='black' size='lg'/>
               </div>
             </div>

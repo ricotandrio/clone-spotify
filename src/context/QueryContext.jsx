@@ -9,7 +9,7 @@ QueryProvider.propTypes = {
 
 export default function QueryProvider({ children }){
   const [query, setQuery] = useState(false);
-
+  
   return(
     <QueryContext.Provider value={{ query, setQuery }}>
       { children }

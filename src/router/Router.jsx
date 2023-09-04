@@ -34,6 +34,8 @@ export default function RouterRedirect() {
   // favorite data
   const [favorite, setFavorite] = useState([]);
   const handleFavoriteButton = (isLoading, tracks) => {
+    console.log(tracks);
+
     if(isLoading === false){
       const found = favorite.filter((curr) => curr.name === tracks.name);
       if(found.length == 1){
@@ -41,7 +43,7 @@ export default function RouterRedirect() {
       } else if(favorite.length > 3){
         window.alert(`You've reached the maximum limit of 4 favorite playlists`);
       } else if(found.length == 0 && favorite.length <= 3){
-        setFavorite([...favorite, { "name": tracks.name, "id": tracks.id, "images": tracks.images[0].url } ]);
+        setFavorite([...favorite, { "name": tracks.name, "id": tracks.id, "images": tracks.images[0].url, "state": tracks.type == "playlist" ? '/' : '/album' } ]);
       }
     }
   }

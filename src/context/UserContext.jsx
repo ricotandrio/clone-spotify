@@ -23,30 +23,34 @@ export default function UserProvider({ children, _setLoading: setLoading }){
   // app login status
   const [login, setLogin] = useState(false);
   useEffect(() => {
-    if(localStorage.getItem('login')){
-      console.log(JSON.parse(localStorage.getItem('login')).status)
-      setLogin(JSON.parse(localStorage.getItem('login')).status);
+    return () => {
+      if(localStorage.getItem('login')){
+        console.log(`Login info is "${JSON.parse(localStorage.getItem('login')).status}"`);
+        setLogin(JSON.parse(localStorage.getItem('login')).status);
+      }
     }
   }, []);
 
   // get spotify web api token
   const [token, setToken] = useState();
   useEffect(() => {
-    FetchSpotify(
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Basic ' + btoa(key.CLIENT_ID + ':' + key.CLIENT_SECRET),
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'grant_type=client_credentials',
-      }, 'https://accounts.spotify.com/api/token'
-    ).then((response) => {
-      console.log(response);
-      setToken(response.access_token);
-      setLoading(false);
-    })
-  }, [login]);
+    return () => {
+      FetchSpotify(
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Basic ' + btoa(key.CLIENT_ID + ':' + key.CLIENT_SECRET),
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: 'grant_type=client_credentials',
+        }, 'https://accounts.spotify.com/api/token'
+      ).then((response) => {
+        console.log(response);
+        setToken(response.access_token);
+        setLoading(false);
+      })
+    }
+  }, [setLoading]);
 
   // audio player initialize value
   const InitAudioPlayer = {
@@ -88,11 +92,10 @@ export default function UserProvider({ children, _setLoading: setLoading }){
         }
       case AudioAction.SET_VOLUME:
         // console.log('progress in audioaction.setvolume');
-        const volumeIs = action.payload.value < 0.2 ? 0 : action.payload.value;
-        state.audioRef.current.volume = volumeIs;
+        state.audioRef.current.volume = action.payload.value < 0.2 ? 0 : action.payload.value;
         return {
           ...state,
-          volume: volumeIs,
+          volume: action.payload.value < 0.2 ? 0 : action.payload.value,
         }
       case AudioAction.SET_ELAPSE:
         // console.log('progress in audioaction.setelapse');

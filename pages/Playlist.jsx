@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
+import PropTypes from 'prop-types';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft, faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,6 +16,12 @@ import { extractYearMonthDay } from '../reusable/ConvertDate.jsx';
 
 import '../src/index.css';
 
+
+Playlist.propTypes = {
+  _handleFavoriteButton: PropTypes.func,
+  _favorite: PropTypes.array,
+}
+
 export default function Playlist({ _handleFavoriteButton, _favorite }) {
   // fetch data from spotify web api
   const [isLoading, setLoading] = useState(true);
@@ -24,6 +32,13 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
 
   const navigate = useNavigate();
 
+  // audio player
+  const { dispatch } = useContext(UserContext);
+
+  // spotify api to GET playlists and albums have different link
+  const location = useLocation();
+  const stateLocation = location.state == '/' ? "playlists" : "albums";
+
   useEffect(() => {
     scrollTo(0, 0);
     setLoading(true);
@@ -33,7 +48,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
-      }, `https://api.spotify.com/v1/playlists/${name}`
+      }, `https://api.spotify.com/v1/${stateLocation}/${name}`
     ).then((response) => {
       console.log(response);
       if(response != null){
@@ -41,10 +56,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
         setLoading(false);
       }
     })
-  }, [name]);
-
-  // audio player
-  const { dispatch } = useContext(UserContext);
+  }, [name, token, stateLocation]);
 
   return (
     <>
@@ -54,12 +66,24 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
             <FontAwesomeIcon
               icon={faChevronLeft}
               className='p-3 pr-9 rounded-full cursor-pointer'
-              onClick={() => navigate(-1) }
+              onClick={() => {
+                if(window.history.state && window.history.state.idx > 0){
+                  navigate(-1)
+                }
+              }}
+              style={{
+                opacity: window.history.state && window.history.state.idx > 0 ? 1 : 0.8,
+                cursor: window.history.state && window.history.state.idx > 0 ? 'pointer' : 'not-allowed'
+              }}
             />
             <FontAwesomeIcon
               icon={faChevronRight}
               className='p-3 rounded-full cursor-pointer'
               onClick={() => navigate(1) }
+              style={{
+                opacity: window.history.state && window.history.state.idx == window.history.length ? 1 : 0.8,
+                cursor: window.history.state && window.history.state.idx == window.history.length ? 'pointer' : 'not-allowed'
+              }}
             />
           </div>
           <div className='flex flex-row p-2 pb-5'>
@@ -68,7 +92,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                 isLoading == true ? (
                   <Loading />
                 ) : (
-                  <img src={tracks?.images[0]?.url} alt={tracks?.name} className='w-full h-full' />
+                  <img src={tracks?.images[0]?.url} alt={tracks?.name} className='w-full h-full line' />
                 )
               }
             </section>
@@ -79,8 +103,8 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                   <Loading />
                 ) : (
                   <>
-                    <h1 className='text-6xl mb-6'>{tracks?.name}</h1>
-                    <p className='text-sm opacity-80 line-clamp-4 text-justify'>{tracks?.description}</p>
+                    <h1 className='text-6xl mb-6 line-clamp-1 pt-1'>{tracks?.name}</h1>
+                    <p className='text-sm opacity-80 line-clamp-4 text-justify'>{tracks.type == "playlist" ? tracks?.description : `In this view, songs can't be played since it's in album view.`}</p>
                   </>
                 )
               }
@@ -90,7 +114,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
 
         <main className='bg-black-1 w-full pb-10'>
           <section className='w-full pl-5 pt-3 pb-3 flex flex-row items-center gap-8'>
-            <div className='cursor-pointer w-14 flex items-center justify-center aspect-square rounded-full bg-green hover:scale-105 hover:opacity-90'>
+            <div className='cursor-not-allowed w-14 flex items-center justify-center aspect-square rounded-full bg-green hover:scale-105 hover:opacity-90'>
               <FontAwesomeIcon icon={faPlay} size='lg' className='text-black'/>
             </div>
             <div className='cursor-pointer hover:scale-105 hover:opacity-90'>
@@ -127,10 +151,12 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                         className='group cursor-pointer w-[96%] flex flex-row m-1 p-2 items-center hover:bg-black-3'
                         onClick={() => {
                           console.log('get in toggle');
-                          dispatch({
-                            type: AudioAction.SET_AUDIO_SOURCE,
-                            payload: { src: track?.track }
-                          })
+                          if(tracks.type == "playlist"){
+                            dispatch({
+                              type: AudioAction.SET_AUDIO_SOURCE,
+                              payload: { src: track?.track }
+                            })
+                          }
                         }}
                       >
                         <div className='w-[3%] flex items-center justify-center mr-2'>
@@ -139,35 +165,35 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                         </div>
                         <div className='w-[30%] flex flex-row items-center'>
                           <div className='w-[15%] aspect-square mr-3'>
-                            <img src={track?.track?.album?.images[0]?.url} alt="" className='w-full h-full' />
+                            <img src={tracks.type == "playlist" ? track?.track?.album?.images[0]?.url : tracks?.images[0]?.url} alt="" className='w-full h-full' />
                           </div>
                           <div className='w-full'>
                             <h1
                               className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current font-scbk line-clamp-1'
-                              onClick={() => navigate(`/search/${encodeURIComponent(track?.track?.name)}`)}
+                              onClick={() => navigate(`/search/${encodeURIComponent(tracks.type == "playlist" ? track?.track?.name : track?.name)}`)}
                             >
-                              {track?.track?.name}
+                              {tracks.type == "playlist" ? track?.track?.name : track?.name}
                             </h1>
                             <p
                               className='underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current opacity-80 text-sm font-scbk'
-                              onClick={() => navigate(`/artist/${track?.track?.artists[0]?.id}`)}
+                              onClick={() => navigate(`/artist/${tracks.type == "playlist" ? track?.track?.artists[0]?.id : tracks?.artists[0]?.id}`)}
                             >
-                              {track?.track?.artists[0]?.name}
+                              {tracks.type == "playlist" ? track?.track?.artists[0]?.name : track?.artists[0]?.name}
                             </p>
                           </div>
                         </div>
                         <div className='w-[30%]'>
-                          <h1 className='text-sm line-clamp-1 underline underline-offset-2 decoration-transparent cursor-pointer hover:decoration-current opacity-80 pl-3 font-scbk'>
-                            {track?.track?.album?.name}
+                          <h1 className='text-sm line-clamp-1 underline underline-offset-2 decoration-transparent cursor-not-allowed hover:decoration-current opacity-80 pl-3 font-scbk'>
+                            {tracks.type == "playlist" ? track?.track?.album?.name : tracks?.name}
                           </h1>
                         </div>
                         <div className='w-[22%]'>
                           <h1 className='font-scbk line-clamp-1 text-sm opacity-80 pl-9'>
-                            {extractYearMonthDay(track?.added_at)}
+                            {tracks.type == "playlist" ? extractYearMonthDay(track?.added_at) : tracks?.release_date}
                           </h1>
                         </div>
                         <div className='w-[15%] pl-3 opacity-80 font-scbk text-sm text-center'>
-                          {convertMsToMMSS(track?.track?.duration_ms)}
+                          {convertMsToMMSS(tracks.type == "playlist" ? track?.track?.duration_ms : track?.duration_ms)}
                         </div>
                       </div>
                     ))

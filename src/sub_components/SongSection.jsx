@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +13,7 @@ SongSection.propTypes = {
 
 export default function SongSection({data: arrayOfData, playlists_name}) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <>
@@ -32,7 +33,7 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
               key={ prop.id }
               className=' group/button relative cursor-pointer w-[31%] sm:w-[24%] bg-innerBlack flex flex-col items-center p-3 rounded-xl ease-in-out duration-300hover:bg-black-3'
               onClick={() => {
-                navigate(`/album/${encodeURIComponent(prop.id)}`);
+                navigate(`/album/${encodeURIComponent(prop.id)}`, {state: location.pathname});
               }}
             >
 
@@ -44,13 +45,26 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
                 <p className='line-clamp-2 opacity-80 text-sm pt-2 font-scbk'>{ prop.description }</p>
               </div>
 
-              <div
-                className='absolute w-12 h-12 bg-darkerGreen flex items-center justify-center rounded-full p-5 bottom-[6rem] right-[1.5rem] opacity-0 ease-linear duration-300
-                hover:z-[5] hover:bg-green hover:opacity-80 hover:scale-110
-                group-hover/button:bottom-[7rem] group-hover/button:opacity-100'
-              >
-                <FontAwesomeIcon icon={faPlay} color='black' size='lg'/>
-              </div>
+              {
+                // I have to declare this button twice for both the playlist page and the artists page due to size constraints.
+                location.pathname == '/' ? (
+                  <div
+                    className='absolute w-12 h-12 bg-darkerGreen flex items-center justify-center rounded-full p-5 bottom-[6rem] right-[1.5rem] opacity-0 ease-linear duration-300
+                    hover:z-[5] hover:bg-green hover:opacity-80 hover:scale-110
+                    group-hover/button:bottom-[40%] group-hover/button:opacity-100'
+                  >
+                    <FontAwesomeIcon icon={faPlay} color='black' size='lg'/>
+                  </div>
+                ) : (
+                  <div
+                    className='absolute w-12 h-12 bg-darkerGreen flex items-center justify-center rounded-full p-5 bottom-[20%] right-[1.5rem] opacity-0 ease-linear duration-300
+                    hover:z-[5] hover:bg-green hover:opacity-80 hover:scale-110
+                    group-hover/button:bottom-[30%] group-hover/button:opacity-100'
+                  >
+                    <FontAwesomeIcon icon={faPlay} color='black' size='lg'/>
+                  </div>
+                )
+              }
 
             </div>
           ))

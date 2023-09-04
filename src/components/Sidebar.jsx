@@ -9,7 +9,7 @@ import { faHouse, faMagnifyingGlass, faPlus, faLinesLeaning, faBars, faX } from 
 import '../index.css';
 
 Sidebar.propTypes = {
-  _favorite: PropTypes.object,
+  _favorite: PropTypes.array,
 }
 
 export default function Sidebar({ _favorite }) {
@@ -31,10 +31,6 @@ export default function Sidebar({ _favorite }) {
     return {
       opacity: isActive ? 1 : 0.8,
     }
-  }
-
-  if(_favorite != null){
-    console.log(_favorite);
   }
 
   return (
@@ -93,13 +89,13 @@ export default function Sidebar({ _favorite }) {
                             key={curr.id}
                             className='cursor-pointer m-2 rounded-md p-1 flex flex-row items-center hover:bg-black-2'
                             onClick={() => {
-                              navigate(`/album/${curr.id}`, { key: Math.random() % 2 })
+                              navigate(`/album/${curr.id}`, { state: curr.state })
                             }}
                           >
                             <img src={curr.images} alt="" className='aspect-square w-14 mr-3 rounded-lg'/>
                             <div>
-                              <h1 className='mb-1 line-clamp-1'>{JSON.parse(localStorage.getItem('whoislogin'))?.name}</h1>
-                              <h2 className='opacity-80 font-scbk text-sm line-clamp-1'>Playlists • user</h2>
+                              <h1 className='mb-1 line-clamp-1'>{curr.name}</h1>
+                              <h2 className='opacity-80 font-scbk text-sm line-clamp-1'>Playlists • {JSON.parse(localStorage.getItem('whoislogin'))?.name}</h2>
                             </div>
                           </div>
                         ))

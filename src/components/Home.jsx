@@ -36,9 +36,10 @@ export default function Home() {
         setLoading(false);
       }
     })
-  }, []);
+  }, [token]);
 
   const navigate = useNavigate();
+  console.log(window.history);
   return (
     <>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
@@ -48,12 +49,24 @@ export default function Home() {
               <FontAwesomeIcon
                 icon={faChevronLeft}
                 className='p-3 rounded-full cursor-pointer'
-                onClick={() => navigate(-1) }
+                onClick={() => {
+                  if(window.history.state && window.history.state.idx > 0){
+                    navigate(-1)
+                  }
+                }}
+                style={{
+                  opacity: window.history.state && window.history.state.idx > 0 ? 1 : 0.8,
+                  cursor: window.history.state && window.history.state.idx > 0 ? 'pointer' : 'not-allowed'
+                }}
               />
               <FontAwesomeIcon
                 icon={faChevronRight}
                 className='p-3 rounded-full cursor-pointer'
                 onClick={() => navigate(1) }
+                style={{
+                  opacity: window.history.state && window.history.state.idx == window.history.length ? 1 : 0.8,
+                  cursor: window.history.state && window.history.state.idx == window.history.length ? 'pointer' : 'not-allowed'
+                }}
               />
             </div>
 

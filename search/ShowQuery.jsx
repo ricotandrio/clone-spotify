@@ -67,7 +67,7 @@ const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
         </h2>
       </div>
 
-      <div className='w-1/4 text-sm opacity-80 font-scbk cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>
+      <div className='w-1/4 text-sm opacity-80 font-scbk cursor-not-allowed underline underline-offset-2 decoration-transparent hover:decoration-inherit line-clamp-1'>
         {track?.album?.name}
       </div>
 
@@ -79,9 +79,9 @@ const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
 }
 
 AudioCard.propTypes = {
-  track: PropTypes.object.isRequired,
-  currentlyPlaying: PropTypes.object.isRequired,
-  setCurrentlyPlaying: PropTypes.func.isRequired,
+  track: PropTypes.object,
+  currentlyPlaying: PropTypes.object,
+  setCurrentlyPlaying: PropTypes.func,
 }
 
 export default function ShowQuery() {
@@ -122,7 +122,7 @@ export default function ShowQuery() {
         setLoading(false);
       }
     })
-  }, [query]);
+  }, [query, token]);
 
   return (
     <>
@@ -131,10 +131,10 @@ export default function ShowQuery() {
           <div>
             <h1 className='text-xl pl-3 pt-3'>Result for query { query }</h1>
           </div>
-            { isLoading == true && ( <Loading /> ) }
-
             {
-              isLoading == false && (
+              isLoading == true ? (
+                <Loading />
+              ) : (
                 <div>{
                   tracksdata.map((track) => (
                     <AudioCard key={track?.id} track={track} currentlyPlaying={currentlyPlaying} setCurrentlyPlaying={setCurrentlyPlaying}/>

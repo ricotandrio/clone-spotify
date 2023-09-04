@@ -28,7 +28,8 @@ export default function RouterRedirect() {
 
   // local json-server data
   const [userdatas, setuserData] = useState({data: [], isLoading: true, errorMessage: ''});
-  fetchdata('http://localhost:3000/users', setuserData);
+  // fetchdata('http://localhost:3000/users', setuserData);
+  fetchdata('../../public/datas.json', setuserData);
 
   const [favorite, setFavorite] = useState([]);
   // favorite data

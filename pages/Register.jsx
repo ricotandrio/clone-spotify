@@ -11,20 +11,7 @@ import spotify_black from '../src/assets/Spotify_Logo_CMYK_Black.png';
 import '../src/index.css';
 
 Register.propTypes = {
-  _userdata: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      password: PropTypes.string,
-      email: PropTypes.string,
-      dob: PropTypes.string,
-      type: PropTypes.string,
-      user_profile: PropTypes.string,
-      user_playlists: PropTypes.array,
-      top_tracks: PropTypes.array,
-      top_artists: PropTypes.array
-    })
-  ).isRequired
+  _userdata: PropTypes.array,
 }
 
 export default function Register({_userdata: users}) {

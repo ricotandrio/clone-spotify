@@ -27,7 +27,7 @@ UserProvider.propTypes = {
   children: PropTypes.element.isRequired,
   _loading: PropTypes.bool.isRequired,
   _setLoading: PropTypes.func.isRequired,
-  _userdata: PropTypes.array.isRequired
+  _userdata: PropTypes.array,
 }
 
 export default function UserProvider({ children, _loading: loading, _setLoading: setLoading, _userdata }){

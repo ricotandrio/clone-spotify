@@ -16,20 +16,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import '../src/index.css';
 
 Login.propTypes = {
-  _userdata: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      password: PropTypes.string,
-      email: PropTypes.string,
-      dob: PropTypes.string,
-      type: PropTypes.string,
-      user_profile: PropTypes.string,
-      user_playlists: PropTypes.array,
-      top_tracks: PropTypes.array,
-      top_artists: PropTypes.array
-    })
-  ).isRequired,
+  _userdata: PropTypes.array,
   SET_CLIENT: PropTypes.func
 }
 

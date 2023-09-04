@@ -60,7 +60,7 @@
 }
 
 body {
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
 }
 
 @media all and (max-width: 640px){

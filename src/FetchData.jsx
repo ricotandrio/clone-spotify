@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export default function getData(_props, _setData) {
+export default function useGetData(_props, _setData) {
   useEffect(() => {
     fetch(_props)
     .then(response => {
@@ -27,7 +27,7 @@ export default function getData(_props, _setData) {
   }, []);
 }
 
-getData.propTypes = {
+useGetData.propTypes = {
   _props: PropTypes.string.isRequired,
   _setData: PropTypes.func.isRequired
 }

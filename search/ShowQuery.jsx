@@ -94,11 +94,6 @@ export default function ShowQuery() {
   // this use state must be in format {ref: useRef(), name: song_title, _setPlayed: function to setplayed to false}
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
 
-  // output song that currently playing
-  useEffect(() => {
-    console.log(currentlyPlaying);
-  }, [currentlyPlaying]);
-
   // update song query when user searches via param
   useEffect(() => {
     setQuery(query);

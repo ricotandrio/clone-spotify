@@ -40,6 +40,7 @@ export default function UserOption({_setProfileVisible}) {
               localStorage.setItem('whoislogin', JSON.stringify({ }));
               setLogin("false");
               navigate('/');
+              window.location.reload();
             }}
           >
             Log out

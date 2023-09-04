@@ -1,8 +1,17 @@
 import { createContext, useEffect, useReducer, useRef, useState } from "react";
 import PropTypes from 'prop-types';
+import key from '../../public/key.jsx'
 
-import key from "../../public/key";
 import { FetchSpotify } from "../../reusable/Spotify";
+import { Route, Routes } from "react-router-dom";
+import Register from "../../pages/Register";
+import Login from "../../pages/Login";
+import DefaultQuery from "../../search/DefaultQuery";
+import Search from "../../search/Search";
+import Home from "../components/Home";
+import Sidebar from "../components/Sidebar";
+import Error from "../sub_components/Error";
+import QueryProvider from "./QueryContext";
 
 export const UserContext = createContext();
 
@@ -16,30 +25,33 @@ export const AudioAction = {
 
 UserProvider.propTypes = {
   children: PropTypes.element.isRequired,
-  _setLoading: PropTypes.func.isRequired
+  _loading: PropTypes.bool.isRequired,
+  _setLoading: PropTypes.func.isRequired,
+  _userdata: PropTypes.array.isRequired
 }
 
-export default function UserProvider({ children, _setLoading: setLoading }){
+export default function UserProvider({ children, _loading: loading, _setLoading: setLoading, _userdata }){
+  const [CLIENT, SET_CLIENT] = useState({CLIENT_ID: key.CLIENT_ID, CLIENT_SECRET: key.CLIENT_SECRET});
+
   // app login status
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState("false");
   useEffect(() => {
-    return () => {
-      if(localStorage.getItem('login')){
-        console.log(`Login info is "${JSON.parse(localStorage.getItem('login')).status}"`);
-        setLogin(JSON.parse(localStorage.getItem('login')).status);
-      }
+    if(localStorage.getItem('login')){
+      const loginLocalItem = JSON.parse(localStorage.getItem('login')).status;
+      console.log(`Login info is "${loginLocalItem}"`);
+      setLogin(loginLocalItem);
     }
   }, []);
 
   // get spotify web api token
   const [token, setToken] = useState();
   useEffect(() => {
-    return () => {
+    if(CLIENT.CLIENT_ID && CLIENT.CLIENT_SECRET && login == "true"){
       FetchSpotify(
         {
           method: 'POST',
           headers: {
-            'Authorization': 'Basic ' + btoa(key.CLIENT_ID + ':' + key.CLIENT_SECRET),
+            'Authorization': 'Basic ' + btoa(CLIENT.CLIENT_ID + ':' + CLIENT.CLIENT_SECRET),
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: 'grant_type=client_credentials',
@@ -50,7 +62,7 @@ export default function UserProvider({ children, _setLoading: setLoading }){
         setLoading(false);
       })
     }
-  }, [setLoading]);
+  }, [CLIENT, setLoading, login]);
 
   // audio player initialize value
   const InitAudioPlayer = {
@@ -111,9 +123,39 @@ export default function UserProvider({ children, _setLoading: setLoading }){
   const [state, dispatch] = useReducer(AudioReducer, InitAudioPlayer);
 
   return(
-    <UserContext.Provider value={{ login, setLogin, token, state, dispatch }}>
-      { children }
-    </UserContext.Provider>
+    <>
+      {
+        loading == false && login == "true" ? (
+          <>
+            <UserContext.Provider value={{ login, setLogin, token, state, dispatch }}>
+              { children }
+            </UserContext.Provider>
+          </>
+        ) : (
+          <UserContext.Provider value={{ login, setLogin, token, state, dispatch }}>
+            <Routes>
+              <Route path='/' element={<Sidebar />}>
+                <Route index element={<Home />}/>
+                <Route
+                  path='/search'
+                  element={
+                    <QueryProvider>
+                      <Search/>
+                    </QueryProvider>
+                  }
+                >
+                  <Route index element={<DefaultQuery/>}/>
+                </Route>
+              </Route>
+
+              <Route path='/login' element={<Login _userdata={_userdata} SET_CLIENT={SET_CLIENT}/>}/>
+              <Route path='/register' element={<Register _userdata={_userdata}/>}/>
+              <Route path='*' element={<Error />}/>
+            </Routes>
+          </UserContext.Provider>
+        )
+      }
+    </>
   )
 }
 

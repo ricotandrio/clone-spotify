@@ -1,5 +1,8 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useContext } from 'react';
+
+import { UserContext } from '../context/UserContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +17,7 @@ SongSection.propTypes = {
 export default function SongSection({data: arrayOfData, playlists_name}) {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const { login } = useContext(UserContext);
   return (
     <>
       <Link to='/404'>
@@ -33,7 +36,9 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
               key={ prop.id }
               className=' group/button relative cursor-pointer w-[31%] sm:w-[24%] bg-innerBlack flex flex-col items-center p-3 rounded-xl ease-in-out duration-300hover:bg-black-3'
               onClick={() => {
-                navigate(`/album/${encodeURIComponent(prop.id)}`, {state: location.pathname});
+                if(login == "true"){
+                  navigate(`/album/${encodeURIComponent(prop.id)}`, {state: location.pathname});
+                }
               }}
             >
 

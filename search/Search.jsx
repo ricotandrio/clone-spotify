@@ -9,15 +9,17 @@ import { UserContext } from '../src/context/UserContext.jsx';
 import { QueryContext } from '../src/context/QueryContext.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faChevronLeft, faUser, faDownload, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faDownload, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import '../src/index.css';
 import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
 
 export default function Search() {
-  const [profileVisible, setProfileVisible] = useState(false);
   const { login } = useContext(UserContext);
   const { query, setQuery } = useContext(QueryContext);
+
+  const [profileVisible, setProfileVisible] = useState(false);
+
   const navigate = useNavigate();
   scrollTo(0, 0);
 

@@ -125,7 +125,8 @@ export default function Register({_userdata: users}) {
                 && namewarning == '' && passwordwarning == '' && emailwarning == ''
                 && nameQuery.length == 0 && emailQuery.length == 0){
 
-                  handlenewuser();
+                  window.alert("Sorry this feature is currently not available, please login with available method.")
+                  // handlenewuser();
 
               }
             }}

@@ -31,24 +31,25 @@ export default function Home() {
   const [featuredPlaylists, setFeaturedPlaylists] = useState();
 
   useEffect(() => {
-    FetchSpotify(
-      {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      }, `https://api.spotify.com/v1/browse/featured-playlists`
-    ).then((response) => {
-      // console.log(response);
-      if(response != null){
-        setFeaturedPlaylists(response);
-        setLoading(false);
-      }
-    })
+    if(token){
+      setLoading(true);
+      FetchSpotify(
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }, `https://api.spotify.com/v1/browse/featured-playlists`
+      ).then((response) => {
+        // console.log(response);
+        if(response != null){
+          setFeaturedPlaylists(response);
+          setLoading(false);
+        }
+      })
+    }
   }, [token]);
 
-  const navigate = useNavigate();
-  console.log(window.history);
   return (
     <>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
@@ -98,7 +99,8 @@ export default function Home() {
         <div className='relative bg-gradient-to-b from-black-2 to-black-1 w-full text-white font-sbbs'>
           {
             isLoading == true ? (
-              <div className='w-full p-10 pb-16 flex items-center justify-center'>
+              <div className='w-full p-10 pb-16 flex flex-col items-center justify-center'>
+                <h1>Please make sure you are already logged in since this app requires Spotify authentication.</h1>
                 <Loading />
               </div>
             ) : (

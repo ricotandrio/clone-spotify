@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import {
   BrowserRouter,
   Route,
@@ -28,11 +28,10 @@ export default function RouterRedirect() {
 
   // local json-server data
   const [userdatas, setuserData] = useState({data: [], isLoading: true, errorMessage: ''});
-
   fetchdata('http://localhost:3000/users', setuserData);
 
-  // favorite data
   const [favorite, setFavorite] = useState([]);
+  // favorite data
   const handleFavoriteButton = (isLoading, tracks) => {
     console.log(tracks);
 
@@ -54,7 +53,7 @@ export default function RouterRedirect() {
   return (
     <>
       <BrowserRouter>
-        <UserProvider _setLoading={ setLoading }>
+        <UserProvider _loading={ isLoading } _setLoading={ setLoading } _userdata={userdatas.data}>
           {
             userdatas.isLoading == true || isLoading == true ? (
               <div className='relative w-full h-screen flex flex-col items-center justify-center'>

@@ -1,0 +1,83 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "user",
+      "password": "user",
+      "email": "user@email.com",
+      "dob": "10january2000",
+      "type": "register",
+      "user_profile_img": "#",
+      "user_playlists": [
+        {
+          "id": 1,
+          "spotify_id": ""
+        },
+        {
+          "id": 2,
+          "spotify_id": ""
+        }
+      ],
+      "top_tracks": [
+        {
+          "id": 1,
+          "spotify_id": "",
+          "title": "Shape of You",
+          "artists": "Ed Sheeran",
+          "track_img": "https://i.scdn.co/image/ab67616d00001e02ba5db46f4b838ef6027e6f96",
+          "album_name": "÷ (Deluxe)",
+          "duration": "3:53"
+        },
+        {
+          "id": 2,
+          "spotify_id": "",
+          "title": "Eight",
+          "artists": "IU",
+          "track_img": "https://i.scdn.co/image/ab67616d00001e02c63be04ae902b1da7a54d247",
+          "album_name": "eight",
+          "duration": "2:47"
+        },
+        {
+          "id": 3,
+          "spotify_id": "",
+          "title": "Sepatu",
+          "artists": "Tulus",
+          "track_img": "https://i.scdn.co/image/ab67616d0000b2737c52c7f7d1da8625e4376795",
+          "album_name": "Gajah",
+          "duration": "3:39"
+        }
+      ],
+      "top_artists": [
+        {
+          "id": 1,
+          "spotify_id": "",
+          "name": "Ed Sheeran",
+          "artist_img": "https://i.scdn.co/image/ab6761610000e5eb9e690225ad4445530612ccc9"
+        },
+        {
+          "id": 2,
+          "spotify_id": "",
+          "name": "Bruno Mars",
+          "artist_img": "https://i.scdn.co/image/ab6761610000e5ebc36dd9eb55fb0db4911f25dd"
+        },
+        {
+          "id": 3,
+          "spotify_id": "",
+          "name": "Tulus",
+          "artist_img": "https://i.scdn.co/image/ab6761610000e5ebb2dac5833519e3b4e5f7efdb"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "newnew",
+      "password": "12345678",
+      "email": "newnew@gmail.com",
+      "dob": "12 october 2000",
+      "type": "register",
+      "user_playlists": [],
+      "top_tracks": [],
+      "top_artists": []
+    }
+  ]
+}

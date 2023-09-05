@@ -27,7 +27,7 @@ UserProvider.propTypes = {
   children: PropTypes.element.isRequired,
   _loading: PropTypes.bool.isRequired,
   _setLoading: PropTypes.func.isRequired,
-  _userdata: PropTypes.array,
+  _userdata: PropTypes.object,
 }
 
 export default function UserProvider({ children, _loading: loading, _setLoading: setLoading, _userdata }){
@@ -46,7 +46,7 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
   // get spotify web api token
   const [token, setToken] = useState();
   useEffect(() => {
-    if(CLIENT.CLIENT_ID && CLIENT.CLIENT_SECRET && login == "true"){
+    if(CLIENT.CLIENT_ID && CLIENT.CLIENT_SECRET){
       FetchSpotify(
         {
           method: 'POST',
@@ -57,7 +57,7 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
           body: 'grant_type=client_credentials',
         }, 'https://accounts.spotify.com/api/token'
       ).then((response) => {
-        console.log(response);
+        // console.log(response);
         setToken(response.access_token);
         setLoading(false);
       })
@@ -125,7 +125,7 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
   return(
     <>
       {
-        loading == false && login == "true" ? (
+        loading == false ? (
           <>
             <UserContext.Provider value={{ login, setLogin, token, state, dispatch }}>
               { children }
@@ -148,7 +148,7 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
                 </Route>
               </Route>
 
-              <Route path='/login' element={<Login _userdata={_userdata} SET_CLIENT={SET_CLIENT}/>}/>
+              <Route path='/login' element={<Login _userdata={_userdata}/>}/>
               <Route path='/register' element={<Register _userdata={_userdata}/>}/>
               <Route path='*' element={<Error />}/>
             </Routes>

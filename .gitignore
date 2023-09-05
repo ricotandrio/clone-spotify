@@ -37,6 +37,6 @@ css/
 *.csv
 
 # temporary lock file
-public/key.jsx
+# public/key.jsx
 public/todo.txt
-public/datas.json
+# public/datas.json

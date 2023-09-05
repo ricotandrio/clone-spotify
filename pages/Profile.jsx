@@ -5,7 +5,7 @@ import UserOption from '../src/sub_components/UserOption.jsx';
 import Footer from '../src/components/Footer.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight, faPlay } from '@fortawesome/free-solid-svg-icons';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 import '../src/index.css';

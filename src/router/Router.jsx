@@ -24,12 +24,14 @@ import QueryProvider from '../context/QueryContext.jsx';
 import Sidebar from '../components/Sidebar.jsx';
 import Artists from '../../pages/Artists.jsx';
 
+import userdata from '../../public/datas.json';
+
 export default function RouterRedirect() {
 
   // local json-server data
-  const [userdatas, setuserData] = useState({data: [], isLoading: true, errorMessage: ''});
+  const [userdatas, setuserData] = useState({data: userdata, isLoading: false, errorMessage: ''});
   // fetchdata('http://localhost:3000/users', setuserData);
-  fetchdata('../../public/datas.json', setuserData);
+  // fetchdata('../../public/datas.json', setuserData);
 
   const [favorite, setFavorite] = useState([]);
   // favorite data

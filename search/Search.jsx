@@ -46,7 +46,7 @@ export default function Search() {
                 id='search-bar'
                 type="text"
                 name='search'
-                className='p-3 rounded-full ml-5 pl-14 w-full bg-black-2 placeholder:text-sm placeholder:opacity-90'
+                className='p-3 rounded-full ml-5 pl-14 w-[80%] sm:w-full bg-black-2 placeholder:text-[1.5vw] sm:placeholder:text-sm placeholder:opacity-90'
                 placeholder={login == "true" ? 'What do you want to listen to? ' : 'Login to access the search feature !'}
                 value={ query || '' }
                 onChange={(e) => {

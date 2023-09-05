@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -16,6 +16,7 @@ export default function Sidebar({ _favorite }) {
   const [width, setWidth] = useState(screen.width);
   const [menu, setMenu] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const updateWidth = () => {
@@ -26,6 +27,11 @@ export default function Sidebar({ _favorite }) {
       window.removeEventListener('resize', updateWidth);
     };
   }, []);
+
+
+  useEffect(() => {
+    setMenu(false);
+  }, [location.pathname])
 
   const NavLinkStyle = ({ isActive }) => {
     return {
@@ -112,10 +118,10 @@ export default function Sidebar({ _favorite }) {
                 <FontAwesomeIcon icon={faBars} size='xl' onClick={ () => setMenu(true) }/>
               </div>
               <div className='flex items-center justify-center p-3'>
-                <FontAwesomeIcon icon={faHouse} size='1x' />
+                <FontAwesomeIcon icon={faHouse} size='1x' onClick={ () => setMenu(true) } />
               </div>
               <div className='flex items-center justify-center p-3'>
-                <FontAwesomeIcon icon={faMagnifyingGlass} size='1x' />
+                <FontAwesomeIcon icon={faMagnifyingGlass} size='1x' onClick={ () => setMenu(true) } />
               </div>
               <div className='flex items-center justify-center p-3'>
                 <FontAwesomeIcon icon={faLinesLeaning} size='1x' />
@@ -130,17 +136,17 @@ export default function Sidebar({ _favorite }) {
 
                     <div className=''>
                       <ul className='text-l'>
-                        <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
+                        <NavLink to='/' style={NavLinkStyle} className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
                           <FontAwesomeIcon icon={faHouse} />
-                          <h1 className='ml-5 mt-2' onClick={() => navigate('/')}>Home</h1>
-                        </li>
-                        <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
+                          <h1 className='ml-5 mt-2'>Home</h1>
+                        </NavLink>
+                        <NavLink to='/search' style={NavLinkStyle} className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
                           <FontAwesomeIcon icon={faMagnifyingGlass} />
-                          <h1 className='ml-5 mt-1' onClick={() => navigate('/search')}>Search</h1>
-                        </li>
+                          <h1 className='ml-5 mt-1'>Search</h1>
+                        </NavLink>
                         <div className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
                           <FontAwesomeIcon icon={faLinesLeaning} size='lg'/>
-                          <h1 className='ml-5 mt-1'>Your Library</h1>
+                          <h1 className='ml-5 mt-1'>Your Library </h1>
                         </div>
                       </ul>
                     </div>

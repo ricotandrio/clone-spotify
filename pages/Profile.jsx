@@ -77,7 +77,7 @@ export default function Profile() {
                     hover:bg-[#282828] group/button'
                     >
                       <div className='w-3/4 m-4 h-40 rounded-full overflow-hidden flex items-center justify-center'>
-                        <img src={artist.artist_img} alt={artist.artist_img} className=''/>
+                        <img src={artist.artist_img} alt={artist.artist_img} className='rounded-full aspect-square'/>
                       </div>
                       <div className='mt-2 mb-8 w-3/4'>
                         <h1 className=''>{artist.name}</h1>

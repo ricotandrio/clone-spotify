@@ -20,7 +20,7 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
   const { login } = useContext(UserContext);
   return (
     <>
-      <Link to='/404'>
+      <Link>
         {
           playlists_name != '' && (
             <h1 className='opacity-80 text-white pl-6 pt-8 text-3xl ease-in-out duration-300 cursor-pointer inline-block hover:underline hover:underline-offset-8'>

@@ -19,7 +19,7 @@ export default function DefaultQuery() {
             banners.map((banner) => (
               <div
                 key={banner.index}
-                className='overflow-hidden relative cursor-pointer w-[23%] aspect-square m-2 rounded-lg'
+                className='overflow-hidden relative cursor-pointer w-[22%] aspect-square m-2 rounded-lg'
                 style={{backgroundColor: banner.color}}
                 onClick={() => {
                   if(login == "true"){
@@ -27,8 +27,8 @@ export default function DefaultQuery() {
                   }
                 }}
               >
-                <h1 className='text-xl pl-5 pt-5'>{ banner.name }</h1>
-                <img src={banner.images} className='relative w-1/2 rotate-12 left-32 top-16 shadow-black shadow-2xl' alt={banner.name} />
+                <h1 className='text-xl pl-5 pt-5 line-clamp-1'>{ banner.name }</h1>
+                <img src={banner.images} className='relative w-1/2 rotate-12 left-20 top-10 sm:left-32 sm:top-16 shadow-black shadow-2xl' alt={banner.name} />
               </div>
             ))
           }

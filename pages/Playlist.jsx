@@ -73,7 +73,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                 isLoading == true ? (
                   <Loading />
                 ) : (
-                  <img src={tracks?.images[0]?.url} alt={tracks?.name} className='w-full h-full line' />
+                  <img src={tracks?.images[0]?.url} alt={tracks?.name} className='w-full aspect-square line' />
                 )
               }
             </section>

@@ -40,7 +40,7 @@ export default function Login({ _userdata: users }) {
 
         <div className='w-full flex flex-col items-center justify-center'>
           <div className='bg-black w-2/3 mt-10 rounded-xl flex flex-col items-center justify-center p-10'>
-            <h1 className='text-5xl mt-8'>Login to Spotify</h1>
+            <h1 className='text-5xl mt-8 text-center'>Login to Spotify</h1>
             {
               login == "true" ? (
                 <>

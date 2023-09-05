@@ -132,11 +132,11 @@ export default function Sidebar({ _favorite }) {
                       <ul className='text-l'>
                         <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
                           <FontAwesomeIcon icon={faHouse} />
-                          <h1 className='ml-5 mt-2'>Home</h1>
+                          <h1 className='ml-5 mt-2' onClick={() => navigate('/')}>Home</h1>
                         </li>
                         <li className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
                           <FontAwesomeIcon icon={faMagnifyingGlass} />
-                          <h1 className='ml-5 mt-1'>Search</h1>
+                          <h1 className='ml-5 mt-1' onClick={() => navigate('/search')}>Search</h1>
                         </li>
                         <div className='cursor-pointer p-3 opacity-80 flex flex-row items-center ease-in-out duration-300 hover:opacity-100'>
                           <FontAwesomeIcon icon={faLinesLeaning} size='lg'/>
@@ -144,6 +144,26 @@ export default function Sidebar({ _favorite }) {
                         </div>
                       </ul>
                     </div>
+                  </div>
+                )
+              }
+
+              {
+                _favorite != null && (
+                  <div>
+                    {
+                      _favorite.map((curr) => (
+                        <div
+                          key={curr.id}
+                          className='cursor-pointer m-2 rounded-md p-1 flex flex-row items-center hover:bg-black-2'
+                          onClick={() => {
+                            navigate(`/album/${curr.id}`, { state: curr.state })
+                          }}
+                        >
+                          <img src={curr.images} alt="" className='aspect-square w-14 mr-3 rounded-lg'/>
+                        </div>
+                      ))
+                    }
                   </div>
                 )
               }

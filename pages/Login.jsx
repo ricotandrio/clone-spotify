@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { UserContext } from '../src/context/UserContext';
-import key from '../public/key.jsx'
 
 import logo from '../src/assets/Spotify_Logo_CMYK_White.png';
 import Spotify from '../src/assets/spotify.png';
@@ -16,11 +15,10 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import '../src/index.css';
 
 Login.propTypes = {
-  _userdata: PropTypes.array,
-  SET_CLIENT: PropTypes.func
+  _userdata: PropTypes.object,
 }
 
-export default function Login({ _userdata: users, SET_CLIENT }) {
+export default function Login({ _userdata: users }) {
   const { setLogin } = useContext(UserContext);
 
   const [accName, setAccName] = useState('');
@@ -32,6 +30,7 @@ export default function Login({ _userdata: users, SET_CLIENT }) {
 
   const { login } = useContext(UserContext);
 
+  // console.log(users);
   return (
     <>
       <div className='bg-gradient-to-b from-[#141414] from-40% to-black pb-1  0'>
@@ -81,8 +80,8 @@ export default function Login({ _userdata: users, SET_CLIENT }) {
                     className='flex flex-col'
                     onSubmit={(e) => {
                       e.preventDefault();
-                      let searchQuery = users.filter((curr) => (curr.name == accName || curr.email == accName) && curr.password == password);
-                      console.log(searchQuery);
+                      let searchQuery = users.users.filter((curr) => (curr.name == accName || curr.email == accName) && curr.password == password);
+                      // console.log(searchQuery);
                       if(searchQuery.length != 0){
                         localStorage.setItem('login', JSON.stringify({"status": "true", }));
                         localStorage.setItem('whoislogin',
@@ -96,7 +95,6 @@ export default function Login({ _userdata: users, SET_CLIENT }) {
                           })
                         );
                         window.scrollTo(0, 0);
-                        SET_CLIENT({CLIENT_ID: key.CLIENT_ID, CLIENT_SECRET: key.CLIENT_SECRET});
                         setLogin("true");
                       } else {
                         console.log('fail to login');

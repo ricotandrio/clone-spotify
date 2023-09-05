@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faChevronLeft, faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
 import AudioPlayer from '../src/sub_components/AudioPlayer.jsx';
 import Footer from '../src/components/Footer.jsx';
@@ -51,7 +51,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
         },
       }, `https://api.spotify.com/v1/${stateLocation}/${name}`
     ).then((response) => {
-      console.log(response);
+      // console.log(response);
       if(response != null){
         setTracks(response);
         setLoading(false);

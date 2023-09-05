@@ -11,7 +11,7 @@ import spotify_black from '../src/assets/Spotify_Logo_CMYK_Black.png';
 import '../src/index.css';
 
 Register.propTypes = {
-  _userdata: PropTypes.array,
+  _userdata: PropTypes.object,
 }
 
 export default function Register({_userdata: users}) {
@@ -47,7 +47,6 @@ export default function Register({_userdata: users}) {
       "top_tracks": [],
       "top_artists": []
     };
-    console.log(newuser);
 
     setProgress(true);
     fetch('http://localhost:3000/users', {
@@ -55,7 +54,6 @@ export default function Register({_userdata: users}) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newuser)
     }).then((response) => {
-      console.log(response);
 
       setTimeout(() => {
         window.location.reload();
@@ -101,8 +99,8 @@ export default function Register({_userdata: users}) {
             className='w-1/2 sm:w-1/3'
             onSubmit={(e) => {
               e.preventDefault();
-              let nameQuery = users.filter((curr) => (curr.name == name));
-              let emailQuery = users.filter((curr) => (curr.email == email));
+              let nameQuery = users.users.filter((curr) => (curr.name == name));
+              let emailQuery = users.users.filter((curr) => (curr.email == email));
 
               if(nameQuery.length != 0) setnameWarning('This email is already connected to an account. Log in instead.');
               if(emailQuery.length != 0) setemailWarning('This email is already connected to an account. Log in instead.');

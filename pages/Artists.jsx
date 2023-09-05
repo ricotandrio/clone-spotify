@@ -1,16 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faChevronLeft, faPlay, faHeart, faClock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import AudioPlayer from '../src/sub_components/AudioPlayer.jsx';
 import Footer from '../src/components/Footer.jsx';
 import Loading from '../reusable/Loading.jsx';
-import { convertMsToMMSS } from '../reusable/ConvertMMSS.jsx';
 import { FetchSpotify } from '../reusable/Spotify.jsx';
-import { AudioAction, UserContext } from '../src/context/UserContext.jsx';
-import { extractYearMonthDay } from '../reusable/ConvertDate.jsx';
+import { UserContext } from '../src/context/UserContext.jsx';
 
 import '../src/index.css';
 import UserOption from '../src/sub_components/UserOption.jsx';
@@ -41,7 +39,7 @@ export default function Artists() {
         },
       }, `https://api.spotify.com/v1/artists/${id}`
     ).then((response) => {
-      console.log(response);
+      // console.log(response);
       if(response != null){
         setArtist(response);
 
@@ -53,7 +51,7 @@ export default function Artists() {
             },
           }, `https://api.spotify.com/v1/artists/${id}/albums`
         ).then((response) => {
-          console.log(response);
+          // console.log(response);
           if(response != null){
             setAlbums(response);
             setLoading(false);

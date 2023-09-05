@@ -34,7 +34,7 @@ export default function RouterRedirect() {
   const [favorite, setFavorite] = useState([]);
   // favorite data
   const handleFavoriteButton = (isLoading, tracks) => {
-    console.log(tracks);
+    // console.log(tracks);
 
     if(isLoading === false){
       const found = favorite.filter((curr) => curr.name === tracks.name);

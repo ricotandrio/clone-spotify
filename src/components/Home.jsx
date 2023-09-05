@@ -100,7 +100,6 @@ export default function Home() {
           {
             isLoading == true ? (
               <div className='w-full p-10 pb-16 flex flex-col items-center justify-center'>
-                <h1>Please make sure you are already logged in since this app requires Spotify authentication.</h1>
                 <Loading />
               </div>
             ) : (

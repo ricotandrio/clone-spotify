@@ -14,11 +14,12 @@ $ cd clone-spotify
 $ npm install
 ```
 
-Now, run the development server, json-server, and tailwind css output with:
+Now, run the development server and json-server with:
 
 ```bash
 $ npm run dev
+$ npx json-server --watch ./public/datas.json
 ```
 
 ## Live Demo
-You can access the live version of the website at ###
+You can visit the live version of the website at https://clone-spotify-deployment.netlify.app. For the full experience and access to all features, please use the application from your local host.

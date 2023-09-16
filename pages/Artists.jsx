@@ -146,7 +146,6 @@ export default function Artists() {
 
         <Footer />
       </div>
-      <AudioPlayer/>
     </>
   )
 }

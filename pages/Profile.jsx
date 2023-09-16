@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import UserOption from '../src/sub_components/UserOption.jsx';
 import Footer from '../src/components/Footer.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 
+
 import '../src/index.css';
-import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
 
 export default function Profile() {
   const [profileVisible, setProfileVisible] = useState(false);

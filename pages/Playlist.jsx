@@ -186,7 +186,6 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
         </main>
         <Footer />
       </div>
-      <AudioPlayer/>
     </>
   )
 }

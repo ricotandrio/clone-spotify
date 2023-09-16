@@ -1,19 +1,18 @@
 import { useContext, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import { UserContext } from '../context/UserContext.jsx';
-import { FetchSpotify } from '../../reusable/Spotify.jsx';
-import UserOption from '../sub_components/UserOption.jsx';
-import Loading from '../../reusable/Loading.jsx';
-import SongSection from '../sub_components/SongSection.jsx';
 import Footer from './Footer.jsx';
-import AudioPlayer from '../sub_components/AudioPlayer.jsx'
+import { FetchSpotify } from '../../reusable/Spotify.jsx';
+import Loading from '../../reusable/Loading.jsx';
+import UserOption from '../sub_components/UserOption.jsx';
+import SongSection from '../sub_components/SongSection.jsx';
+import { UserContext } from '../context/UserContext.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '../../reusable/ForwardBackwardButton.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faChevronLeft, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 import '../index.css';
-import { ButtonStyleNext, ButtonStylePrev } from '../../reusable/ForwardBackwardButton.jsx';
 
 export const ButtonStyleNexts = () => {
   return {
@@ -111,7 +110,6 @@ export default function Home() {
           }
         </div>
       </div>
-      <AudioPlayer/>
     </>
   )
 }

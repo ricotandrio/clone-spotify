@@ -1,12 +1,13 @@
-import { convertMsToMMSS } from '../../reusable/ConvertMMSS';
+import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
+
+import { convertMsToMMSS } from '../../reusable/ConvertMMSS';
 import { AudioAction, UserContext } from '../context/UserContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackward, faForward, faPause, faPlay, faVolumeHigh, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
+import { faBackward, faForward, faHeadset, faListUl, faMicrophone, faMicrophoneAlt, faPause, faPlay, faVolumeHigh, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
 
 import '../index.css';
-import { useNavigate } from 'react-router-dom';
 
 export default function AudioPlayer() {
   const { state, dispatch } = useContext(UserContext);
@@ -33,7 +34,7 @@ export default function AudioPlayer() {
     <>
       <audio
         ref={state.audioRef}
-        src={state.audioSource.preview_url}
+        src={state?.audioSource?.preview_url}
       />
 
       {
@@ -43,7 +44,7 @@ export default function AudioPlayer() {
           <main className='fixed bottom-0 z-[999] w-full h-[14%] bg-black flex items-center justify-center gap-3'>
             <section className='w-1/5 p-3 flex flex-row'>
               <div className='w-1/4 aspect-square mr-4'>
-                <img src={state.audioSource.album.images[0].url} alt="" />
+                <img src={state.audioSource.type == "playlist" ? state.audioSource.album.images[0].url : state.audioSource.images} alt="" />
               </div>
               <div className='flex flex-col justify-center'>
                 <h2 className='cursor-not-allowed text-sm line-clamp-1 underline underline-offset-2 decoration-transparent'>
@@ -64,8 +65,7 @@ export default function AudioPlayer() {
                   <FontAwesomeIcon icon={faBackward}/>
                 </span>
                 <div
-                  title='play'
-                  className='cursor-pointer p-3 border rounded-full w-10 aspect-square flex items-center justify-center bg-white hover:scale-105'
+                  className='relative cursor-pointer p-3 border rounded-full w-10 aspect-square flex items-center justify-center bg-white hover:scale-105'
                   onClick={() => {
                     console.log(Math.ceil(state.elapseDuration), 'to' , Math.floor(state.maxDuration/1000));
                     if(Math.ceil(state.elapseDuration) == Math.floor(state.maxDuration / 1000)){
@@ -95,11 +95,38 @@ export default function AudioPlayer() {
             </section>
 
             <section className='w-1/4 flex flex-row gap-3 justify-end items-center '>
-              <div className='mt-1'>
-                <FontAwesomeIcon icon={state.volume > 0.2 ? faVolumeHigh : faVolumeMute}/>
+              <div className='group flex relative'>
+                <span
+                  className="group-hover:opacity-100 transition-opacity bg-transparent
+                  text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-7 -translate-y-11
+                  opacity-0 m-4 mx-auto "
+                >
+                  Connect
+                </span>
+                <FontAwesomeIcon icon={ faHeadset } className='cursor-pointer'/>
+              </div>
+              <div className='group flex relative'>
+                <span
+                  className="group-hover:opacity-100 transition-opacity bg-transparent
+                  text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-5 -translate-y-11
+                  opacity-0 m-4 mx-auto "
+                >
+                  Lyrics
+                </span>
+                <FontAwesomeIcon icon={ faListUl } className='cursor-pointer'/>
+              </div>
+              <div className='group flex relative'>
+                <span
+                  className="group-hover:opacity-100 transition-opacity bg-transparent
+                  text-sm text-gray-100 rounded-md absolute left-1/2 -translate-x-6 -translate-y-11
+                  opacity-0 m-4 mx-auto "
+                >
+                  {state.volume > 0.2 ? "Volume" : "Muted"}
+                </span>
+                <FontAwesomeIcon icon={state.volume > 0.2 ? faVolumeHigh : faVolumeMute} className='cursor-pointer'/>
               </div>
               <input
-                className='w-[80%] sm:w-20'
+                className='w-[80%] sm:w-20 mr-3'
                 type="range"
                 value={state.volume * 100}
                 onChange={

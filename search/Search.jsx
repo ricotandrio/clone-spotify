@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 import Footer from '../src/components/Footer.jsx';
@@ -7,12 +7,12 @@ import AudioPlayer from '../src/sub_components/AudioPlayer.jsx';
 
 import { UserContext } from '../src/context/UserContext.jsx';
 import { QueryContext } from '../src/context/QueryContext.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faDownload, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import '../src/index.css';
-import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
 
 export default function Search() {
   const { login } = useContext(UserContext);
@@ -21,7 +21,10 @@ export default function Search() {
   const [profileVisible, setProfileVisible] = useState(false);
 
   const navigate = useNavigate();
-  scrollTo(0, 0);
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -101,7 +104,6 @@ export default function Search() {
 
         <Footer />
       </div>
-      <AudioPlayer />
     </>
   )
 }

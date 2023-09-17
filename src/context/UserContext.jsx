@@ -79,10 +79,12 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
     switch(action.type) {
       case AudioAction.SET_AUDIO_SOURCE:
         // console.log('progress in audioaction.setaudiosource');
+        console.log(action.payload);
         if(state.isPlaying == true){
           state.audioRef.current.pause();
           state.audioSource = '';
         }
+
         return {
           ...state,
           audioSource: action.payload.src,

@@ -25,6 +25,7 @@ import Sidebar from '../components/Sidebar.jsx';
 import Artists from '../../pages/Artists.jsx';
 
 import userdata from '../../public/datas.json';
+import AudioPlayer from '../sub_components/AudioPlayer.jsx';
 
 export default function RouterRedirect() {
 

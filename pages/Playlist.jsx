@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
-import AudioPlayer from '../src/sub_components/AudioPlayer.jsx';
 import Footer from '../src/components/Footer.jsx';
 import Loading from '../reusable/Loading.jsx';
 import { convertMsToMMSS } from '../reusable/ConvertMMSS.jsx';
@@ -40,8 +39,8 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
   const location = useLocation();
   const stateLocation = location.state == '/' ? "playlists" : "albums";
 
-  scrollTo(0, 0);
   useEffect(() => {
+    scrollTo(0, 0);
     setLoading(true);
     FetchSpotify(
       {
@@ -51,7 +50,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
         },
       }, `https://api.spotify.com/v1/${stateLocation}/${name}`
     ).then((response) => {
-      // console.log(response);
+      console.log(response);
       if(response != null){
         setTracks(response);
         setLoading(false);
@@ -85,7 +84,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                 ) : (
                   <>
                     <h1 className='text-6xl mb-6 line-clamp-1 pt-1'>{tracks?.name}</h1>
-                    <p className='text-sm opacity-80 line-clamp-4 text-justify'>{tracks.type == "playlist" ? tracks?.description : `In this view, songs can't be played since it's in album view.`}</p>
+                    <p className='text-sm opacity-80 line-clamp-4 text-justify'>{tracks.type == "playlist" ? tracks?.description : tracks.name}</p>
                   </>
                 )
               }
@@ -132,12 +131,13 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                         className='group cursor-pointer w-[96%] flex flex-row m-1 p-2 items-center hover:bg-black-3'
                         onClick={() => {
                           console.log('get in toggle');
-                          if(tracks.type == "playlist"){
-                            dispatch({
-                              type: AudioAction.SET_AUDIO_SOURCE,
-                              payload: { src: track?.track }
-                            })
-                          }
+                          dispatch({
+                            type: AudioAction.SET_AUDIO_SOURCE,
+                            payload: {
+                              src: tracks.type == "playlist" ?
+                                { ...track?.track, type: "playlist"} : { ...track, images: tracks.images[0].url }
+                            }
+                          })
                         }}
                       >
                         <div className='w-[3%] flex items-center justify-center mr-2'>

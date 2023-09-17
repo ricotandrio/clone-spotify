@@ -9,17 +9,20 @@ import Loading from '../reusable/Loading';
 import { FetchSpotify } from '../reusable/Spotify';
 import { convertMsToMMSS } from '../reusable/ConvertMMSS';
 import { QueryContext } from '../src/context/QueryContext';
+import { UserContext } from '../src/context/UserContext';
 
 import '../src/index.css';
-import { UserContext } from '../src/context/UserContext';
 
 const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   const audio = useRef(null);
   const [played, setPlayed] = useState(false);
   const [isHovered, setHovered] = useState(false);
+  const { state } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleMusic = () => {
+    state?.audioRef?.current?.pause();
+
     if(played == false){
       if(currentlyPlaying != null){
         // pause the song that is currently playing before play new song

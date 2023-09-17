@@ -4,7 +4,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import AudioPlayer from '../src/sub_components/AudioPlayer.jsx';
 import Footer from '../src/components/Footer.jsx';
 import Loading from '../reusable/Loading.jsx';
 import { FetchSpotify } from '../reusable/Spotify.jsx';

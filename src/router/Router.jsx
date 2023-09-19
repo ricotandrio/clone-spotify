@@ -36,7 +36,7 @@ export default function RouterRedirect() {
 
   const [favorite, setFavorite] = useState([]);
   // favorite data
-  const handleFavoriteButton = (isLoading, tracks) => {
+  const handleFavoriteButton = (isLoading, tracks, pageIdentifier) => {
     // console.log(tracks);
 
     if(isLoading === false){
@@ -46,7 +46,16 @@ export default function RouterRedirect() {
       } else if(favorite.length > 3){
         window.alert(`You've reached the maximum limit of 4 favorite playlists`);
       } else if(found.length == 0 && favorite.length <= 3){
-        setFavorite([...favorite, { "name": tracks.name, "id": tracks.id, "images": tracks.images[0].url, "state": tracks.type == "playlist" ? '/' : '/album' } ]);
+        console.log(tracks);
+        setFavorite([
+          ...favorite, {
+             "name": tracks.name,
+             "id": tracks.id,
+             "images": pageIdentifier == "AlbumPage" ? tracks.images[0].url : tracks.images,
+             "state": tracks.type == "playlist" ? '/' : '/album',
+             "page": pageIdentifier == "AlbumPage" ? "album" : "artist"
+          }
+        ]);
       }
     }
   }
@@ -82,7 +91,7 @@ export default function RouterRedirect() {
                     <Route path=':query' element={<ShowQuery/>}/>
                   </Route>
 
-                  <Route path='/artist/:id' element={<Artists />}/>
+                  <Route path='/artist/:id' element={<Artists _handleFavoriteButton={handleFavoriteButton} _favorite={favorite} />}/>
                 </Route>
 
                 <Route path='/login' element={<Login _userdata={userdatas.data}/>}/>

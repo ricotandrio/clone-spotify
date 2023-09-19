@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
+import PropTypes from 'prop-types';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import Footer from '../src/components/Footer.jsx';
 import Loading from '../reusable/Loading.jsx';
@@ -14,7 +16,12 @@ import UserOption from '../src/sub_components/UserOption.jsx';
 import SongSection from '../src/sub_components/SongSection.jsx';
 import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
 
-export default function Artists() {
+Artists.propTypes = {
+  _handleFavoriteButton: PropTypes.func,
+  _favorite: PropTypes.array,
+}
+
+export default function Artists({ _handleFavoriteButton, _favorite }) {
   const [profileVisible, setProfileVisible] = useState(false);
 
   // fetch data from spotify web api
@@ -69,7 +76,7 @@ export default function Artists() {
       </div>
     );
   }
-
+  
   return (
     <>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
@@ -128,8 +135,28 @@ export default function Artists() {
               <h1 className='text-xl font-scbk'>
                 Followers: {artist?.followers?.total}
               </h1>
-              <div className='absolute w-14 h-14 bg-darkerGreen flex items-center justify-center rounded-full p-5 cursor-not-allowed hover:scale-105 mt-5' >
-                <FontAwesomeIcon icon={faPlay} color='black' size='lg'/>
+              <div className='flex flex-row'>
+                <div className='w-14 h-14 bg-darkerGreen flex items-center justify-center rounded-full p-5 cursor-not-allowed hover:scale-105 mt-5' >
+                  <FontAwesomeIcon icon={faPlay} color='black' size='lg'/>
+                </div>
+                <div
+                  className='bg-white flex text-black items-center justify-center rounded-full ml-4 pl-5 pr-5 cursor-pointer hover:scale-105 mt-5'
+                  onClick={() => {
+                    console.log(artist?.images[0]?.url)
+                    _handleFavoriteButton(
+                      isLoading,
+                      {
+                        "name": artist?.name,
+                        "id": artist?.id,
+                        "images": artist?.images[0]?.url,
+                        "type": artist?.type,
+                      } , "ArtistPage")
+                  }}
+                >
+                  <h1 className='m-3 pl-1 pr-3 w-20 text-center'>
+                    { (_favorite.filter((curr) => curr.name === artist?.name)).length >= 1 ? "Following" : "Follow" }
+                  </h1>
+                </div>
               </div>
             </div>
           </div>

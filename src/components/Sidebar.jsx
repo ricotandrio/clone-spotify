@@ -17,6 +17,7 @@ Sidebar.propTypes = {
 export default function Sidebar({ _favorite }) {
   const [width, setWidth] = useState(screen.width);
   const [menu, setMenu] = useState(false);
+  const [filterBar, setFilterBar] = useState("ALL");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -29,7 +30,6 @@ export default function Sidebar({ _favorite }) {
       window.removeEventListener('resize', updateWidth);
     };
   }, []);
-
 
   useEffect(() => {
     setMenu(false);
@@ -80,11 +80,40 @@ export default function Sidebar({ _favorite }) {
                 </div>
 
                 <div className='mt-5 mb-5 ml-3 flex flex-row items-center gap-2 '>
-                  <div className='cursor-not-allowed w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
+                  <div
+                    className='cursor-pointer w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'
+                    onClick={() => {
+                      setFilterBar("PLAYLISTS");
+                    }}
+                    style={{
+                      backgroundColor: filterBar == "PLAYLISTS" ? "white" : "black",
+                      color: filterBar == "PLAYLISTS" ? "black" : "white",
+                    }}
+                  >
                     <h1 className='text-sm opacity-95'>Playlists</h1>
                   </div>
-                  <div className='cursor-not-allowed w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'>
+                  <div
+                    className='cursor-pointer w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323]'
+                    onClick={() => {
+                      setFilterBar("ARTISTS");
+                    }}
+                    style={{
+                      backgroundColor: filterBar == "ARTISTS" ? "white" : "black",
+                      color: filterBar == "ARTISTS" ? "black" : "white",
+                    }}
+                  >
                     <h1 className='text-sm opacity-95'>Artists</h1>
+                  </div>
+                  <div
+                    className='cursor-pointer w-7 aspect-square p-1 font-scbb rounded-full flex items-center justify-center text-center text-black bg-white hover:scale-105'
+                    onClick={() => {
+                      setFilterBar("ALL");
+                    }}
+                    style={{
+                      display: filterBar == "ALL" ? "none" : "block",
+                    }}
+                  >
+                    <h1 className='text-sm opacity-95'>X</h1>
                   </div>
                 </div>
 
@@ -92,18 +121,47 @@ export default function Sidebar({ _favorite }) {
                   _favorite != null && (
                     <div>
                       {
-                        _favorite.map((curr) => (
+                        _favorite
+                        .filter((curr) => {
+                          if(filterBar == "ALL"){
+                            return curr;
+                          } else if(filterBar == "PLAYLISTS"){
+                            if(curr.page == "album"){
+                              return curr;
+                            }
+                          } else if(filterBar == "ARTISTS"){
+                            if(curr.page == "artist"){
+                              return curr;
+                            }
+                          }
+                        })
+                        .map((curr) => (
                           <div
                             key={curr.id}
                             className='cursor-pointer m-2 rounded-md p-1 flex flex-row items-center hover:bg-black-2'
                             onClick={() => {
-                              navigate(`/album/${curr.id}`, { state: curr.state })
+                              if(curr.page == "album"){
+                                navigate(`/album/${curr.id}`, { state: curr.state });
+                              } else {
+                                navigate(`/artist/${curr.id}`);
+                              }
                             }}
                           >
-                            <img src={curr.images} alt="" className='aspect-square w-14 mr-3 rounded-lg'/>
+                            <img
+                              alt=""
+                              src={curr.images}
+                              className='aspect-square w-14 mr-3'
+                              style={{
+                                borderRadius: curr.page == "album" ? "20%" : "50%",
+                              }}
+                            />
                             <div>
                               <h1 className='mb-1 line-clamp-1'>{curr.name}</h1>
-                              <h2 className='opacity-80 font-scbk text-sm line-clamp-1'>Playlists • {JSON.parse(localStorage.getItem('whoislogin'))?.name}</h2>
+                              {
+                                curr.page == "album" && (
+                                  <h2 className='opacity-80 font-scbk text-sm line-clamp-1'>Playlists • {JSON.parse(localStorage.getItem('whoislogin'))?.name}</h2>
+                                )
+                              }
                             </div>
                           </div>
                         ))

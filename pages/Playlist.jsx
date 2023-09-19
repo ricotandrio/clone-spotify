@@ -102,7 +102,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                 icon={faHeart}
                 size='2xl'
                 style={{ color: (_favorite.filter((curr) => curr.name === tracks.name)).length == 1 ? 'red' : 'white' }}
-                onClick={() => _handleFavoriteButton(isLoading, tracks) }
+                onClick={() => _handleFavoriteButton(isLoading, tracks, "AlbumPage") }
               />
             </div>
           </section>

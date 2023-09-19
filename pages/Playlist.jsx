@@ -50,7 +50,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
         },
       }, `https://api.spotify.com/v1/${stateLocation}/${name}`
     ).then((response) => {
-      console.log(response);
+      // console.log(response);
       if(response != null){
         setTracks(response);
         setLoading(false);

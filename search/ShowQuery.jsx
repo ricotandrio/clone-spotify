@@ -113,7 +113,7 @@ export default function ShowQuery() {
         },
       }, `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=20`
     ).then((response) => {
-      console.log(response);
+      // console.log(response);
       if(response != null){
         setTracks(response.tracks.items);
         setCurrentlyPlaying(null);

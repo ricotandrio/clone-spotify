@@ -76,18 +76,18 @@ export default function Artists({ _handleFavoriteButton, _favorite }) {
       </div>
     );
   }
-  
+
   return (
     <>
       <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
         <nav className='relative bg-black-1 w-full h-22 pt-1 rounded-t-xl'>
-          <div className='w-3/4 h-16 pl-8 pr-2 pb-2 flex items-center fixed justify-between top-4'>
+          <div className='w-3/4 h-16 pl-8 pr-2 pb-2 flex items-center fixed justify-between top-4 backdrop-blur-sm z-[999]'>
             <div className='gap-6 flex relative'>
               <ButtonStylePrev/>
               <ButtonStyleNext />
             </div>
 
-            <div className='relative flex flex-row right-8'>
+            <div className='relative flex flex-row -right-20 sm:right-8'>
             {
               login == "false" ? (
                 <>

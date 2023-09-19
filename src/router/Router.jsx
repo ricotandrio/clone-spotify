@@ -46,7 +46,7 @@ export default function RouterRedirect() {
       } else if(favorite.length > 3){
         window.alert(`You've reached the maximum limit of 4 favorite playlists`);
       } else if(found.length == 0 && favorite.length <= 3){
-        console.log(tracks);
+        // console.log(tracks);
         setFavorite([
           ...favorite, {
              "name": tracks.name,

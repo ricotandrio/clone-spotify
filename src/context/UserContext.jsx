@@ -1,17 +1,22 @@
 import { createContext, useEffect, useReducer, useRef, useState } from "react";
 import PropTypes from 'prop-types';
-import key from '../../public/key.jsx'
 
-import { FetchSpotify } from "../../reusable/Spotify";
+import { FetchSpotify } from "../utils/Spotify";
 import { Route, Routes } from "react-router-dom";
-import Register from "../../pages/Register";
-import Login from "../../pages/Login";
-import DefaultQuery from "../../search/DefaultQuery";
-import Search from "../../search/Search";
-import Home from "../components/Home";
+
+import Register from "../pages/Register/__test__/Register_copy";
+import Login from "../pages/Login/__test__/Login_copy";
+import DefaultQuery from "../pages/Search/DefaultQuery";
+import Search from "../pages/Search/Search";
+import Home from "../pages/Home/Home";
 import Sidebar from "../components/Sidebar";
-import Error from "../sub_components/Error";
+import Error from "../components/Error";
 import QueryProvider from "./QueryContext";
+
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../config/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import { mydb } from "../config/firebase";
 
 export const UserContext = createContext();
 
@@ -23,25 +28,18 @@ export const AudioAction = {
   SET_ELAPSE: 'SET_ELAPSE',
 }
 
+// prototype for export default
 UserProvider.propTypes = {
   children: PropTypes.element.isRequired,
   _loading: PropTypes.bool.isRequired,
   _setLoading: PropTypes.func.isRequired,
-  _userdata: PropTypes.object,
 }
 
-export default function UserProvider({ children, _loading: loading, _setLoading: setLoading, _userdata }){
-  const [CLIENT, SET_CLIENT] = useState({CLIENT_ID: key.CLIENT_ID, CLIENT_SECRET: key.CLIENT_SECRET});
-
-  // app login status
-  const [login, setLogin] = useState("false");
-  useEffect(() => {
-    if(localStorage.getItem('login')){
-      const loginLocalItem = JSON.parse(localStorage.getItem('login')).status;
-      console.log(`Login info is "${loginLocalItem}"`);
-      setLogin(loginLocalItem);
-    }
-  }, []);
+export default function UserProvider({ children, _loading: loading, _setLoading: setLoading }){
+  const [CLIENT, SET_CLIENT] = useState({
+    CLIENT_ID: import.meta.env.VITE_SP_CLIENT_ID,
+    CLIENT_SECRET: import.meta.env.VITE_SP_CLIENT_SECRET
+  });
 
   // get spotify web api token
   const [token, setToken] = useState();
@@ -55,14 +53,63 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: 'grant_type=client_credentials',
-        }, 'https://accounts.spotify.com/api/token'
+        }, import.meta.env.VITE_SP_TOKEN_SRC
       ).then((response) => {
         // console.log(response);
         setToken(response.access_token);
         setLoading(false);
       })
     }
-  }, [CLIENT, setLoading, login]);
+  }, [CLIENT, setLoading]);
+
+  // userdata for profile
+  const [authUser, setAuthUser] = useState(null);
+  const [db, setDB] = useState({});
+
+  useEffect(() => {
+    const authState = onAuthStateChanged(auth, (user) => {
+      setAuthUser(user ? user : null);
+    });
+
+    return () => {
+      setLoading(true);
+      authState();
+    }
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    if(authUser) {
+      try {
+        const fillDB = async () => {
+          const data = await getDocs(collection(mydb, "account"));
+          console.log(data);
+
+          const promises = data.docs.map(async (curr) => {
+            if(curr.id === authUser?.uid) {
+              const topArtists = await getDocs(collection(curr.ref, "top_artists"));
+              const topArtistsData = topArtists.docs.map((artistDoc) => artistDoc.data());
+
+              const topTracks = await getDocs(collection(curr.ref, "top_tracks"));
+              const topTracksData = topTracks.docs.map((trackDoc) => trackDoc.data());
+
+              console.log({ ...curr.data(), topArtistsData, topTracksData });
+              return { ...curr.data(), id: curr.id, topArtistsData, topTracksData };
+            }
+            return null;
+          });
+          
+          const results = await Promise.all(promises); // make sure all promises is done
+          setDB(results.filter(Boolean)); // Filter out null values
+          setLoading(false);
+        };
+
+        fillDB();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }, [authUser]);
 
   // audio player initialize value
   const InitAudioPlayer = {
@@ -129,12 +176,12 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
       {
         loading == false ? (
           <>
-            <UserContext.Provider value={{ login, setLogin, token, state, dispatch }}>
+            <UserContext.Provider value={{ token, state, dispatch, db, authUser }}>
               { children }
             </UserContext.Provider>
           </>
         ) : (
-          <UserContext.Provider value={{ login, setLogin, token, state, dispatch }}>
+          <UserContext.Provider value={{ token, state, dispatch, db, authUser  }}>
             <Routes>
               <Route path='/' element={<Sidebar />}>
                 <Route index element={<Home />}/>
@@ -150,8 +197,8 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
                 </Route>
               </Route>
 
-              <Route path='/login' element={<Login _userdata={_userdata}/>}/>
-              <Route path='/register' element={<Register _userdata={_userdata}/>}/>
+              <Route path='/login' element={<Login />}/>
+              <Route path='/register' element={<Register />}/>
               <Route path='*' element={<Error />}/>
             </Routes>
           </UserContext.Provider>

@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 
-import Loading from '../reusable/Loading';
-import { FetchSpotify } from '../reusable/Spotify';
-import { convertMsToMMSS } from '../reusable/ConvertMMSS';
-import { QueryContext } from '../src/context/QueryContext';
-import { UserContext } from '../src/context/UserContext';
+import Loading from '../../components/Loading';
+import { FetchSpotify } from '../../utils/Spotify';
+import { convertMsToMMSS } from '../../utils/ConvertMMSS';
+import { QueryContext } from '../../context/QueryContext';
+import { UserContext } from '../../context/UserContext';
 
-import '../src/index.css';
+import '../../assets/index.css';
 
 const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   const audio = useRef(null);

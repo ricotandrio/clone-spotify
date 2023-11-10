@@ -36,7 +36,10 @@ css/
 *.xlsx
 *.csv
 
-# temporary lock file
-# public/key.jsx
-public/todo.txt
-# public/datas.json
+# ignore
+.env
+.env.local
+
+__test__
+config
+data

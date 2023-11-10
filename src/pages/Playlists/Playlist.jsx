@@ -6,15 +6,18 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
-import Footer from '../src/components/Footer.jsx';
-import Loading from '../reusable/Loading.jsx';
-import { convertMsToMMSS } from '../reusable/ConvertMMSS.jsx';
-import { FetchSpotify } from '../reusable/Spotify.jsx';
-import { AudioAction, UserContext } from '../src/context/UserContext.jsx';
-import { extractYearMonthDay } from '../reusable/ConvertDate.jsx';
+import Footer from '../../components/Footer.jsx';
+import Loading from '../../components/Loading.jsx';
 
-import '../src/index.css';
-import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
+import { convertMsToMMSS } from '../../utils/ConvertMMSS.jsx';
+import { FetchSpotify } from '../../utils/Spotify.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardButton.jsx';
+import { extractYearMonthDay } from '../../utils/ConvertDate.jsx';
+
+import { AudioAction, UserContext } from '../../context/UserContext.jsx';
+
+import '../../assets/index.css';
+
 
 
 Playlist.propTypes = {

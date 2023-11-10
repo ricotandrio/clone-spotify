@@ -2,17 +2,20 @@ import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { UserContext } from '../src/context/UserContext';
+import { UserContext } from '../../context/UserContext';
 
-import logo from '../src/assets/Spotify_Logo_CMYK_White.png';
-import Spotify from '../src/assets/spotify.png';
-import Github from '../src/assets/bi_github.png';
-import Google from '../src/assets/flat-color-icons_google.png';
+import logo from '../../assets/images/Spotify_Logo_CMYK_White.png';
+import Spotify from '../../assets/images/spotify.png';
+import Github from '../../assets/images/bi_github.png';
+import Google from '../../assets/images/flat-color-icons_google.png';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
-import '../src/index.css';
+import { auth } from '../../config/firebase.jsx';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+
+import '../../../assets/index.css';
 
 Login.propTypes = {
   _userdata: PropTypes.object,

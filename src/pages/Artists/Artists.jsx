@@ -6,15 +6,16 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import Footer from '../src/components/Footer.jsx';
-import Loading from '../reusable/Loading.jsx';
-import { FetchSpotify } from '../reusable/Spotify.jsx';
-import { UserContext } from '../src/context/UserContext.jsx';
+import Footer from '../../components/Footer.jsx';
+import Loading from '../../components/Loading.jsx';
+import { FetchSpotify } from '../../utils/Spotify.jsx';
+import { UserContext } from '../../context/UserContext.jsx';
 
-import '../src/index.css';
-import UserOption from '../src/sub_components/UserOption.jsx';
-import SongSection from '../src/sub_components/SongSection.jsx';
-import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
+import UserOption from '../../components/UserOption.jsx';
+import SongSection from '../Home/SongSection.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardButton.jsx';
+
+import '../../assets/index.css';
 
 Artists.propTypes = {
   _handleFavoriteButton: PropTypes.func,

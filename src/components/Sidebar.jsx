@@ -3,12 +3,12 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import AudioPlayer from '../sub_components/AudioPlayer';
+import AudioPlayer from './AudioPlayer';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faMagnifyingGlass, faPlus, faLinesLeaning, faBars, faX } from '@fortawesome/free-solid-svg-icons';
 
-import '../index.css';
+import '../assets/index.css';
 
 Sidebar.propTypes = {
   _favorite: PropTypes.array,

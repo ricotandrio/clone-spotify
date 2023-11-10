@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
-import Footer from './Footer.jsx';
-import { FetchSpotify } from '../../reusable/Spotify.jsx';
-import Loading from '../../reusable/Loading.jsx';
-import UserOption from '../sub_components/UserOption.jsx';
-import SongSection from '../sub_components/SongSection.jsx';
-import { UserContext } from '../context/UserContext.jsx';
-import { ButtonStyleNext, ButtonStylePrev } from '../../reusable/ForwardBackwardButton.jsx';
+import Footer from '../../components/Footer.jsx';
+import { FetchSpotify } from '../../utils/Spotify.jsx';
+import Loading from '../../components/Loading.jsx';
+import UserOption from '../../components/UserOption.jsx';
+import SongSection from './SongSection.jsx';
+import { UserContext } from '../../context/UserContext.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardButton.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-import '../index.css';
+import '../../assets/index.css';
 
 export const ButtonStyleNexts = () => {
   return {
@@ -21,10 +21,9 @@ export const ButtonStyleNexts = () => {
   }
 }
 
-
 export default function Home() {
   const [profileVisible, setProfileVisible] = useState(false);
-  const { login, token } = useContext(UserContext);
+  const { token, authUser } = useContext(UserContext);
 
   const [isLoading, setLoading] = useState(true);
   const [featuredPlaylists, setFeaturedPlaylists] = useState();
@@ -61,7 +60,7 @@ export default function Home() {
 
             <div className='absolute flex flex-row right-8'>
             {
-              login == "false" ? (
+              !authUser ? (
                 <>
                   <Link to='/register'>
                     <div className='w-28 h-12 rounded-full flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-80 hover:opacity-100'>

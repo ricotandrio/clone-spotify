@@ -6,9 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 
-import spotify_black from '../src/assets/Spotify_Logo_CMYK_Black.png';
+import spotify_black from '../../assets/images/Spotify_Logo_CMYK_Black.png';
 
-import '../src/index.css';
+import '../../assets/index.css';
 
 Register.propTypes = {
   _userdata: PropTypes.object,

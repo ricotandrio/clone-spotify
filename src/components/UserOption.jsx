@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 
 import { UserContext } from '../context/UserContext';
 
-import '../index.css';
+import { signOut } from 'firebase/auth';
+import { auth } from '../config/firebase';
+
+import '../assets/index.css';
 
 UserOption.propTypes = {
   _setProfileVisible: PropTypes.func.isRequired,
@@ -13,6 +16,16 @@ UserOption.propTypes = {
 export default function UserOption({_setProfileVisible}) {
   const navigate = useNavigate();
   const { setLogin } = useContext(UserContext);
+
+  const handleSignOut = async () => {
+    return signOut(auth)
+    .then(() => {
+      console.log('Signed Out');
+    })
+    .catch((error) => {
+      console.error('Sign Out Error', error);
+    })
+  }
 
   return (
     <>
@@ -34,14 +47,7 @@ export default function UserOption({_setProfileVisible}) {
           <li className='p-2 opacity-80 bg-black-3 cursor-not-allowed'>Settings</li>
           <li
             className='p-2 opacity-80 bg-black-3 hover:opacity-100 hover:bg-[#3E3E3E] cursor-pointer'
-            onClick={() => {
-              _setProfileVisible(false);
-              localStorage.setItem('login', JSON.stringify({"status": "false", }));
-              localStorage.setItem('whoislogin', JSON.stringify({ }));
-              setLogin("false");
-              navigate('/');
-              window.location.reload();
-            }}
+            onClick={ handleSignOut }
           >
             Log out
           </li>

@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 
-import Footer from '../src/components/Footer.jsx';
-import UserOption from '../src/sub_components/UserOption.jsx';
-import AudioPlayer from '../src/sub_components/AudioPlayer.jsx';
+import Footer from '../../components/Footer.jsx';
+import UserOption from '../../components/UserOption.jsx';
+import AudioPlayer from '../../components/AudioPlayer.jsx';
 
-import { UserContext } from '../src/context/UserContext.jsx';
-import { QueryContext } from '../src/context/QueryContext.jsx';
-import { ButtonStyleNext, ButtonStylePrev } from '../reusable/ForwardBackwardButton.jsx';
+import { UserContext } from '../../context/UserContext.jsx';
+import { QueryContext } from '../../context/QueryContext.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardButton.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faDownload, faSearch } from '@fortawesome/free-solid-svg-icons';
 
-import '../src/index.css';
+import '../../assets/index.css';
 
 export default function Search() {
   const { login } = useContext(UserContext);

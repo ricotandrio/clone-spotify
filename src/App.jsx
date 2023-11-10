@@ -6,9 +6,9 @@ import {
 } from 'react-router-dom';
 
 import Home from './pages/Home/Home.jsx';
-import Login from './pages/Login/__test__/Login_copy.jsx';
-import Register from './pages/Register/__test__/Register_copy.jsx';
-import Profile from './pages/Profile/__test__/Profile_copy.jsx';
+import Login from './pages/Login/Login.jsx';
+import Register from './pages/Register/Register.jsx';
+import Profile from './pages/Profile/Profile.jsx';
 import Search from './pages/Search/Search.jsx';
 import ShowQuery from './pages/Search/ShowQuery.jsx';
 import DefaultQuery from './pages/Search/DefaultQuery.jsx';

@@ -18,8 +18,6 @@ import { AudioAction, UserContext } from '../../context/UserContext.jsx';
 
 import '../../assets/index.css';
 
-
-
 Playlist.propTypes = {
   _handleFavoriteButton: PropTypes.func,
   _favorite: PropTypes.array,

@@ -15,7 +15,7 @@ import { faUser, faDownload, faSearch } from '@fortawesome/free-solid-svg-icons'
 import '../../assets/index.css';
 
 export default function Search() {
-  const { login } = useContext(UserContext);
+  const { authUser } = useContext(UserContext);
   const { query, setQuery } = useContext(QueryContext);
 
   const [profileVisible, setProfileVisible] = useState(false);
@@ -44,13 +44,13 @@ export default function Search() {
                 <FontAwesomeIcon icon={faSearch} />
               </label>
               <input
-                disabled={login == "true" ? false : true}
+                disabled={authUser ? false : true}
                 autoComplete='off'
                 id='search-bar'
                 type="text"
                 name='search'
                 className='p-3 rounded-full ml-5 pl-14 w-[80%] sm:w-full bg-black-2 placeholder:text-[1.5vw] sm:placeholder:text-sm placeholder:opacity-90'
-                placeholder={login == "true" ? 'What do you want to listen to? ' : 'Login to access the search feature !'}
+                placeholder={authUser ? 'What do you want to listen to? ' : 'Login to access the search feature !'}
                 value={ query || '' }
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -65,7 +65,7 @@ export default function Search() {
 
             <div className='absolute flex flex-row items-center right-8'>
               {
-                login == "false" ? (
+                !authUser ? (
                   <>
                     <Link to='/register'>
                       <div className='w-28 h-12 rounded-full flex items-center justify-center ease-in-out duration-300 hover:scale-110 opacity-80 hover:opacity-100'>

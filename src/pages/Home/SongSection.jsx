@@ -17,7 +17,8 @@ SongSection.propTypes = {
 export default function SongSection({data: arrayOfData, playlists_name}) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useContext(UserContext);
+  const { authUser } = useContext(UserContext);
+  
   return (
     <>
       <Link>
@@ -36,7 +37,7 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
               key={ prop.id }
               className=' group/button relative cursor-pointer w-[31%] sm:w-[24%] bg-innerBlack flex flex-col items-center p-3 rounded-xl ease-in-out duration-300hover:bg-black-3'
               onClick={() => {
-                if(login == "true"){
+                if(authUser){
                   navigate(`/album/${encodeURIComponent(prop.id)}`, {state: location.pathname});
                 }
               }}

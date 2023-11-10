@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { FetchSpotify } from "../utils/Spotify";
 import { Route, Routes } from "react-router-dom";
 
-import Register from "../pages/Register/__test__/Register_copy";
-import Login from "../pages/Login/__test__/Login_copy";
+import Register from "../pages/Register/Register";
+import Login from "../pages/Login/Login";
 import DefaultQuery from "../pages/Search/DefaultQuery";
 import Search from "../pages/Search/Search";
 import Home from "../pages/Home/Home";
@@ -87,14 +87,8 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
 
           const promises = data.docs.map(async (curr) => {
             if(curr.id === authUser?.uid) {
-              const topArtists = await getDocs(collection(curr.ref, "top_artists"));
-              const topArtistsData = topArtists.docs.map((artistDoc) => artistDoc.data());
-
-              const topTracks = await getDocs(collection(curr.ref, "top_tracks"));
-              const topTracksData = topTracks.docs.map((trackDoc) => trackDoc.data());
-
-              console.log({ ...curr.data(), topArtistsData, topTracksData });
-              return { ...curr.data(), id: curr.id, topArtistsData, topTracksData };
+              console.log({ ...curr.data() });
+              return { ...curr.data() };
             }
             return null;
           });
@@ -181,7 +175,7 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
             </UserContext.Provider>
           </>
         ) : (
-          <UserContext.Provider value={{ token, state, dispatch, db, authUser  }}>
+          <UserContext.Provider value={{ token, state, dispatch, db, authUser }}>
             <Routes>
               <Route path='/' element={<Sidebar />}>
                 <Route index element={<Home />}/>

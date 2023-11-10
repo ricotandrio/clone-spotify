@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { UserContext } from '../../context/UserContext';
+import { UserContext } from '../../context/UserContext.jsx';
 
 import logo from '../../assets/images/Spotify_Logo_CMYK_White.png';
 import Spotify from '../../assets/images/spotify.png';
@@ -15,7 +15,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { auth } from '../../config/firebase.jsx';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import '../../../assets/index.css';
+import '../../assets/index.css';
 
 Login.propTypes = {
   _userdata: PropTypes.object,
@@ -31,9 +31,21 @@ export default function Login({ _userdata: users }) {
 
   const [passwordType, setpasswordType] = useState('password');
 
-  const { login } = useContext(UserContext);
+  const { authUser } = useContext(UserContext);
 
-  // console.log(users);
+  const handleSignIn = (email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log(userCredential);
+    })
+    .catch((error) => {
+      console.log(`error: ${error}`);
+      setWarning("undefined account");
+    })
+  }
+
+  // console.log(auth?.current?.email);
+
   return (
     <>
       <div className='bg-gradient-to-b from-[#141414] from-40% to-black pb-1  0'>
@@ -45,7 +57,7 @@ export default function Login({ _userdata: users }) {
           <div className='bg-black w-2/3 mt-10 rounded-xl flex flex-col items-center justify-center p-10'>
             <h1 className='text-5xl mt-8 text-center'>Login to Spotify</h1>
             {
-              login == "true" ? (
+              authUser ? (
                 <>
                   <div className='flex flex-col items-center justify-center'>
                     <h1 className='text-2xl mt-5'>You are already logged in.</h1>
@@ -83,27 +95,7 @@ export default function Login({ _userdata: users }) {
                     className='flex flex-col'
                     onSubmit={(e) => {
                       e.preventDefault();
-                      let searchQuery = users.users.filter((curr) => (curr.name == accName || curr.email == accName) && curr.password == password);
-                      // console.log(searchQuery);
-                      if(searchQuery.length != 0){
-                        localStorage.setItem('login', JSON.stringify({"status": "true", }));
-                        localStorage.setItem('whoislogin',
-                          JSON.stringify({
-                            "name": searchQuery[0].name,
-                            "email": searchQuery[0].email,
-                            "user_profile": searchQuery[0].user_profile,
-                            "user_playlists": [searchQuery[0].user_playlists],
-                            "top_tracks": [searchQuery[0].top_tracks],
-                            "top_artists": [searchQuery[0].top_artists]
-                          })
-                        );
-                        window.scrollTo(0, 0);
-                        setLogin("true");
-                      } else {
-                        console.log('fail to login');
-                        localStorage.setItem('login', JSON.stringify({"status": "false", }));
-                        setWarning('account not found');
-                      }
+                      handleSignIn(accName, password);
                     }}
                   >
                     <div className='flex flex-col'>
@@ -144,7 +136,6 @@ export default function Login({ _userdata: users }) {
                       <div className="w-8 h-4 bg-gray-1 rounded-full peer peer-checked:after:translate-x-4 after:absolute after:top-[0.6vw] sm:after:top-[0.3vw] after:left-[0.2vw] after:bg-black after:border after:border-black after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-green"></div>
                       <span className="ml-3 text-sm font-scbk">Remember Me</span>
                     </label>
-
                     <div className='flex flex-col justify-center items-center'>
                       <button type='submit' className='w-full p-3 text-black mt-10 rounded-full bg-green transform hover:scale-105'>
                         Log In

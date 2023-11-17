@@ -17,7 +17,7 @@ export default function AudioPlayer() {
     let interval;
     if(state.audioSource && state.isPlaying){
       interval = setInterval(() => {
-        console.log('song is playing');
+        // console.log('song is playing');
         dispatch({
           type: AudioAction.SET_ELAPSE,
           payload: {
@@ -67,7 +67,7 @@ export default function AudioPlayer() {
                 <div
                   className='relative cursor-pointer p-3 border rounded-full w-10 aspect-square flex items-center justify-center bg-white hover:scale-105'
                   onClick={() => {
-                    console.log(Math.ceil(state.elapseDuration), 'to' , Math.floor(state.maxDuration/1000));
+                    // console.log(Math.ceil(state.elapseDuration), 'to' , Math.floor(state.maxDuration/1000));
                     if(Math.ceil(state.elapseDuration) == Math.floor(state.maxDuration / 1000)){
                       state.elapseDuration = 0;
                       state.isPlaying = false;

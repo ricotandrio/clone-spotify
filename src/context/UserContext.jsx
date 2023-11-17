@@ -36,6 +36,7 @@ UserProvider.propTypes = {
 }
 
 export default function UserProvider({ children, _loading: loading, _setLoading: setLoading }){
+  // spotify CLIENT data
   const [CLIENT, SET_CLIENT] = useState({
     CLIENT_ID: import.meta.env.VITE_SP_CLIENT_ID,
     CLIENT_SECRET: import.meta.env.VITE_SP_CLIENT_SECRET
@@ -64,8 +65,9 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
 
   // userdata for profile
   const [authUser, setAuthUser] = useState(null);
-  const [db, setDB] = useState({});
+  const [db, setDB] = useState();
 
+  // always check auth user status
   useEffect(() => {
     const authState = onAuthStateChanged(auth, (user) => {
       setAuthUser(user ? user : null);
@@ -77,25 +79,23 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
     }
   }, []);
 
+  // get authUser firestore storage
   useEffect(() => {
     setLoading(true);
     if(authUser) {
       try {
         const fillDB = async () => {
           const data = await getDocs(collection(mydb, "account"));
-          console.log(data);
+          // console.log(data);
 
-          const promises = data.docs.map(async (curr) => {
+          data.docs.map(async (curr) => {
             if(curr.id === authUser?.uid) {
-              console.log({ ...curr.data() });
-              return { ...curr.data() };
+              // console.log({ ...curr.data() });
+              setDB({ ...curr.data() });
+              setLoading(false);
+              return;
             }
-            return null;
           });
-          
-          const results = await Promise.all(promises); // make sure all promises is done
-          setDB(results.filter(Boolean)); // Filter out null values
-          setLoading(false);
         };
 
         fillDB();
@@ -164,18 +164,19 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
   }
 
   const [state, dispatch] = useReducer(AudioReducer, InitAudioPlayer);
+  
 
   return(
     <>
       {
         loading == false ? (
           <>
-            <UserContext.Provider value={{ token, state, dispatch, db, authUser }}>
+            <UserContext.Provider value={{ token, state, dispatch, db, authUser, setDB }}>
               { children }
             </UserContext.Provider>
           </>
         ) : (
-          <UserContext.Provider value={{ token, state, dispatch, db, authUser }}>
+          <UserContext.Provider value={{ token, state, dispatch, db, authUser, setDB }}>
             <Routes>
               <Route path='/' element={<Sidebar />}>
                 <Route index element={<Home />}/>

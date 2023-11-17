@@ -1,8 +1,5 @@
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
-import { UserContext } from '../context/UserContext';
 
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
@@ -15,12 +12,14 @@ UserOption.propTypes = {
 
 export default function UserOption({_setProfileVisible}) {
   const navigate = useNavigate();
-  const { setLogin } = useContext(UserContext);
 
   const handleSignOut = async () => {
     return signOut(auth)
     .then(() => {
       console.log('Signed Out');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     })
     .catch((error) => {
       console.error('Sign Out Error', error);

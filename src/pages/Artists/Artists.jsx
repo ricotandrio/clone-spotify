@@ -6,23 +6,18 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
+import { UserContext } from '../../context/UserContext.jsx';
 import Footer from '../../components/Footer.jsx';
 import Loading from '../../components/Loading.jsx';
-import { FetchSpotify } from '../../utils/Spotify.jsx';
-import { UserContext } from '../../context/UserContext.jsx';
-
 import UserOption from '../../components/UserOption.jsx';
-import SongSection from '../Home/SongSection.jsx';
+import { FetchSpotify } from '../../utils/Spotify.jsx';
 import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardButton.jsx';
+import { PushLibrary } from '../../utils/PushLibrary.jsx';
+import SongSection from '../Home/SongSection.jsx';
 
 import '../../assets/index.css';
 
-Artists.propTypes = {
-  _handleFavoriteButton: PropTypes.func,
-  _favorite: PropTypes.array,
-}
-
-export default function Artists({ _handleFavoriteButton, _favorite }) {
+export default function Artists() {
   const [profileVisible, setProfileVisible] = useState(false);
 
   // fetch data from spotify web api
@@ -30,10 +25,8 @@ export default function Artists({ _handleFavoriteButton, _favorite }) {
   const [artist, setArtist] = useState();
   const [albums, setAlbums] = useState();
 
-  const { login, token } = useContext(UserContext);
-  const { id } = useParams();
-
-  const navigate = useNavigate();
+  const { login, token, db, setDB, authUser } = useContext(UserContext);
+  const { id } = useParams(); // get id from browser link
 
   useEffect(() => {
     scrollTo(0, 0);
@@ -67,8 +60,41 @@ export default function Artists({ _handleFavoriteButton, _favorite }) {
 
       }
     })
-
   }, [id, token]);
+
+  const updateArtistState = () => {
+    // console.log(artist);
+    // console.log(db);
+
+    if(isLoading == true) return;
+
+    const found = db?.user_library?.filter((curr) => curr.id === artist.id);
+
+    if(found.length === 1){
+      // remove it from database
+      const newlibrary = db?.user_library?.filter((curr) => curr.id !== artist.id);
+      
+      setDB({ ...db, user_library: newlibrary });
+      
+      PushLibrary(authUser?.uid, newlibrary);
+    } else if(db?.user_library.length > 3){
+      // alert maximum library 
+      window.alert("The library has reached its maximum size.");
+    } else if(found.length == 0){
+      // insert it into database
+      const newlibrary = [ ...db?.user_library, {
+        "name": artist.name,
+        "id": artist.id,
+        "images": artist.images[0].url,
+        "state": artist.type == "playlist" ? '/' : '/album',
+        "page": "artist"
+      } ];
+
+      setDB({ ...db, user_library: newlibrary });
+      
+      PushLibrary(authUser?.uid, newlibrary);
+    }
+  }
 
   if(isLoading == true){
     return (
@@ -142,20 +168,10 @@ export default function Artists({ _handleFavoriteButton, _favorite }) {
                 </div>
                 <div
                   className='bg-white flex text-black items-center justify-center rounded-full ml-4 pl-5 pr-5 cursor-pointer hover:scale-105 mt-5'
-                  onClick={() => {
-                    console.log(artist?.images[0]?.url)
-                    _handleFavoriteButton(
-                      isLoading,
-                      {
-                        "name": artist?.name,
-                        "id": artist?.id,
-                        "images": artist?.images[0]?.url,
-                        "type": artist?.type,
-                      } , "ArtistPage")
-                  }}
+                  onClick={ updateArtistState }
                 >
                   <h1 className='m-3 pl-1 pr-3 w-20 text-center'>
-                    { (_favorite.filter((curr) => curr.name === artist?.name)).length >= 1 ? "Following" : "Follow" }
+                    { db?.user_library?.filter((curr) => curr.id === artist.id).length >= 1 && isLoading == false ? "Following" : "Follow" }
                   </h1>
                 </div>
               </div>

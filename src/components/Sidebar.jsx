@@ -3,6 +3,7 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { UserContext } from '../context/UserContext';
 import AudioPlayer from './AudioPlayer';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,7 +21,9 @@ export default function Sidebar({ _favorite }) {
   const [filterBar, setFilterBar] = useState("ALL");
   const navigate = useNavigate();
   const location = useLocation();
-
+  
+  const { db } = useContext(UserContext);
+  
   useEffect(() => {
     const updateWidth = () => {
       setWidth(screen.width);
@@ -118,10 +121,10 @@ export default function Sidebar({ _favorite }) {
                 </div>
 
                 {
-                  _favorite != null && (
+                  db && (
                     <div>
                       {
-                        _favorite
+                        db?.user_library
                         .filter((curr) => {
                           if(filterBar == "ALL"){
                             return curr;
@@ -159,7 +162,7 @@ export default function Sidebar({ _favorite }) {
                               <h1 className='mb-1 line-clamp-1'>{curr.name}</h1>
                               {
                                 curr.page == "album" && (
-                                  <h2 className='opacity-80 font-scbk text-sm line-clamp-1'>Playlists • {JSON.parse(localStorage.getItem('whoislogin'))?.name}</h2>
+                                  <h2 className='opacity-80 font-scbk text-sm line-clamp-1'>Playlists • {db?.name}</h2>
                                 )
                               }
                             </div>

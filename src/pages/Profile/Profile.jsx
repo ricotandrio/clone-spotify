@@ -28,7 +28,7 @@ export default function Profile() {
 
   if(!authUser || !db) return <Error />
 
-  // console.log(db[0].top_artists);
+  // console.log(db.top_artists);
 
   return (
     <>
@@ -62,7 +62,7 @@ export default function Profile() {
             </div>
             <div className='sm:pt-14 pl-5'>
               <h5>Profile</h5>
-              <h1 className='text-8xl'>{db[0]?.name}</h1>
+              <h1 className='text-8xl'>{db?.name}</h1>
             </div>
           </div>
         </div>
@@ -80,14 +80,14 @@ export default function Profile() {
                 </div>
               ) : (
                 <div className='p-5 w-full flex flex-row items-center'>{
-                  db[0]?.top_artists?.map((artist) => (
+                  db?.top_artists?.map((artist) => (
                     <div
                       key={artist.spotify_id}
                       className='w-1/4 m-2 flex flex-col items-center justify-center relative cursor-pointer bg-black-1 rounded-xl ease-in-out duration-300
                     hover:bg-[#282828] group/button'
                     >
                       <div className='w-3/4 m-4 h-40 rounded-full overflow-hidden flex items-center justify-center'>
-                        <img src={artist.artists_img} alt={artist.artists_img} className='rounded-full aspect-square'/>
+                        <img src={artist.artist_img} alt={artist.artist_img} className='rounded-full aspect-square'/>
                       </div>
                       <div className='mt-2 mb-8 w-3/4'>
                         <h1 className=''>{artist.name}</h1>
@@ -121,7 +121,7 @@ export default function Profile() {
                 </div>
               ) : (
                 <div>{
-                  db[0]?.top_tracks?.map((track, index) => (
+                  db?.top_tracks?.map((track, index) => (
                     <div key={track.spotify_id}
                       className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-black-1 hover:bg-[#282828]'
                     >

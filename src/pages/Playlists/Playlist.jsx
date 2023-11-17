@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,20 +13,16 @@ import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardBut
 import { extractYearMonthDay } from '../../utils/ConvertDate.jsx';
 
 import { AudioAction, UserContext } from '../../context/UserContext.jsx';
+import { PushLibrary } from '../../utils/PushLibrary.jsx';
 
 import '../../assets/index.css';
 
-Playlist.propTypes = {
-  _handleFavoriteButton: PropTypes.func,
-  _favorite: PropTypes.array,
-}
-
-export default function Playlist({ _handleFavoriteButton, _favorite }) {
+export default function Playlist() {
   // fetch data from spotify web api
   const [isLoading, setLoading] = useState(true);
   const [tracks, setTracks] = useState({});
-
-  const { token } = useContext(UserContext);
+  
+  const { token, authUser, db, setDB } = useContext(UserContext);
   const { name } = useParams();
 
   const navigate = useNavigate();
@@ -39,7 +33,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
   // spotify api to GET playlists and albums have different link
   const location = useLocation();
   const stateLocation = location.state == '/' ? "playlists" : "albums";
-
+  
   useEffect(() => {
     scrollTo(0, 0);
     setLoading(true);
@@ -58,6 +52,42 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
       }
     })
   }, [name, token, stateLocation]);
+
+
+  const updateAlbumState = () => {
+    // console.log(tracks);
+    // console.log(db);
+
+    if(isLoading == true) return;
+
+    const found = db?.user_library?.filter((curr) => curr.id === tracks.id);
+
+    if(found.length === 1){
+      // remove it from database
+      const newlibrary = db?.user_library?.filter((curr) => curr.id !== tracks.id);
+      
+      setDB({ ...db, user_library: newlibrary });
+      
+      PushLibrary(authUser?.uid, newlibrary);
+
+    } else if(db?.user_library.length > 3){
+      // alert maximum library 
+      window.alert("The library has reached its maximum size.");
+    } else if(found.length == 0){
+      // insert it into database
+      const newlibrary = [ ...db?.user_library, {
+        "name": tracks.name,
+        "id": tracks.id,
+        "images": tracks.images[0].url,
+        "state": tracks.type == "playlist" ? '/' : '/album',
+        "page": "album"
+      } ];
+
+      setDB({ ...db, user_library: newlibrary });
+      
+      PushLibrary(authUser?.uid, newlibrary);
+    }
+  }
 
   return (
     <>
@@ -102,8 +132,8 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
               <FontAwesomeIcon
                 icon={faHeart}
                 size='2xl'
-                style={{ color: (_favorite.filter((curr) => curr.name === tracks.name)).length == 1 ? 'red' : 'white' }}
-                onClick={() => _handleFavoriteButton(isLoading, tracks, "AlbumPage") }
+                style={{ color: db?.user_library?.filter((curr) => curr.id === tracks.id).length == 1 && isLoading == false ? 'red' : 'white' }}
+                onClick={ updateAlbumState }
               />
             </div>
           </section>
@@ -131,7 +161,7 @@ export default function Playlist({ _handleFavoriteButton, _favorite }) {
                         key={index}
                         className='group cursor-pointer w-[96%] flex flex-row m-1 p-2 items-center hover:bg-black-3'
                         onClick={() => {
-                          console.log('get in toggle');
+                          // console.log('get in toggle');
                           dispatch({
                             type: AudioAction.SET_AUDIO_SOURCE,
                             payload: {

@@ -41,4 +41,5 @@ css/
 .env.local
 
 __test__
-data
+datas_backup.json
+todo.txt

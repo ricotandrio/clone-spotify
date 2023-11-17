@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import { UserContext } from '../../context/UserContext.jsx';
+import Loading from '../../components/Loading.jsx';
 
 import logo from '../../assets/images/Spotify_Logo_CMYK_White.png';
 import Spotify from '../../assets/images/spotify.png';
@@ -17,12 +17,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import '../../assets/index.css';
 
-Login.propTypes = {
-  _userdata: PropTypes.object,
-}
-
-export default function Login({ _userdata: users }) {
-  const { setLogin } = useContext(UserContext);
+export default function Login() {
 
   const [accName, setAccName] = useState('');
   const [password, setPassword] = useState('');
@@ -33,10 +28,14 @@ export default function Login({ _userdata: users }) {
 
   const { authUser } = useContext(UserContext);
 
+  const [loading, setLoading] = useState(false);
+
   const handleSignIn = (email, password) => {
+    setLoading(true);
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      console.log(userCredential);
+      // console.log(userCredential);
+      setLoading(false);
     })
     .catch((error) => {
       console.log(`error: ${error}`);
@@ -137,8 +136,14 @@ export default function Login({ _userdata: users }) {
                       <span className="ml-3 text-sm font-scbk">Remember Me</span>
                     </label>
                     <div className='flex flex-col justify-center items-center'>
-                      <button type='submit' className='w-full p-3 text-black mt-10 rounded-full bg-green transform hover:scale-105'>
-                        Log In
+                      <button type='submit' className='w-full p-3 text-black mt-10 rounded-full flex justify-center bg-green transform hover:scale-105'>
+                        {
+                          loading == true ? (
+                            <Loading />
+                          ) : (
+                            "Log In"
+                          )
+                        }
                       </button>
                       <h2 className='mt-5 text-red-500'>{warning}</h2>
                       <a href="" className='font-scl mt-3 underline underline-offset-2 hover:text-green'>Forgot your password ? </a>

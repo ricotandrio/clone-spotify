@@ -1,38 +1,34 @@
 import { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { auth, mydb } from '../../config/firebase.jsx';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, mydb } from '../../config/firebase.jsx';
 
 import spotify_black from '../../assets/images/Spotify_Logo_CMYK_Black.png';
 import Loading from '../../components/Loading.jsx';
-
+import datas from '../../data/datas.json';
 import { UserContext } from '../../context/UserContext.jsx';
 
 import '../../assets/index.css';
-import { doc, setDoc } from 'firebase/firestore';
 
-Register.propTypes = {
-  _userdata: PropTypes.object,
-}
-
-export default function Register({_userdata: users}) {
-  const navigate = useNavigate();
+export default function Register() {
 
   const [passwordType, setpasswordType] = useState('password');
   const [isLoading, setIsLoading] = useState(false);
 
   // form
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [day, setDay] = useState();
-  const [month, setMonth] = useState();
-  const [year, setYear] = useState();
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+    name: '',
+    day: '',
+    month: '',
+    year: ''
+  })
 
   // warning
   const [emailwarning, setemailWarning] = useState('');
@@ -41,39 +37,19 @@ export default function Register({_userdata: users}) {
 
   // load
   const [isProgress, setProgress] = useState(false);
-
+  
   const updateAccount = async (userId) => {
 
-    const date = new Date(year, month - 1, day);
+    const date = new Date(form.year, form.month - 1, form.day);
     
     await setDoc(doc(mydb, "account", userId), {
-      top_artists: [
-        // {
-        //   "artists_img": "https://i.scdn.co/image/ab6761610000e5eb9e690225ad4445530612ccc9",
-        //   "name": "Ed Sheeran",
-        //   "spotify_id": "6eUK  ZXaKkcviH0Ku9w2n3V"
-        // }
-      ],
-      top_tracks: [
-        // {
-        //   "album_name": "÷ (Deluxe)",
-        //   "artists": "Ed Sheeran",
-        //   "duration": "3:53",
-        //   "spotify_id": "7qiZfU4dY1lWllzX7mPBI3",
-        //   "title": "Shape of You",
-        //   "track_img": "https://i.scdn.co/image/ab67616d0000b273ba5db46f4b838ef6027e6f96"
-        // }
-      ],
+      top_artists: datas.top_artists,
+      top_tracks: datas.top_tracks,
       dob: date,
-      email,
-      name,
-      user_playlists: [""]
-    }, {
-      capital: true
-    }, {
-      merge: true
-    })
-
+      email: form.email,
+      name: form.name,
+      user_library: []
+    }, { merge: true })
   }
 
   const handleCreateAccount = (email, password) => {
@@ -92,7 +68,8 @@ export default function Register({_userdata: users}) {
   }
 
   const { authUser } = useContext(UserContext);
-
+  // if(authUser) PushPlaylists(authUser, "asdasdasa");
+  
   if(authUser){
     return (
       <>
@@ -134,8 +111,8 @@ export default function Register({_userdata: users}) {
                 // if(emailQuery.length != 0) setemailWarning('This email is already connected to an account. Log in instead.');
 
                 // An empty namewarning indicates that the name is in the correct format, similar to other state variables."
-                if(name && email && password && namewarning == '' && passwordwarning == '' && emailwarning == '' && isLoading == false){
-                    handleCreateAccount(email, password);
+                if(form.name && form.email && form.password && namewarning == '' && passwordwarning == '' && emailwarning == '' && isLoading == false){
+                    handleCreateAccount(form.email, form.password);
                 }
               }}
             >
@@ -150,9 +127,9 @@ export default function Register({_userdata: users}) {
                   placeholder='Enter your mail.'
                   name='email'
                   className='w-full p-3 rounded-md border outline-black border-gray-1 font-scbk'
-                  value={email}
+                  value={form.email}
                   onChange={(e) => {
-                    setEmail(e.target.value);
+                    setForm({ ...form, email: e.target.value });
                     if(e.target.value.includes('@') == false){
                       setemailWarning('This email is invalid. Make sure it\'s written like example@email.com');
                     } else {
@@ -175,9 +152,9 @@ export default function Register({_userdata: users}) {
                     id='password'
                     placeholder='Create a password.'
                     className='w-full p-3 rounded-md border outline-black border-gray-1 font-scbk'
-                    value={password}
+                    value={form.password}
                     onChange={(e) => {
-                      setPassword(e.target.value);
+                      setForm({ ...form, password: e.target.value });
                       if(e.target.value.length < 8){
                         setpasswordWarning('Your password is too short.');
                       } else {
@@ -209,9 +186,9 @@ export default function Register({_userdata: users}) {
                   id='name'
                   placeholder='Enter a profile name.' name='name'
                   className='w-full p-3 rounded-md border outline-black border-gray-1 font-scbk'
-                  value={name}
+                  value={form.name}
                   onChange={(e) => {
-                    setName(e.target.value);
+                    setForm({ ...form, name: e.target.value});
                     if(e.target.value.length < 3){
                       setnameWarning('Enter a name for your profile at least 3 characters.');
                     } else {
@@ -239,8 +216,10 @@ export default function Register({_userdata: users}) {
                       placeholder='DD'
                       name='day'
                       className='border-[0.1em] border-gray-1 w-full p-3 rounded-md'
-                      value={day}
-                      onChange={(e) => setDay(e.target.value)}
+                      value={form.day}
+                      onChange={(e) => {
+                        setForm({ ...form, day: e.target.value }); 
+                      }}
                     />
                   </div>
 
@@ -252,8 +231,10 @@ export default function Register({_userdata: users}) {
                       placeholder='Month'
                       name='month'
                       className='border-[0.1em] border-gray-1 w-full h-full opacity-60 p-2 rounded-md'
-                      value={month}
-                      onChange={(e) => setMonth(e.target.value)}
+                      value={form.month}
+                      onChange={(e) => {
+                        setForm({ ...form, month: e.target.value })
+                      }}
                     >
                     <option value="default" disabled>Month</option>
                     <option value="1">January</option>
@@ -278,8 +259,10 @@ export default function Register({_userdata: users}) {
                       placeholder='YYYY'
                       name='year'
                       className='border-[0.1em] border-gray-1 w-full p-3 rounded-md'
-                      value={year}
-                      onChange={(e) => setYear(e.target.value)}
+                      value={form.year}
+                      onChange={(e) => {
+                        setForm({ ...form, year: e.target.value });
+                      }}
                     />
                   </div>
                 </div>

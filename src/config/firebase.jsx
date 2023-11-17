@@ -24,15 +24,3 @@ const analytics = getAnalytics(app);
 export const auth = getAuth(); // account authentication by email and password
 export const mydb = getFirestore(app);
 
-export const handleSignOut = async () => {
-	return (
-		await signOut(auth)
-			.then(() => {
-        console.log("sign out ...");
-			})
-			.catch((e) => {
-				console.log(`Error Code: ${e.code} with message ${e.message}`);
-			}
-		)
-	)
-}

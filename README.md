@@ -14,11 +14,9 @@ $ cd clone-spotify
 $ npm install
 ```
 
-Now, run the development server and json-server with:
-
+Now, run the development server with:
 ```bash
 $ npm run dev
-$ npx json-server --watch ./public/datas.json
 ```
 
 ## Live Demo

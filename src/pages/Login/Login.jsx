@@ -40,6 +40,7 @@ export default function Login() {
     .catch((error) => {
       console.log(`error: ${error}`);
       setWarning("undefined account");
+      setLoading(false);
     })
   }
 

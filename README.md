@@ -19,5 +19,7 @@ Now, run the development server with:
 $ npm run dev
 ```
 
+If you run this repository on localhost, you'll need to provide a .env file containing the Spotify client ID and Firebase authentication details.
+
 ## Live Demo
-You can visit the live version of the website at https://clone-spotify-deployment.netlify.app. For the full experience and access to all features, please use the application from your local host.
+You can visit the live version of the website at https://clone-spotify-deployment.netlify.app.

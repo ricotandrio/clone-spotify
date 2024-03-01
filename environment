@@ -1,0 +1,17 @@
+# This file contains the environment variables that are used in the application.
+# You can provide your own values for the variables in this file.
+
+# Firebase Environment
+VITE_FB_API_KEY=
+VITE_FB_AUTH_DOMAIN=
+VITE_FB_PROJECT_ID=
+VITE_FB_STORAGE_BUCKET=
+VITE_FB_MESSAGE_SENDER_ID=
+VITE_FB_APP_ID=
+VITE_FB_MEASUREMENT_ID=
+
+# Spotify Environtment
+VITE_SP_CLIENT_ID=
+VITE_SP_CLIENT_SECRET=
+
+VITE_SP_TOKEN_SRC=

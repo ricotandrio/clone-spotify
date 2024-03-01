@@ -14,12 +14,10 @@ $ cd clone-spotify
 $ npm install
 ```
 
-Now, run the development server with:
+To run the development server, create a `.env` file and fill it with your own Firebase authentications details and Spotify client ID. Then, execute the following command:
 ```bash
 $ npm run dev
 ```
-
-If you run this repository on localhost, you'll need to provide a .env file containing the Spotify client ID and Firebase authentication details.
 
 ## Live Demo
 You can visit the live version of the website at https://clone-spotify-deployment.netlify.app.

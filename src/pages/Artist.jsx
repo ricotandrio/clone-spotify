@@ -1,21 +1,22 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-
-import PropTypes from 'prop-types';
+import { Link, useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import { UserContext } from '../../context/UserContext.jsx';
-import Footer from '../../components/Footer.jsx';
-import Loading from '../../components/Loading.jsx';
-import UserOption from '../../components/UserOption.jsx';
-import { FetchSpotify } from '../../utils/Spotify.jsx';
-import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardButton.jsx';
-import { PushLibrary } from '../../utils/PushLibrary.jsx';
-import SongSection from '../Home/SongSection.jsx';
+import { pushLibraryService } from '@apis/firebase_services/push_library_service';
 
-import '../../assets/index.css';
+import { UserContext } from '@contexts/UserContext.jsx';
+
+import Footer from '@components/Footer.jsx';
+import Loading from '@components/Loading.jsx';
+import UserOption from '@components/UserOption.jsx';
+
+import SongSection from '@pages/Home/SongSection.jsx';
+
+import { ButtonStyleNext, ButtonStylePrev } from '@utils/ForwardBackwardButton.jsx';
+
+import '@assets/global.css';
 
 export default function Artists() {
   const [profileVisible, setProfileVisible] = useState(false);
@@ -76,7 +77,7 @@ export default function Artists() {
       
       setDB({ ...db, user_library: newlibrary });
       
-      PushLibrary(authUser?.uid, newlibrary);
+      pushLibraryService(authUser?.uid, newlibrary);
     } else if(db?.user_library.length > 3){
       // alert maximum library 
       window.alert("The library has reached its maximum size.");

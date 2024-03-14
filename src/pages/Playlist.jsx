@@ -4,18 +4,20 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
-import Footer from '../../components/Footer.jsx';
-import Loading from '../../components/Loading.jsx';
+import { getPlaylistService } from '@apis/spotify_services/playlist_service';
+import { pushLibraryService } from '@apis/firebase_services/push_library_service';
 
-import { convertMsToMMSS } from '../../utils/ConvertMMSS.jsx';
-import { FetchSpotify } from '../../utils/Spotify.jsx';
-import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardButton.jsx';
-import { extractYearMonthDay } from '../../utils/ConvertDate.jsx';
+import { UserContext } from '@contexts/UserContext.jsx';
+import { AudioAction } from '@contexts/AudioReducer';
 
-import { AudioAction, UserContext } from '../../context/UserContext.jsx';
-import { PushLibrary } from '../../utils/PushLibrary.jsx';
+import Footer from '@components/Footer.jsx';
+import Loading from '@components/Loading.jsx';
 
-import '../../assets/index.css';
+import { convertMsToMMSS } from '@utils/ConvertMMSS.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '@utils/ForwardBackwardButton.jsx';
+import { extractYearMonthDay } from '@utils/ConvertDate.jsx';
+
+import '@assets/global.css';
 
 export default function Playlist() {
   // fetch data from spotify web api
@@ -23,7 +25,9 @@ export default function Playlist() {
   const [tracks, setTracks] = useState({});
   
   const { token, authUser, db, setDB } = useContext(UserContext);
-  const { name } = useParams();
+  
+  // useParam should using id since route is /:id
+  const { id } = useParams();
 
   const navigate = useNavigate();
 
@@ -35,23 +39,19 @@ export default function Playlist() {
   const stateLocation = location.state == '/' ? "playlists" : "albums";
   
   useEffect(() => {
-    scrollTo(0, 0);
-    setLoading(true);
-    FetchSpotify(
-      {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      }, `https://api.spotify.com/v1/${stateLocation}/${name}`
-    ).then((response) => {
-      // console.log(response);
+    const getPlaylist = async () => {
+      setLoading(true);
+      const response = await getPlaylistService(stateLocation, id, token);
+      
       if(response != null){
+        console.log(response);
         setTracks(response);
         setLoading(false);
       }
-    })
-  }, [name, token, stateLocation]);
+    }
+    
+    getPlaylist();
+  }, [id, token, stateLocation]);
 
 
   const updateAlbumState = () => {
@@ -68,7 +68,7 @@ export default function Playlist() {
       
       setDB({ ...db, user_library: newlibrary });
       
-      PushLibrary(authUser?.uid, newlibrary);
+      pushLibraryService(authUser?.uid, newlibrary);
 
     } else if(db?.user_library.length > 3){
       // alert maximum library 
@@ -85,7 +85,7 @@ export default function Playlist() {
 
       setDB({ ...db, user_library: newlibrary });
       
-      PushLibrary(authUser?.uid, newlibrary);
+      pushLibraryService(authUser?.uid, newlibrary);
     }
   }
 

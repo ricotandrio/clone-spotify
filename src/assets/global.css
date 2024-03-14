@@ -5,48 +5,48 @@
 @font-face {
   font-family: 'Spotify Circular Black';
   src: local('Spotify Circular Black'),
-    url(/circular-spotify-text-font/CircularSpotifyText-Black.otf);
+    url(./fonts/CircularSpotifyText-Black.otf);
 }
 
 @font-face {
   font-family: 'Spotify Circular Black I';
   src: local('Spotify Circular Black I'),
-    url(/circular-spotify-text-font/CircularSpotifyText-BlackItalic.otf);
+    url(./fonts/CircularSpotifyText-BlackItalic.otf);
 }
 
 @font-face {
   font-family: 'Spotify Circular Bold';
   src: local('Spotify Circular Bold'),
-    url(/circular-spotify-text-font/CircularSpotifyText-Bold.otf);
+    url(./fonts/CircularSpotifyText-Bold.otf);
 }
 
 @font-face {
   font-family: 'Spotify Circular Book';
   src: local('Spotify Circular Book'),
-    url(/circular-spotify-text-font/CircularSpotifyText-Book.otf);
+    url(./fonts/CircularSpotifyText-Book.otf);
 }
 @font-face {
   font-family: 'Spotify Circular Book I';
   src: local('Spotify Circular Book I'),
-    url(/circular-spotify-text-font/CircularSpotifyText-BookItalic.otf);
+    url(./fonts/CircularSpotifyText-BookItalic.otf);
 }
 
 @font-face {
   font-family: 'Spotify Circular Light';
   src: local('Spotify Circular Light'),
-    url(/circular-spotify-text-font/CircularSpotifyText-Light.otf);
+    url(./fonts/CircularSpotifyText-Light.otf);
 }
 
 @font-face {
   font-family: 'Spotify Circular Medium';
   src: local('Spotify Circular Medium'),
-    url(/circular-spotify-text-font/CircularSpotifyText-Medium.otf);
+    url(./fonts/CircularSpotifyText-Medium.otf);
 }
 
 @font-face {
   font-family: 'Spotify Circular Medium I';
   src: local('Spotify Circular Medium I'),
-    url(/circular-spotify-text-font/CircularSpotifyText-MediumItalic.otf);
+    url(./fonts/CircularSpotifyText-MediumItalic.otf);
 }
 
 :root {

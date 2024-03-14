@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
-import '../assets/index.css';
+import '@assets/global.css';
 
 export default function Loading() {
   return (

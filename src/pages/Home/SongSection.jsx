@@ -1,13 +1,13 @@
+import { useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
-
-import { UserContext } from '../../context/UserContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
-import '../../assets/index.css';
+import { UserContext } from '@contexts/UserContext';
+
+import '@assets/global.css';
 
 SongSection.propTypes = {
   data: PropTypes.array.isRequired,

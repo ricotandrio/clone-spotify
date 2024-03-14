@@ -1,17 +1,18 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 
-import Loading from '../../components/Loading';
-import { FetchSpotify } from '../../utils/Spotify';
-import { convertMsToMMSS } from '../../utils/ConvertMMSS';
-import { QueryContext } from '../../context/QueryContext';
-import { UserContext } from '../../context/UserContext';
+import { QueryContext } from '@contexts/QueryContext';
+import { UserContext } from '@contexts/UserContext';
 
-import '../../assets/index.css';
+import Loading from '@components/Loading';
+
+import { convertMsToMMSS } from '@utils/ConvertMMSS';
+
+import '@assets/global.css';
 
 const AudioCard = ({ track, currentlyPlaying, setCurrentlyPlaying }) => {
   const audio = useRef(null);

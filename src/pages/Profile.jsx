@@ -1,18 +1,19 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import UserOption from '../../components/UserOption.jsx';
-import Footer from '../../components/Footer.jsx';
-import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardButton.jsx';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 
-import Error from '../../components/Error.jsx';
-import { UserContext } from '../../context/UserContext.jsx';
+import { UserContext } from '@contexts/UserContext.jsx';
 
-import '../../assets/index.css';
+import UserOption from '@components/UserOption.jsx';
+import Footer from '@components/Footer.jsx';
+import Error from '@components/Error.jsx';
+
+import { ButtonStyleNext, ButtonStylePrev } from '@utils/ForwardBackwardButton.jsx';
+
+import '@assets/global.css';
 
 export default function Profile() {
 
@@ -21,10 +22,6 @@ export default function Profile() {
   const [profileVisible, setProfileVisible] = useState(false);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    scrollTo(0, 0);
-  }, []);
 
   if(!authUser || !db) return <Error />
 

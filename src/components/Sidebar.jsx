@@ -3,13 +3,13 @@ import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { UserContext } from '../context/UserContext';
-import AudioPlayer from './AudioPlayer';
+import { UserContext } from '@contexts/UserContext';
+import AudioPlayer from '@components/AudioPlayer';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faMagnifyingGlass, faPlus, faLinesLeaning, faBars, faX } from '@fortawesome/free-solid-svg-icons';
 
-import '../assets/index.css';
+import '@assets/global.css';
 
 Sidebar.propTypes = {
   _favorite: PropTypes.array,
@@ -22,7 +22,7 @@ export default function Sidebar({ _favorite }) {
   const navigate = useNavigate();
   const location = useLocation();
   
-  const { db } = useContext(UserContext);
+  const { db, authUser } = useContext(UserContext);
   
   useEffect(() => {
     const updateWidth = () => {
@@ -78,7 +78,7 @@ export default function Sidebar({ _favorite }) {
                     <h1 className='block text-l'>Your Library</h1>
                   </div>
                   <div className='hidden sm:block sm:absolute sm:right-10 cursor-pointer opacity-80 ease-in-out duration-300 hover:opacity-100'>
-                    <a href="#"><FontAwesomeIcon icon={faPlus} /></a>
+                    <a href=""><FontAwesomeIcon icon={faPlus} /></a>
                   </div>
                 </div>
 
@@ -86,7 +86,7 @@ export default function Sidebar({ _favorite }) {
                   <div
                     className='cursor-pointer w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323] hover:bg-white hover:text-black'
                     onClick={() => {
-                      setFilterBar("PLAYLISTS");
+                      if(authUser) setFilterBar("PLAYLISTS");
                     }}
                     style={{
                       backgroundColor: filterBar == "PLAYLISTS" ? "white" : "black",
@@ -98,7 +98,7 @@ export default function Sidebar({ _favorite }) {
                   <div
                     className='cursor-pointer w-1/3 p-1 font-scbb rounded-full flex items-center justify-center bg-[#232323]'
                     onClick={() => {
-                      setFilterBar("ARTISTS");
+                      if(authUser) setFilterBar("ARTISTS");
                     }}
                     style={{
                       backgroundColor: filterBar == "ARTISTS" ? "white" : "black",

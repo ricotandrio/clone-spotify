@@ -6,14 +6,18 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { auth, mydb } from '../../config/firebase.jsx';
 
-import spotify_black from '../../assets/images/Spotify_Logo_CMYK_Black.png';
-import Loading from '../../components/Loading.jsx';
-import datas from '../../data/datas.json';
-import { UserContext } from '../../context/UserContext.jsx';
+import spotify_black from '@assets/images/Spotify_Logo_CMYK_Black.png';
 
-import '../../assets/index.css';
+import { auth, mydb } from '@configs/firebase.js';
+
+import { UserContext } from '@contexts/UserContext.jsx';
+
+import datas from '@datas/datas.json';
+
+import Loading from '@components/Loading.jsx';
+
+import '@assets/global.css';
 
 export default function Register() {
 

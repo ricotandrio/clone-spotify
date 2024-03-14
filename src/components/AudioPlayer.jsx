@@ -1,13 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 
-import { convertMsToMMSS } from '../utils/ConvertMMSS';
-import { AudioAction, UserContext } from '../context/UserContext';
+import { convertMsToMMSS } from '@utils/ConvertMMSS';
+import { UserContext } from '@contexts/UserContext';
+import { AudioAction } from '@src/contexts/AudioReducer';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackward, faForward, faHeadset, faListUl, faMicrophone, faMicrophoneAlt, faPause, faPlay, faVolumeHigh, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
+import { faBackward, faForward, faHeadset, faListUl, faPause, faPlay, faVolumeHigh, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
 
-import '../assets/index.css';
+import '@assets/global.css';
 
 export default function AudioPlayer() {
   const { state, dispatch } = useContext(UserContext);

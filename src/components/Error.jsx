@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import '../assets/index.css';
+import '@assets/global.css';
 
 export default function Error() {
   return (

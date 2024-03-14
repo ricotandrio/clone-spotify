@@ -1,8 +1,8 @@
-import Twitter from '../assets/images/uil_twitter.png';
-import Facebook from '../assets/images/ic_twotone-facebook.png';
-import Instagram from '../assets/images/bi_instagram.png';
+import Twitter from '@images/uil_twitter.png';
+import Facebook from '@images/ic_twotone-facebook.png';
+import Instagram from '@images/bi_instagram.png';
 
-import '../assets/index.css'
+import '@assets/global.css';
 
 export default function Footer() {
   return (

@@ -1,38 +1,34 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import {
   BrowserRouter,
   Route,
   Routes,
 } from 'react-router-dom';
 
-import Home from './pages/Home/Home.jsx';
-import Login from './pages/Login/Login.jsx';
-import Register from './pages/Register/Register.jsx';
-import Profile from './pages/Profile/Profile.jsx';
-import Search from './pages/Search/Search.jsx';
-import ShowQuery from './pages/Search/ShowQuery.jsx';
-import DefaultQuery from './pages/Search/DefaultQuery.jsx';
-import Artists from './pages/Artists/Artists.jsx';
-import Playlist from './pages/Playlists/Playlist.jsx';
+import Error from '@components/Error.jsx';
+import Loading from '@components/Loading.jsx';
+import Sidebar from '@components/Sidebar.jsx';
 
-import Error from './components/Error.jsx';
-import Loading from './components/Loading.jsx';
-import Sidebar from './components/Sidebar.jsx';
+import UserProvider from '@contexts/UserContext.jsx';
+import QueryProvider from '@contexts/QueryContext.jsx';
 
-import UserProvider from './context/UserContext.jsx';
-import QueryProvider from './context/QueryContext.jsx';
+import userdata from '@datas/datas.json';
 
-import userdata from './data/datas.json';
+import Home from '@pages/Home/Home.jsx';
+import Login from '@pages/Login.jsx';
+import Register from '@pages/Register.jsx';
+import Profile from '@pages/Profile.jsx';
+import Search from '@pages/Search/Search.jsx';
+import ShowQuery from '@pages/Search/ShowQuery.jsx';
+import DefaultQuery from '@pages/Search/DefaultQuery.jsx';
+import Artists from '@pages/Artist.jsx';
+import Playlist from '@pages/Playlist.jsx';
 
 export default function App() {
-  // local json-server data
   const [userdatas, setuserData] = useState({data: userdata, isLoading: false, errorMessage: ''});
-  // useGetData('http://localhost:3000/users', setuserData);
-  // useGetData('../../public/datas.json', setuserData);
 
-  // set loading for user provider
   const [isLoading, setLoading] = useState(true);
-  
+
   return (
     <>
       <BrowserRouter>
@@ -46,7 +42,7 @@ export default function App() {
               <Routes>
                 <Route path='/' element={<Sidebar />}>
                   <Route index element={<Home />}/>
-                  <Route path='/album/:name' element={<Playlist />}/>
+                  <Route path='/album/:id' element={<Playlist />}/>
 
                   <Route path='/profile' element={<Profile />}/>
                   <Route

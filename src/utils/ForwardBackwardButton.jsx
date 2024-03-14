@@ -1,6 +1,7 @@
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const ButtonStylePrev = () => {
   const navigate = useNavigate();

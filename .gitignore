@@ -40,6 +40,6 @@ css/
 .env
 .env.local
 
-__test__
+__tests__
 datas_backup.json
 todo.txt

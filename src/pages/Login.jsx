@@ -1,21 +1,22 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { UserContext } from '../../context/UserContext.jsx';
-import Loading from '../../components/Loading.jsx';
-
-import logo from '../../assets/images/Spotify_Logo_CMYK_White.png';
-import Spotify from '../../assets/images/spotify.png';
-import Github from '../../assets/images/bi_github.png';
-import Google from '../../assets/images/flat-color-icons_google.png';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-
-import { auth } from '../../config/firebase.jsx';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import '../../assets/index.css';
+import logo from '@assets/images/Spotify_Logo_CMYK_White.png';
+import Spotify from '@assets/images/spotify.png';
+import Github from '@assets/images/bi_github.png';
+import Google from '@assets/images/flat-color-icons_google.png';
+
+import { auth } from '@configs/firebase.js';
+
+import { UserContext } from '@contexts/UserContext.jsx';
+
+import Loading from '@components/Loading.jsx';
+
+import '@assets/global.css';
 
 export default function Login() {
 

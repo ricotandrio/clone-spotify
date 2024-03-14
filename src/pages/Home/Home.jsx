@@ -1,18 +1,22 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import Footer from '../../components/Footer.jsx';
-import { FetchSpotify } from '../../utils/Spotify.jsx';
-import Loading from '../../components/Loading.jsx';
-import UserOption from '../../components/UserOption.jsx';
-import SongSection from './SongSection.jsx';
-import { UserContext } from '../../context/UserContext.jsx';
-import { ButtonStyleNext, ButtonStylePrev } from '../../utils/ForwardBackwardButton.jsx';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-import '../../assets/index.css';
+import { getFeaturedPlaylistService } from '@apis/spotify_services/featured_playlist_service';
+
+import Footer from '@components/Footer.jsx';
+import Loading from '@components/Loading.jsx';
+import UserOption from '@components/UserOption.jsx';
+
+import { UserContext } from '@contexts/UserContext.jsx';
+
+import SongSection from '@pages/Home/SongSection.jsx';
+
+import { ButtonStyleNext, ButtonStylePrev } from '@utils/ForwardBackwardButton.jsx';
+
+import '@assets/global.css';
 
 export const ButtonStyleNexts = () => {
   return {
@@ -29,23 +33,18 @@ export default function Home() {
   const [featuredPlaylists, setFeaturedPlaylists] = useState();
 
   useEffect(() => {
-    if(token){
+    const getFeaturedPlaylist = async (token) => {
       setLoading(true);
-      FetchSpotify(
-        {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        }, `https://api.spotify.com/v1/browse/featured-playlists`
-      ).then((response) => {
-        // console.log(response);
-        if(response != null){
-          setFeaturedPlaylists(response);
-          setLoading(false);
-        }
-      })
+      const response = await getFeaturedPlaylistService(token);
+      
+      if(response != null){
+        setFeaturedPlaylists(response);
+        setLoading(false);
+      }
     }
+    
+    if(token) getFeaturedPlaylist(token);
+    
   }, [token]);
 
   return (

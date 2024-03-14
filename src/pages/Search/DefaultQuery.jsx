@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import banners from '../../data/banners';
-import { UserContext } from '../../context/UserContext';
+import banners from '@datas/banner.jsx';
 
-import '../../assets/index.css';
+import { UserContext } from '@contexts/UserContext';
+
+import '@assets/global.css';
 
 export default function DefaultQuery() {
   const navigate = useNavigate();

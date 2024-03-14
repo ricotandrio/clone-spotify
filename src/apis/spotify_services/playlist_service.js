@@ -1,6 +1,5 @@
 export const getPlaylistService = async (stateLocation, playlistId, token) => {
   try {
-    console.log(stateLocation, " ", playlistId);
     const response = await fetch(`https://api.spotify.com/v1/${stateLocation}/${playlistId}`, {
       method: 'GET',
       headers: {
@@ -13,8 +12,8 @@ export const getPlaylistService = async (stateLocation, playlistId, token) => {
     }
     return response.json();
   } catch (e) {
-    console.error(e);
 
+    console.error(e);
     return null;
   }
 }

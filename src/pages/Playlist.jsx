@@ -8,7 +8,7 @@ import { getPlaylistService } from '@apis/spotify_services/playlist_service';
 import { pushLibraryService } from '@apis/firebase_services/push_library_service';
 
 import { UserContext } from '@contexts/UserContext.jsx';
-import { AudioAction } from '@contexts/AudioReducer';
+import { AudioAction } from '@contexts/UserContext.jsx';
 
 import Footer from '@components/Footer.jsx';
 import Loading from '@components/Loading.jsx';

@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import { pushLibraryService } from '@apis/firebase_services/push_library_service';
+import { getArtistService } from '@apis/spotify_services/artist_service';
+import { getArtistAlbumService } from '@apis/spotify_services/artist_album_service';
 
 import { UserContext } from '@contexts/UserContext.jsx';
 
@@ -30,42 +32,25 @@ export default function Artists() {
   const { id } = useParams(); // get id from browser link
 
   useEffect(() => {
-    scrollTo(0, 0);
-    setLoading(true);
-    FetchSpotify(
-      {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      }, `https://api.spotify.com/v1/artists/${id}`
-    ).then((response) => {
-      // console.log(response);
-      if(response != null){
-        setArtist(response);
+    const getArtist = async () => {
+      setLoading(true);
+      const responseArtist = await getArtistService(token, id);
+      const responseAlbum = await getArtistAlbumService(token, id);
 
-        FetchSpotify(
-          {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          }, `https://api.spotify.com/v1/artists/${id}/albums`
-        ).then((response) => {
-          // console.log(response);
-          if(response != null){
-            setAlbums(response);
-            setLoading(false);
-          }
-        })
-
+      if(responseArtist != null){
+        setArtist(responseArtist);
+        setLoading(false);
       }
-    })
+
+      if(responseAlbum != null){
+        setAlbums(responseAlbum);
+      }
+    }
+
+    if(token) getArtist();
   }, [id, token]);
 
   const updateArtistState = () => {
-    // console.log(artist);
-    // console.log(db);
 
     if(isLoading == true) return;
 
@@ -93,7 +78,7 @@ export default function Artists() {
 
       setDB({ ...db, user_library: newlibrary });
       
-      PushLibrary(authUser?.uid, newlibrary);
+      pushLibraryService(authUser?.uid, newlibrary);
     }
   }
 
@@ -184,8 +169,14 @@ export default function Artists() {
           <div className='p-5'>
             <h1 className='text-2xl pt-4'>Discography</h1>
           </div>
-
-          <SongSection data={albums?.items} playlists_name='' />
+          
+          {
+            albums?.items?.length == 0 ? (
+              <h1 className='text-xl pl-5'>No albums found</h1>
+            ) : (
+              <SongSection data={albums?.items} playlists_name='' />
+            )
+          }
         </div>
 
         <Footer />

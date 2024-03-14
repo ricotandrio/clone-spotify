@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
-import { UserContext } from '@contexts/UserContext';
+import { UserContext } from '@contexts/UserContext.jsx';
 
 import '@assets/global.css';
 
@@ -18,8 +18,8 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
   const navigate = useNavigate();
   const location = useLocation();
   const { authUser } = useContext(UserContext);
-  
-  return (
+
+  return (  
     <>
       <Link>
         {

@@ -25,14 +25,14 @@ src
 To begin, clone this repository to your local machine and use npm to install the necessary modules.
 
 ```bash
-$ git clone https://github.com/ricotandrio/clone-spotify.git
-$ cd clone-spotify
-$ npm install
+git clone https://github.com/ricotandrio/clone-spotify.git
+cd clone-spotify
+npm install
 ```
 
 To run the development server, create a `.env` file and fill it with your own Firebase authentications details and Spotify client ID. Then, execute the following command:
 ```bash
-$ npm run dev
+npm run dev
 ```
 
 ## Live Demo

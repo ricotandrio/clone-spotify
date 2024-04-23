@@ -18,7 +18,7 @@ export default function SongSection({data: arrayOfData, playlists_name}) {
   const navigate = useNavigate();
   const location = useLocation();
   const { authUser } = useContext(UserContext);
-
+  console.log('sd');
   return (  
     <>
       <Link>

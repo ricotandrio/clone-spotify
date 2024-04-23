@@ -15,14 +15,15 @@ import { auth, mydb } from '@configs/firebase.js';
 
 import { UserContext } from '@contexts/UserContext.jsx';
 
-import datas from '@datas/datas.json';
+import datas from '@assets/datas/datas.json';
 
 import '@assets/global.css';
+import { FirebaseController } from '@apis/controllers/firebase.controller';
 
 export default function Register() {
 
   const [passwordType, setpasswordType] = useState('password');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   // form
   const [form, setForm] = useState({
@@ -57,18 +58,36 @@ export default function Register() {
   }
 
   const handleCreateAccount = (email, password) => {
-    setIsLoading(true);
+    setLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // console.log(userCredential);
         // console.log(userCredential?.user?.reloadUserInfo?.localId);
 
         updateAccount(userCredential?.user?.reloadUserInfo?.localId);
-        setIsLoading(false);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(`error: ${error}`);
       })
+  }
+
+  const signUpHandler = async () => {
+    try {
+      setLoading(true);
+      const response = await FirebaseController.signUp({
+        email: form.email,
+        password: form.password,
+        name: form.name,
+        date_of_birth: new Date(form.year, form.month - 1, form.day)
+      });
+
+      
+    } catch (e) {
+      setWarning(e.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   const { authUser } = useContext(UserContext);

@@ -4,10 +4,8 @@ import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import { pushLibraryService } from '@apis/firebase_services/push_library_service';
-import { getArtistService } from '@apis/spotify_services/artist_service';
-import { getArtistAlbumService } from '@apis/spotify_services/artist_album_service';
-
+import { SpotifyController } from '@apis/controllers/spotify.controller';
+import { FirebaseController } from '@apis/controllers/firebase.controller';
 import { UserContext } from '@contexts/UserContext.jsx';
 
 import Footer from '@components/Footer.jsx';
@@ -34,8 +32,8 @@ export default function Artists() {
   useEffect(() => {
     const getArtist = async () => {
       setLoading(true);
-      const responseArtist = await getArtistService(token, id);
-      const responseAlbum = await getArtistAlbumService(token, id);
+      const responseArtist = await SpotifyController.getArtist(token, id);
+      const responseAlbum = await SpotifyController.getAlbumByArtist(token, id);
 
       if(responseArtist != null){
         setArtist(responseArtist);

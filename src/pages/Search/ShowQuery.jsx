@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { getSearchService } from '@apis/spotify_services/search_service';
-
 import { QueryContext } from '@contexts/QueryContext.jsx';
 import { UserContext } from '@contexts/UserContext.jsx';
 
@@ -11,6 +9,7 @@ import Loading from '@components/Loading.jsx';
 import AudioCard from '@pages/Search/AudioCard.jsx';
 
 import '@assets/global.css';
+import { SpotifyController } from '@apis/controllers/spotify.controller';
 
 export default function ShowQuery() {
   const { query } = useParams();
@@ -31,7 +30,7 @@ export default function ShowQuery() {
 
     const getSearch = async () => {
       setLoading(true);
-      const response = await getSearchService(token, query);
+      const response = await SpotifyController.search(token, query);
 
       if(response != null){
         setTracks(response.tracks.items);

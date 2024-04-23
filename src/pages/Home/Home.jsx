@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-
-import { getFeaturedPlaylistService } from '@apis/spotify_services/featured_playlist_service';
 
 import Footer from '@components/Footer.jsx';
 import Loading from '@components/Loading.jsx';
@@ -17,6 +15,7 @@ import SongSection from '@pages/Home/SongSection.jsx';
 import { ButtonStyleNext, ButtonStylePrev } from '@utils/ForwardBackwardButton.jsx';
 
 import '@assets/global.css';
+import { SpotifyController } from '@apis/controllers/spotify.controller';
 
 export const ButtonStyleNexts = () => {
   return {
@@ -35,7 +34,7 @@ export default function Home() {
   useEffect(() => {
     const getFeaturedPlaylist = async (token) => {
       setLoading(true);
-      const response = await getFeaturedPlaylistService(token);
+      const response = await SpotifyController.getFeaturedPlaylists(token);
       
       if(response != null){
         setFeaturedPlaylists(response);

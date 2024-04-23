@@ -17,6 +17,7 @@ import { UserContext } from '@contexts/UserContext.jsx';
 import Loading from '@components/Loading.jsx';
 
 import '@assets/global.css';
+import { FirebaseController } from '@apis/controllers/firebase.controller';
 
 export default function Login() {
 
@@ -43,6 +44,19 @@ export default function Login() {
       setWarning("undefined account");
       setLoading(false);
     })
+  } 
+
+  const signInHandler = async () => {
+    try {
+      setLoading(true);
+      const response = await FirebaseController.signIn(email, password);
+      
+    } catch (e) {
+      setWarning(e.message);
+    } finally {
+      setLoading(false);
+    }
+        
   }
 
   // console.log(auth?.current?.email);

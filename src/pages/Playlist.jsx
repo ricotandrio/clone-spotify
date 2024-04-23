@@ -4,9 +4,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
-import { getPlaylistService } from '@apis/spotify_services/playlist_service';
-import { pushLibraryService } from '@apis/firebase_services/push_library_service';
-
 import { UserContext } from '@contexts/UserContext.jsx';
 import { AudioAction } from '@contexts/UserContext.jsx';
 
@@ -17,6 +14,9 @@ import { convertMsToMMSS } from '@utils/ConvertMMSS.jsx';
 import { ButtonStyleNext, ButtonStylePrev } from '@utils/ForwardBackwardButton.jsx';
 import { extractYearMonthDay } from '@utils/ConvertDate.jsx';
 
+import { FirebaseController } from '@apis/controllers/firebase.controller';
+
+import { SpotifyController } from '@apis/controllers/spotify.controller';
 import '@assets/global.css';
 
 export default function Playlist() {
@@ -41,7 +41,7 @@ export default function Playlist() {
   useEffect(() => {
     const getPlaylist = async () => {
       setLoading(true);
-      const response = await getPlaylistService(stateLocation, id, token);
+      const response = await SpotifyController.getPlaylistById(stateLocation, id, token);
       
       if(response != null){
         console.log(response);

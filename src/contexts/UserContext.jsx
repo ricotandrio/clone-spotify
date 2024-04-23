@@ -3,9 +3,6 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import PropTypes from 'prop-types';
 
-import { getTokenService } from "@apis/spotify_services/token_service";
-import { getUserService } from "@apis/firebase_services/user_service";
-
 import Sidebar from "@components/Sidebar";
 import Error from "@components/Error";
 
@@ -20,6 +17,9 @@ import Search from "@pages/Search/Search";
 import Home from "@pages/Home/Home";
 
 export const UserContext = createContext();
+
+import { FirebaseController } from "@apis/controllers/firebase.controller";
+import { SpotifyController } from "@apis/controllers/spotify.controller";
 
 UserProvider.propTypes = {
   children: PropTypes.element.isRequired,
@@ -91,7 +91,7 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
       setLoading(true);
       
       // get token from spotify
-      const tokenResponse = await getTokenService();
+      const tokenResponse = await SpotifyController.getSpotifyToken();
       if (tokenResponse != null) {
         setToken(tokenResponse.access_token);
       }
@@ -117,7 +117,7 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
     const getCurrUser = async () => {
       setLoading(true);
       
-      const response = await getUserService(authUser?.uid);
+      const response = await FirebaseController.getUser(authUser?.uid);
 
       if(response != null){
         setDB(response);
@@ -185,4 +185,3 @@ export default function UserProvider({ children, _loading: loading, _setLoading:
     </>
   )
 }
-

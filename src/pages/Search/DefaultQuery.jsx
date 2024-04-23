@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import banners from '@datas/banner.jsx';
+import banners from '@assets/datas/banner.jsx';
 
 import { UserContext } from '@contexts/UserContext.jsx';
 

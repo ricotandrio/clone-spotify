@@ -12,8 +12,7 @@ import Sidebar from '@components/Sidebar.jsx';
 import UserProvider from '@contexts/UserContext.jsx';
 import QueryProvider from '@contexts/QueryContext.jsx';
 
-import userdata from '@datas/datas.json';
-
+import userdata from '@assets/datas/datas.json';
 import Home from '@pages/Home/Home.jsx';
 import Login from '@pages/Login.jsx';
 import Register from '@pages/Register.jsx';

@@ -67,6 +67,19 @@ export class FirebaseService {
     }
   }
 
+  static authState = async (callback) => {
+    try {
+      const response = await auth.onAuthStateChanged(callback);
+      return response;
+    } catch (e) {
+      console.error(`Error ${e.code}: ${e.message}`);
+      return {
+        code: e.code,
+        message: e.message
+      };
+    }
+  }
+
   static getUser = async (uid) => {
     try {
       const data = await getDocs(collection(mydb, "account"));

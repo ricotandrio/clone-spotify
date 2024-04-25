@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BrowserRouter,
   Route,
@@ -22,50 +22,93 @@ import ShowQuery from '@pages/Search/ShowQuery.jsx';
 import DefaultQuery from '@pages/Search/DefaultQuery.jsx';
 import Artists from '@pages/Artist.jsx';
 import Playlist from '@pages/Playlist.jsx';
+import { checkEnvironment } from '@configs/environment';
 
 export default function App() {
+
   const [userdatas, setuserData] = useState({data: userdata, isLoading: false, errorMessage: ''});
 
   const [isLoading, setLoading] = useState(true);
 
+  // return (
+  //   <>
+  //     <BrowserRouter>
+  //       <UserProvider _loading={ isLoading } _setLoading={ setLoading }>
+  //         {
+  //           userdatas.isLoading == true || isLoading == true ? (
+  //             <div className='relative w-full h-screen flex flex-col items-center justify-center'>
+  //               <Loading />
+  //             </div>
+  //           ) : (
+  //             <Routes>
+  //               <Route path='/' element={<Sidebar />}>
+  //                 <Route index element={<Home />}/>
+  //                 <Route path='/album/:id' element={<Playlist />}/>
+
+  //                 <Route path='/profile' element={<Profile />}/>
+  //                 <Route
+  //                   path='/search'
+  //                   element={
+  //                     <QueryProvider>
+  //                       <Search/>
+  //                     </QueryProvider>
+  //                   }
+  //                 >
+  //                   <Route index element={<DefaultQuery/>}/>
+  //                   <Route path=':query' element={<ShowQuery/>}/>
+  //                 </Route>
+
+  //                 <Route path='/artist/:id' element={<Artists />}/>
+  //               </Route>
+
+  //               <Route path='/login' element={<Login/>}/>
+  //               <Route path='/register' element={<Register/>}/>
+  //               <Route path='*' element={<Error />}/>
+  //             </Routes>
+  //           )
+  //         }
+  //       </UserProvider>
+  //     </BrowserRouter>
+  //   </>
+  // )
+  
+  // const location = useLocation();
+
+  // useEffect(() => {
+  //   return () => {
+  //     window.scrollTo(0, 0);
+  //   }
+  // }, [location]);
+  
   return (
     <>
       <BrowserRouter>
-        <UserProvider _loading={ isLoading } _setLoading={ setLoading }>
-          {
-            userdatas.isLoading == true || isLoading == true ? (
-              <div className='relative w-full h-screen flex flex-col items-center justify-center'>
-                <Loading />
-              </div>
-            ) : (
-              <Routes>
-                <Route path='/' element={<Sidebar />}>
-                  <Route index element={<Home />}/>
-                  <Route path='/album/:id' element={<Playlist />}/>
+        
+        <Routes>
+          <Route path='/' element={<Sidebar />}>
+            <Route index element={<Home />}/>
+            {/* <Route path='/album/:id' element={<Playlist />}/>
 
-                  <Route path='/profile' element={<Profile />}/>
-                  <Route
-                    path='/search'
-                    element={
-                      <QueryProvider>
-                        <Search/>
-                      </QueryProvider>
-                    }
-                  >
-                    <Route index element={<DefaultQuery/>}/>
-                    <Route path=':query' element={<ShowQuery/>}/>
-                  </Route>
+            <Route path='/profile' element={<Profile />}/>
+            <Route
+              path='/search'
+              element={
+                <QueryProvider>
+                  <Search/>
+                </QueryProvider>
+              }
+            >
+              <Route index element={<DefaultQuery/>}/>
+              <Route path=':query' element={<ShowQuery/>}/>
+            </Route>
 
-                  <Route path='/artist/:id' element={<Artists />}/>
-                </Route>
+            <Route path='/artist/:id' element={<Artists />}/> */}
+          </Route>
 
-                <Route path='/login' element={<Login/>}/>
-                <Route path='/register' element={<Register/>}/>
-                <Route path='*' element={<Error />}/>
-              </Routes>
-            )
-          }
-        </UserProvider>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/register' element={<Register/>}/>
+          <Route path='*' element={<Error />}/>
+        </Routes>
       </BrowserRouter>
     </>
   )

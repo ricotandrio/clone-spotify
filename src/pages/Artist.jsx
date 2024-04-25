@@ -14,7 +14,7 @@ import UserOption from '@components/UserOption.jsx';
 
 import SongSection from '@pages/Home/SongSection.jsx';
 
-import { ButtonStyleNext, ButtonStylePrev } from '@utils/ForwardBackwardButton.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '@components/Button.jsx';
 
 import '@assets/global.css';
 

@@ -72,7 +72,7 @@ export default function Register() {
       })
   }
 
-  const signUpHandler = async () => {
+  const handleSignUp = async () => {
     try {
       setLoading(true);
       const response = await FirebaseController.signUp({

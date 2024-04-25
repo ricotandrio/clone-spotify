@@ -32,24 +32,25 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = (email, password) => {
-    setLoading(true);
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // console.log(userCredential);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.log(`error: ${error}`);
-      setWarning("undefined account");
-      setLoading(false);
-    })
-  } 
+  // const handleSignIn = (email, password) => {
+  //   setLoading(true);
+  //   signInWithEmailAndPassword(auth, email, password)
+  //   .then((userCredential) => {
+  //     // console.log(userCredential);
+  //     setLoading(false);
+  //   })
+  //   .catch((error) => {
+  //     console.log(`error: ${error}`);
+  //     setWarning("undefined account");
+  //     setLoading(false);
+  //   })
+  // } 
 
-  const signInHandler = async () => {
+  const handleSignIn = async (e) => {
+    e.preventDefault();
     try {
       setLoading(true);
-      const response = await FirebaseController.signIn(email, password);
+      const response = await FirebaseController.signIn(accName, password);
       
     } catch (e) {
       setWarning(e.message);

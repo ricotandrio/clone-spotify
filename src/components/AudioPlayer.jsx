@@ -7,8 +7,7 @@ import { faBackward, faForward, faHeadset, faListUl, faPause, faPlay, faVolumeHi
 import { UserContext } from '@contexts/UserContext.jsx';
 import { AudioAction } from '@contexts/UserContext';
 
-import { convertMsToMMSS } from '@utils/ConvertMMSS.jsx';
-
+import { DateUtil } from '@utils/DateUtil';
 import '@assets/global.css';
 
 export default function AudioPlayer() {
@@ -85,14 +84,14 @@ export default function AudioPlayer() {
 
               </div>
               <div className='flex flex-row items-center w-full justify-center gap-2 mt-2'>
-                <h1 className='text-xs opacity-90'>{convertMsToMMSS(state.elapseDuration * 1000)}</h1>
+                <h1 className='text-xs opacity-90'>{DateUtil.convertMsToMMSS(state.elapseDuration * 1000)}</h1>
                 <div className='w-1/2 bg-gray-1 h-1 rounded-full flex'>
                   <div
                     className='bg-white rounded-full aspect-square'
                     style={{width: `${Math.ceil((state.elapseDuration))/Math.floor(state.maxDuration/1000) * 100}%`}}
                   />
                 </div>
-                <h1 className='text-xs opacity-90'>{convertMsToMMSS(Math.floor(state.maxDuration))}</h1>
+                <h1 className='text-xs opacity-90'>{DateUtil.convertMsToMMSS(Math.floor(state.maxDuration))}</h1>
               </div>
             </section>
 

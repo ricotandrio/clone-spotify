@@ -1,14 +1,14 @@
 import { ResponseError } from "@apis/errors/ResponseError";
-import { SpotifyApi } from "@configs/api";
+import { SpotifyEnv } from "@configs/environment";
 
 export class SpotifyService {
 
   static getSpotifyToken = async () => {
     try {
-      const response = await fetch(SpotifyApi.authUrl, {
+      const response = await fetch(SpotifyEnv.authUrl, {
         method: 'POST',
         headers: {
-          'Authorization': 'Basic ' + btoa(SpotifyApi.clientId + ':' + SpotifyApi.clientSecret),
+          'Authorization': 'Basic ' + btoa(SpotifyEnv.clientId + ':' + SpotifyEnv.clientSecret),
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: 'grant_type=client_credentials',
@@ -33,7 +33,7 @@ export class SpotifyService {
   static getArtistById = async (token, id) => {
   
     try {
-      const response = await fetch(`${SpotifyApi.baseUrl}/artists/${id}`, {
+      const response = await fetch(`${SpotifyEnv.baseUrl}/artists/${id}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -54,7 +54,7 @@ export class SpotifyService {
   static getAlbumByArtist = async (token, id) => {
   
     try {
-      const response = await fetch(`${SpotifyApi.baseUrl}/artists/${id}/albums`, {
+      const response = await fetch(`${SpotifyEnv.baseUrl}/artists/${id}/albums`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -79,7 +79,7 @@ export class SpotifyService {
   static getPlaylistById = async (stateLocation, playlistId, token) => {
   
     try {
-      const response = await fetch(`${SpotifyApi.baseUrl}/${stateLocation}/${playlistId}`, {
+      const response = await fetch(`${SpotifyEnv.baseUrl}/${stateLocation}/${playlistId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -104,7 +104,7 @@ export class SpotifyService {
   static getFeaturedPlaylists = async (token) => {
 
     try {
-      const response = await fetch(`${SpotifyApi.baseUrl}/browse/featured-playlists`, {
+      const response = await fetch(`${SpotifyEnv.baseUrl}/browse/featured-playlists`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -128,7 +128,7 @@ export class SpotifyService {
   static search = async (token, query) => {
     
     try {
-      const response = await fetch(`${SpotifyApi.baseUrl}/search?q=${encodeURIComponent(query)}&type=track&limit=20`, {
+      const response = await fetch(`${SpotifyEnv.baseUrl}/search?q=${encodeURIComponent(query)}&type=track&limit=20`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,

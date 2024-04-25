@@ -1,9 +1,9 @@
-class DateUtil extends Date {
+export class DateUtil extends Date {
   constructor(date) {
     super(date);
   }
 
-  extractYearMonthDay = () => {
+  static extractYearMonthDay = () => {
 
     const year = this.date.getFullYear();
     const month = (this.date.getMonth() + 1).toString().padStart(2, '0');

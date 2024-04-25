@@ -40,6 +40,15 @@ export class FirebaseController {
     }
   }
 
+  static authState = async (callback) => {
+    try {
+      const response = await FirebaseService.authState(callback);
+      return response;
+    } catch (e) {
+      return e.message;
+    }
+  }
+
   static getUser = async (uid) => {
     try {
       const response = await FirebaseService.getUser(uid);

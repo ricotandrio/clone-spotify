@@ -11,7 +11,7 @@ import Footer from '@components/Footer.jsx';
 import UserOption from '@components/UserOption.jsx';
 import AudioPlayer from '@components/AudioPlayer.jsx';
 
-import { ButtonStyleNext, ButtonStylePrev } from '@utils/ForwardBackwardButton.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '@components/Button.jsx';
 
 import '@assets/global.css';
 

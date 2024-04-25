@@ -10,9 +10,8 @@ import { AudioAction } from '@contexts/UserContext.jsx';
 import Footer from '@components/Footer.jsx';
 import Loading from '@components/Loading.jsx';
 
-import { convertMsToMMSS } from '@utils/ConvertMMSS.jsx';
-import { ButtonStyleNext, ButtonStylePrev } from '@utils/ForwardBackwardButton.jsx';
-import { extractYearMonthDay } from '@utils/ConvertDate.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '@components/Button.jsx';
+import {DateUtil} from '@utils/DateUtil';
 
 import { FirebaseController } from '@apis/controllers/firebase.controller';
 
@@ -201,11 +200,11 @@ export default function Playlist() {
                         </div>
                         <div className='w-[22%]'>
                           <h1 className='font-scbk line-clamp-1 text-sm opacity-80 pl-9'>
-                            {tracks.type == "playlist" ? extractYearMonthDay(track?.added_at) : tracks?.release_date}
+                            {tracks.type == "playlist" ? DateUtil.extractYearMonthDay(track?.added_at) : tracks?.release_date}
                           </h1>
                         </div>
                         <div className='w-[15%] pl-3 opacity-80 font-scbk text-sm text-center'>
-                          {convertMsToMMSS(tracks.type == "playlist" ? track?.track?.duration_ms : track?.duration_ms)}
+                          {DateUtil.convertMsToMMSS(tracks.type == "playlist" ? track?.track?.duration_ms : track?.duration_ms)}
                         </div>
                       </div>
                     ))

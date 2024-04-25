@@ -6,9 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 
 import { UserContext } from '@contexts/UserContext.jsx';
-
-import { convertMsToMMSS } from '@utils/ConvertMMSS.jsx';
-
+import { DateUtil } from '@utils/DateUtil';
 import '@assets/global.css';
 
 AudioCard.propTypes = { 
@@ -79,7 +77,7 @@ export default function AudioCard({ track, currentlyPlaying, setCurrentlyPlaying
       </div>
 
       <div className='text-sm opacity-80 font-scbk'>
-        {convertMsToMMSS(track?.duration_ms)}
+        {DateUtil.convertMsToMMSS(track?.duration_ms)}
       </div>
     </div>
   )

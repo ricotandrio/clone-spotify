@@ -13,7 +13,7 @@ export const registerUserSchema = z.object({
 });
 
 export const validateExtractor = (parsed) => {
-  if(!parsed.success){
+  if (!parsed.success) {
     const error = parsed.error;
     let errors = {};
     for (const issue of error.issues) {
@@ -29,4 +29,4 @@ export const validateExtractor = (parsed) => {
     // console.log(`errors safe`);
     return {};
   }
-}
+};

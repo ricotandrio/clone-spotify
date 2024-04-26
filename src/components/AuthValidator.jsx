@@ -1,4 +1,1 @@
-
-export default function AuthValidator() {
-    
-}
+export default function AuthValidator() {}

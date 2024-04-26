@@ -3,55 +3,54 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'Spotify Circular Black';
-  src: local('Spotify Circular Black'),
+  font-family: "Spotify Circular Black";
+  src: local("Spotify Circular Black"),
     url(./fonts/CircularSpotifyText-Black.otf);
 }
 
 @font-face {
-  font-family: 'Spotify Circular Black I';
-  src: local('Spotify Circular Black I'),
+  font-family: "Spotify Circular Black I";
+  src: local("Spotify Circular Black I"),
     url(./fonts/CircularSpotifyText-BlackItalic.otf);
 }
 
 @font-face {
-  font-family: 'Spotify Circular Bold';
-  src: local('Spotify Circular Bold'),
-    url(./fonts/CircularSpotifyText-Bold.otf);
+  font-family: "Spotify Circular Bold";
+  src: local("Spotify Circular Bold"), url(./fonts/CircularSpotifyText-Bold.otf);
 }
 
 @font-face {
-  font-family: 'Spotify Circular Book';
-  src: local('Spotify Circular Book'),
-    url(./fonts/CircularSpotifyText-Book.otf);
+  font-family: "Spotify Circular Book";
+  src: local("Spotify Circular Book"), url(./fonts/CircularSpotifyText-Book.otf);
 }
+
 @font-face {
-  font-family: 'Spotify Circular Book I';
-  src: local('Spotify Circular Book I'),
+  font-family: "Spotify Circular Book I";
+  src: local("Spotify Circular Book I"),
     url(./fonts/CircularSpotifyText-BookItalic.otf);
 }
 
 @font-face {
-  font-family: 'Spotify Circular Light';
-  src: local('Spotify Circular Light'),
+  font-family: "Spotify Circular Light";
+  src: local("Spotify Circular Light"),
     url(./fonts/CircularSpotifyText-Light.otf);
 }
 
 @font-face {
-  font-family: 'Spotify Circular Medium';
-  src: local('Spotify Circular Medium'),
+  font-family: "Spotify Circular Medium";
+  src: local("Spotify Circular Medium"),
     url(./fonts/CircularSpotifyText-Medium.otf);
 }
 
 @font-face {
-  font-family: 'Spotify Circular Medium I';
-  src: local('Spotify Circular Medium I'),
+  font-family: "Spotify Circular Medium I";
+  src: local("Spotify Circular Medium I"),
     url(./fonts/CircularSpotifyText-MediumItalic.otf);
 }
 
 :root {
   font-size: 1.25vw;
-  font-family: 'Spotify Circular Bold';
+  font-family: "Spotify Circular Bold";
   color: white;
   margin: 0;
   padding: 0;
@@ -63,10 +62,8 @@ body {
   overflow-x: hidden;
 }
 
-@media all and (max-width: 640px){
-  :root {
-    font-size: 2.5vw;
-  }
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 @layer base {
@@ -77,6 +74,8 @@ body {
   }
 }
 
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+@media all and (max-width: 640px) {
+  :root {
+    font-size: 2.5vw;
+  }
 }

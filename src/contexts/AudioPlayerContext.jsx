@@ -1,28 +1,28 @@
 import { createContext, createRef, useEffect, useReducer } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
 import { FirebaseService } from "@src/apis/services/firebase.service";
 
 export const AudioPlayerContext = createContext();
 
 export const AudioAction = {
-  SET_AUDIO_SOURCE: 'SET_AUDIO_SOURCE',
-  SET_PLAY: 'SET_PLAY',
-  SET_VOLUME: 'SET_VOLUME',
-  SET_ELAPSE: 'SET_ELAPSE',
-  SET_NEXT: 'SET_NEXT',
-  SET_PREV: 'SET_PREV',
-  SET_STOP: 'SET_STOP',
-}
+  SET_AUDIO_SOURCE: "SET_AUDIO_SOURCE",
+  SET_PLAY: "SET_PLAY",
+  SET_VOLUME: "SET_VOLUME",
+  SET_ELAPSE: "SET_ELAPSE",
+  SET_NEXT: "SET_NEXT",
+  SET_PREV: "SET_PREV",
+  SET_STOP: "SET_STOP",
+};
 
 const AudioReducer = (state, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case AudioAction.SET_AUDIO_SOURCE:
       // console.log('progress in audioaction.setaudiosource');
       console.log(action.payload);
-      if(state.isPlaying == true){
+      if (state.isPlaying == true) {
         state.audioRef.current.pause();
-        state.audioSource = '';
+        state.audioSource = "";
       }
 
       return {
@@ -36,7 +36,7 @@ const AudioReducer = (state, action) => {
       };
     case AudioAction.SET_PLAY:
       // console.log('progress in audioaction.setplay');
-      if(state.isPlaying == true){
+      if (state.isPlaying == true) {
         state.audioRef.current.pause();
       } else {
         state.audioRef.current.play();
@@ -45,24 +45,24 @@ const AudioReducer = (state, action) => {
       return {
         ...state,
         isPlaying: !state.isPlaying,
-        audioMaxDuration: (state.audioRef.current.duration) * 1000,
+        audioMaxDuration: state.audioRef.current.duration * 1000,
         audioAlbum: state.audioAlbum,
         audioAlbumIndex: state.audioAlbumIndex,
-      }
+      };
     case AudioAction.SET_VOLUME:
       return {
         ...state,
         volume: action.payload.value < 0.2 ? 0 : action.payload.value,
-      }
+      };
     case AudioAction.SET_ELAPSE:
       return {
         ...state,
         elapse: action.payload.duration,
-      }
+      };
     case AudioAction.SET_NEXT:
-      if(state.isPlaying == true){
+      if (state.isPlaying == true) {
         state.audioRef.current.pause();
-        state.audioSource = '';
+        state.audioSource = "";
       }
 
       var nextIndex = (state.audioAlbumIndex + 1) % state.audioAlbum.length;
@@ -75,14 +75,17 @@ const AudioReducer = (state, action) => {
         audioAlbumIndex: nextIndex,
         elapsed: 0,
         isPlaying: true,
-      }
+      };
     case AudioAction.SET_PREV:
-      if(state.isPlaying == true){
+      if (state.isPlaying == true) {
         state.audioRef.current.pause();
-        state.audioSource = '';
+        state.audioSource = "";
       }
 
-      var prevIndex = state.audioAlbumIndex === 0 ? state.audioAlbum.length - 1 : state.audioAlbumIndex - 1;
+      var prevIndex =
+        state.audioAlbumIndex === 0
+          ? state.audioAlbum.length - 1
+          : state.audioAlbumIndex - 1;
 
       return {
         ...state,
@@ -92,25 +95,25 @@ const AudioReducer = (state, action) => {
         audioAlbumIndex: prevIndex,
         elapsed: 0,
         isPlaying: true,
-      }
+      };
     case AudioAction.SET_STOP:
       state.audioRef.current.pause();
-      
+
       return {
         ...state,
         isPlaying: false,
-      }
+      };
     default:
       break;
   }
-}
+};
 
 const AudioPlayerProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AudioReducer, {
-    audioSource: '',
+    audioSource: "",
     audioMaxDuration: 0,
     audioRef: createRef(),
-    audioAlbum: '',
+    audioAlbum: "",
     audioAlbumIndex: 0,
     volume: 1,
     elapse: 0,
@@ -121,11 +124,11 @@ const AudioPlayerProvider = ({ children }) => {
     <AudioPlayerContext.Provider value={{ state, dispatch }}>
       {children}
     </AudioPlayerContext.Provider>
-  )
-}
+  );
+};
 
 AudioPlayerProvider.propTypes = {
   children: PropTypes.element.isRequired,
-}
+};
 
 export default AudioPlayerProvider;

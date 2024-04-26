@@ -4,46 +4,41 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-import Footer from '@components/Footer.jsx';
-import Loading from '@components/Loading.jsx';
-import UserOption from '@components/UserOption.jsx';
+import Footer from '@src/components/Footer.jsx';
+import Loading from '@src/components/Loading.jsx';
+import UserOption from '@src/components/UserOption.jsx';
 
-import { UserContext } from '@contexts/UserContext.jsx';
+import { UserContext } from '@src/contexts/UserContext.jsx';
 
-import SongSection from '@pages/Home/SongSection.jsx';
+import SongSection from '@src/pages/Home/SongSection.jsx';
 
-import { ButtonStyleNext, ButtonStylePrev } from '@components/Button.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '@src/components/Button.jsx';
 
-import '@assets/global.css';
-import { SpotifyController } from '@apis/controllers/spotify.controller';
+import '@src/assets/global.css';
+import { FirebaseService } from '@src/apis/services/firebase.service';
+import { SpotifyService } from '@src/apis/services/spotify.service';
 
-export const ButtonStyleNexts = () => {
-  return {
-    opacity: window.history.state && window.history.state.idx == window.history.length ? 0.8 : 1,
-    cursor: window.history.state && window.history.state.idx == window.history.length - 3 ? 'not-allowed' : 'pointer'
-  }
-}
-
-export default function Home() {
-  const [profileVisible, setProfileVisible] = useState(false);
+const HomePage = () => {
   const { token, authUser } = useContext(UserContext);
-
+  
   const [isLoading, setLoading] = useState(true);
-  const [featuredPlaylists, setFeaturedPlaylists] = useState();
+  const [profileVisible, setProfileVisible] = useState(false);
+  const [featuredPlaylists, setFeaturedPlaylists] = useState({});
+  
+  console.log("sdf");
+  
+  const getFeaturedPlaylist = async (token) => {
+    setLoading(true);
+    const response = await SpotifyService.getFeaturedPlaylists(token);
+    
+    if(response != null){
+      setFeaturedPlaylists(response);
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    const getFeaturedPlaylist = async (token) => {
-      setLoading(true);
-      const response = await SpotifyController.getFeaturedPlaylists(token);
-      
-      if(response != null){
-        setFeaturedPlaylists(response);
-        setLoading(false);
-      }
-    }
-    
     if(token) getFeaturedPlaylist(token);
-    
   }, [token]);
 
   return (
@@ -111,5 +106,4 @@ export default function Home() {
   )
 }
 
-
-
+export default HomePage;

@@ -1,17 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { QueryContext } from '@contexts/QueryContext.jsx';
-import { UserContext } from '@contexts/UserContext.jsx';
+import { QueryContext } from '@src/contexts/QueryContext.jsx';
+import { UserContext } from '@src/contexts/UserContext.jsx';
 
-import Loading from '@components/Loading.jsx';
+import Loading from '@src/components/Loading.jsx';
 
-import AudioCard from '@pages/Search/AudioCard.jsx';
+import { SearchResultCard } from '@src/components/Card';
+import { SpotifyService } from '@src/apis/services/spotify.service';
 
-import '@assets/global.css';
-import { SpotifyController } from '@apis/controllers/spotify.controller';
-
-export default function ShowQuery() {
+const QueryResultOutlet = () => {
   const { query } = useParams();
   const [tracksdata, setTracks] = useState();
   const [isLoading, setLoading] = useState(true);
@@ -30,7 +28,7 @@ export default function ShowQuery() {
 
     const getSearch = async () => {
       setLoading(true);
-      const response = await SpotifyController.search(token, query);
+      const response = await SpotifyService.search(token, query);
 
       if(response != null){
         setTracks(response.tracks.items);
@@ -56,7 +54,7 @@ export default function ShowQuery() {
               ) : (
                 <div>{
                   tracksdata.map((track) => (
-                    <AudioCard key={track?.id} track={track} currentlyPlaying={currentlyPlaying} setCurrentlyPlaying={setCurrentlyPlaying}/>
+                    <SearchResultCard key={track?.id} track={track} currentlyPlaying={currentlyPlaying} setCurrentlyPlaying={setCurrentlyPlaying}/>
                   ))
                 }</div>
               )
@@ -66,3 +64,5 @@ export default function ShowQuery() {
     </>
   )
 }
+
+export default QueryResultOutlet;

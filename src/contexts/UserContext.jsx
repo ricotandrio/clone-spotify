@@ -1,258 +1,92 @@
-import { createContext, useEffect, useReducer, useRef, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
+import { createContext, useCallback, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 
-import Sidebar from "@components/Sidebar";
-import Error from "@components/Error";
-
-import { auth } from "@configs/firebase.js";
-
-import QueryProvider from "@contexts/QueryContext";
-
-import Register from "@pages/Register";
-import Login from "@pages/Login";
-import DefaultQuery from "@pages/Search/DefaultQuery";
-import Search from "@pages/Search/Search";
-import Home from "@pages/Home/Home";
+import { checkEnvironment } from "@src/configs/environment";
+import { SpotifyService } from "@src/apis/services/spotify.service";
+import { FirebaseService } from "@src/apis/services/firebase.service";
+import { auth } from "@src/configs/firebase";
+import { onSnapshot } from "firebase/firestore";
 
 export const UserContext = createContext();
 
-import { FirebaseController } from "@apis/controllers/firebase.controller";
-import { SpotifyController } from "@apis/controllers/spotify.controller";
-import { checkEnvironment } from "@configs/environment";
-
-UserProvider.propTypes = {
-  children: PropTypes.element.isRequired,
-}
-
-export const AudioAction = {
-  SET_AUDIO_SOURCE: 'SET_AUDIO_SOURCE',
-  SET_PLAY: 'SET_PLAY',
-  SET_VOLUME: 'SET_VOLUME',
-  SET_ELAPSE: 'SET_ELAPSE',
-}
-
-const AudioReducer = (state, action) => {
-  switch(action.type) {
-    case AudioAction.SET_AUDIO_SOURCE:
-      // console.log('progress in audioaction.setaudiosource');
-      // console.log(action.payload);
-      if(state.isPlaying == true){
-        state.audioRef.current.pause();
-        state.audioSource = '';
-      }
-
-      return {
-        ...state,
-        audioSource: action.payload.src,
-        maxDuration: action.payload.src.duration_ms,
-        elapseDuration: 0,
-        isPlaying: false,
-      };
-    case AudioAction.SET_PLAY:
-      // console.log('progress in audioaction.setplay');
-      if(state.isPlaying == true){
-        state.audioRef.current.pause();
-      } else {
-        state.audioRef.current.play();
-      }
-      return {
-        ...state,
-        isPlaying: !state.isPlaying,
-        maxDuration: (state.audioRef.current.duration) * 1000,
-      }
-    case AudioAction.SET_VOLUME:
-      // console.log('progress in audioaction.setvolume');
-      state.audioRef.current.volume = action.payload.value < 0.2 ? 0 : action.payload.value;
-      return {
-        ...state,
-        volume: action.payload.value < 0.2 ? 0 : action.payload.value,
-      }
-    case AudioAction.SET_ELAPSE:
-      // console.log('progress in audioaction.setelapse');
-      return {
-        ...state,
-        elapseDuration: action.payload.duration,
-      }
-    default:
-      break;
-  }
-}
-
-export default function UserProvider({ children }){
-  const [loading, setLoading] = useState(true);
+const UserProvider = ({ children }) => {
+  const [userContextIsLoading, setUserContextIsLoading] = useState(true);
   const [token, setToken] = useState();
+  const [authUser, setAuthUser] = useState({});
   const [db, setDB] = useState();
-  const [authUser, setAuthUser] = useState(null);
 
-  // get token and authUser
-  useEffect(() => {
-    const userAppInit = async () => {
+  const userAppInit = async () => {
+    try {
+      // sign out 
+      setUserContextIsLoading(true);
+      checkEnvironment();
+
+      const tokenResponse = await SpotifyService.getSpotifyToken();
+      setToken(tokenResponse.access_token);
+
+      console.log(tokenResponse);
+      FirebaseService.authState(
+        auth => {
+          console.log(auth);
+          setAuthUser(auth ? auth : null);
+        }
+      );
+      
+    } catch (e) {
+      console.error(e.message);
+    } finally {
+      setUserContextIsLoading(false);
+    }
+  }
+
+  const getCurrentUser = useCallback(
+    async () => {
       try {
-        setLoading(true);
-        checkEnvironment();
+        console.log(authUser.uid);
+        setUserContextIsLoading(true);
 
-        const tokenResponse = await SpotifyController.getSpotifyToken();
-        setToken(tokenResponse.access_token);
-
-        const authState = await FirebaseController.authState();
-        setAuthUser(authState);
-
-        console.log('authUser');
+        const response = await FirebaseService.getUser(authUser?.uid);
+        setDB(response);
+        
+        console.log(response);
+  
       } catch (e) {
         console.error(e.message);
       } finally {
-        setLoading(false);
+        setUserContextIsLoading(false);
       }
-    }
-    
+    }, [authUser]
+  );
+
+  // get token and authUser
+  useEffect(() => {
     userAppInit();
   }, []);
   
   // get authUser firestore storage
   useEffect(() => {
-    const getCurrentUser = async () => {
-      try {
-        setLoading(true);
+    console.log("get cd");
 
-        const response = await FirebaseController.getUser(authUser?.uid);
-        setDB(response);
-
-      } catch (e) {
-        console.error(e.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    
-    if(authUser != null){
-      getCurrentUser();
-    };
-  }, [authUser]);
-
-  const DefaultAudioPlayer = {
-    audioSource: '',
-    audioRef: useRef(null),
-    isPlaying: false,
-    maxDuration: 0,
-    elapseDuration: 0,
-    volume: 1,
-  }
-  
-  const [state, dispatch] = useReducer(AudioReducer, DefaultAudioPlayer);
-  
-  const ContextValue = { token, state, dispatch, db, authUser, setDB };
+    if(authUser?.uid) getCurrentUser();
+  }, [authUser?.uid, getCurrentUser]);
   
   return(
     <>
-      <UserContext.Provider value={ContextValue}>
+      <UserContext.Provider value={{
+        token,
+        db,
+        authUser,
+        userContextIsLoading,
+        setDB
+      }}>
         { children }
       </UserContext.Provider>
     </>
   )
 }
-// export default function UserProvider({ children, _loading: loading, _setLoading: setLoading }){
-//   const [token, setToken] = useState();
-//   const [db, setDB] = useState();
-//   const [authUser, setAuthUser] = useState(null);
 
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       setLoading(true);
-      
-//       // get token from spotify
-//       const tokenResponse = await SpotifyController.getSpotifyToken();
-//       if (tokenResponse != null) {
-//         setToken(tokenResponse.access_token);
-//       }
-  
-//       // check auth user status
-//       const authState = onAuthStateChanged(auth, user => {
-//         setAuthUser(user ? user : null);
-//       });
-      
-//       setLoading(false);
-  
-//       return () => {
-//         setLoading(true);
-//         authState();
-//       };
-//     };
-  
-//     fetchData();
-//   }, []);
-  
-//   // get authUser firestore storage
-//   useEffect(() => {
-//     const getCurrUser = async () => {
-//       setLoading(true);
-      
-//       const response = await FirebaseController.getUser(authUser?.uid);
+UserProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+}
 
-//       if(response != null){
-//         setDB(response);
-//         setLoading(false);
-//       }
-//     }
-
-//     if(authUser != null) getCurrUser();
-//   }, [authUser]);
-
-//   const DefaultAudioPlayer = {
-//     audioSource: '',
-//     audioRef: useRef(null),
-//     isPlaying: false,
-//     maxDuration: 0,
-//     elapseDuration: 0,
-//     volume: 1,
-//   }
-  
-//   const location = useLocation();
-
-//   useEffect(() => {
-//     return () => {
-//       window.scrollTo(0, 0);
-//     }
-//   }, [location]);
-  
-//   const [state, dispatch] = useReducer(AudioReducer, DefaultAudioPlayer);
-  
-//   const ContextValue = { token, state, dispatch, db, authUser, setDB };
-  
-//   return(
-//     <>
-//       {
-//         loading == false ? (
-//           <>
-//             <UserContext.Provider value={ ContextValue }>
-//               { children }
-//             </UserContext.Provider>
-//           </>
-//         ) : (
-//           <UserContext.Provider value={ ContextValue }>
-//             <Routes>
-//               <Route path='/' element={<Sidebar />}>
-//                 <Route index element={<Home />}/>
-//                 <Route
-//                   path='/search'
-//                   element={
-//                     <QueryProvider>
-//                       <Search/>
-//                     </QueryProvider>
-//                   }
-//                 >
-//                   <Route index element={<DefaultQuery/>}/>
-//                 </Route>
-//               </Route>
-
-//               <Route path='/login' element={<Login />}/>
-//               <Route path='/register' element={<Register />}/>
-//               <Route path='*' element={<Error />}/>
-//             </Routes>
-//           </UserContext.Provider>
-//         )
-//       }
-//     </>
-//   )
-// }
+export default UserProvider;

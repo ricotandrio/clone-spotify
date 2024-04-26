@@ -3,64 +3,61 @@ import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 
-import logo from '@assets/images/Spotify_Logo_CMYK_White.png';
-import Spotify from '@assets/images/spotify.png';
-import Github from '@assets/images/bi_github.png';
-import Google from '@assets/images/flat-color-icons_google.png';
+import logo from '@src/assets/images/Spotify_Logo_CMYK_White.png';
+import Spotify from '@src/assets/images/spotify.png';
+import Github from '@src/assets/images/bi_github.png';
+import Google from '@src/assets/images/flat-color-icons_google.png';
 
-import { auth } from '@configs/firebase.js';
+import { UserContext } from '@src/contexts/UserContext.jsx';
 
-import { UserContext } from '@contexts/UserContext.jsx';
+import Loading from '@src/components/Loading.jsx';
+import { FirebaseService } from '@src/apis/services/firebase.service';
+import { loginUserSchema, validateExtractor } from '@src/apis/validations/user.validate';
 
-import Loading from '@components/Loading.jsx';
 
-import '@assets/global.css';
-import { FirebaseController } from '@apis/controllers/firebase.controller';
-
-export default function Login() {
-
-  const [accName, setAccName] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [warning, setWarning] = useState('');
-
-  const [passwordType, setpasswordType] = useState('password');
-
+const LoginPage = () => {
   const { authUser } = useContext(UserContext);
+  const [isLoading, setLoading] = useState(false);
+  const [isVisible, setVisible] = useState(false);
 
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  });
 
-  // const handleSignIn = (email, password) => {
-  //   setLoading(true);
-  //   signInWithEmailAndPassword(auth, email, password)
-  //   .then((userCredential) => {
-  //     // console.log(userCredential);
-  //     setLoading(false);
-  //   })
-  //   .catch((error) => {
-  //     console.log(`error: ${error}`);
-  //     setWarning("undefined account");
-  //     setLoading(false);
-  //   })
-  // } 
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+    form: ''
+  });
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await FirebaseController.signIn(accName, password);
+
+      const formToObject = {
+        email: form.email,
+        password: form.password
+      }
+
+      const zodValidation = validateExtractor(loginUserSchema.safeParse(formToObject));
+
+      if(zodValidation == {}) return;
+
+      // eslint-disable-next-line no-unused-vars
+      const response = await FirebaseService.signIn(formToObject);
       
     } catch (e) {
-      setWarning(e.message);
+      setErrors({ ...errors, form: e.message});
+      
+      console.log(`error: ${e.message}`);
     } finally {
       setLoading(false);
     }
         
   }
-
-  // console.log(auth?.current?.email);
 
   return (
     <>
@@ -109,10 +106,7 @@ export default function Login() {
                     action=''
                     autoComplete='off'
                     className='flex flex-col'
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      handleSignIn(accName, password);
-                    }}
+                    onSubmit={ handleSignIn }
                   >
                     <div className='flex flex-col'>
                       <label htmlFor="username" className='pt-2 pb-2'>Email or username</label>
@@ -120,27 +114,28 @@ export default function Login() {
                         id='username'
                         className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray-1 rounded-md hover:border-white placeholder:font-scbk'
                         placeholder='Email or username'
-                        value={accName}
-                        onChange={(e) => setAccName(e.target.value)}
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value})}
                       />
                     </div>
 
                     <div className='flex flex-col'>
                       <label htmlFor="password" className='pt-2 pb-2'>Password</label>
                       <div className='relative flex flex-row'>
-                        <input type={passwordType}
+                        <input 
+                          type={isVisible ? 'text' : 'password'}
                           id='password'
                           className='opacity-80 bg-[#121212] p-3 pr-10 border-2 border-gray-1 rounded-md hover:border-white placeholder:font-scbk'
                           placeholder='Password'
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
+                          value={form.password}
+                          onChange={(e) => setForm({ ...form, password: e.target.value})}
                         />
                         <div className='right-0 flex items-center p-4 z-20 absolute cursor-pointer hover:scale-105 opacity-80 hover:opacity-100'>
                           {
-                            passwordType == 'text' ? (
-                              <FontAwesomeIcon icon={faEye} size='1x' onClick={() => setpasswordType('password')} />
+                            isVisible ? (
+                              <FontAwesomeIcon icon={faEye} size='1x' onClick={() => setVisible(false)} />
                               ) : (
-                              <FontAwesomeIcon icon={faEyeSlash} size='1x' onClick={() => setpasswordType('text')} />
+                              <FontAwesomeIcon icon={faEyeSlash} size='1x' onClick={() => setVisible(true)} />
                             )
                           }
                         </div>
@@ -155,14 +150,14 @@ export default function Login() {
                     <div className='flex flex-col justify-center items-center'>
                       <button type='submit' className='w-full p-3 text-black mt-10 rounded-full flex justify-center bg-green transform hover:scale-105'>
                         {
-                          loading == true ? (
+                          isLoading == true ? (
                             <Loading />
                           ) : (
                             "Log In"
                           )
                         }
                       </button>
-                      <h2 className='mt-5 text-red-500'>{warning}</h2>
+                      <h2 className='mt-5 text-red-500'>{errors.form}</h2>
                       <a href="" className='font-scl mt-3 underline underline-offset-2 hover:text-green'>Forgot your password ? </a>
                     </div>
                   </form>
@@ -182,3 +177,4 @@ export default function Login() {
   )
 }
 
+export default LoginPage;

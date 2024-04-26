@@ -5,17 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 
-import { UserContext } from '@contexts/UserContext.jsx';
+import { UserContext } from '@src/contexts/UserContext.jsx';
 
-import UserOption from '@components/UserOption.jsx';
-import Footer from '@components/Footer.jsx';
-import Error from '@components/Error.jsx';
+import UserOption from '@src/components/UserOption.jsx';
+import Footer from '@src/components/Footer.jsx';
+import Error from '@src/pages/ErrorPage.jsx';
 
-import { ButtonStyleNext, ButtonStylePrev } from '@components/Button.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '@src/components/Button.jsx';
 
-import '@assets/global.css';
-
-export default function Profile() {
+const ProfilePage = () => {
 
   const { authUser, db } = useContext(UserContext);
 
@@ -157,4 +155,6 @@ export default function Profile() {
     </>
   )
 }
+
+export default ProfilePage;
 

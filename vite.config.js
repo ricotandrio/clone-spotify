@@ -8,17 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@public": path.resolve(__dirname, "./public"),
-      "@apis": path.resolve(__dirname, "./src/apis"),
-      "@assets": path.resolve(__dirname, "./src/assets"),
-      "@images": path.resolve(__dirname, "./src/assets/images"),
-      "@components": path.resolve(__dirname, "./src/components"),
-      "@configs": path.resolve(__dirname, "./src/configs"),
-      "@contexts": path.resolve(__dirname, "./src/contexts"),
-      "@hooks": path.resolve(__dirname, "./src/hooks"),
-      "@models": path.resolve(__dirname, "./src/models"),
-      "@pages": path.resolve(__dirname, "./src/pages"),
-      "@utils": path.resolve(__dirname, "./src/utils"),
-      "@datas": path.resolve(__dirname, "./src/datas"),
+      "@src": path.resolve(__dirname, "./src"),
     }
   },
   plugins: [react()],

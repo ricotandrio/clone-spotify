@@ -1,24 +1,22 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faHeart, faClock } from '@fortawesome/free-solid-svg-icons';
 
-import { UserContext } from '@contexts/UserContext.jsx';
-import { AudioAction } from '@contexts/UserContext.jsx';
+import { UserContext } from '@src/contexts/UserContext.jsx';
 
-import Footer from '@components/Footer.jsx';
-import Loading from '@components/Loading.jsx';
+import Footer from '@src/components/Footer.jsx';
+import Loading from '@src/components/Loading.jsx';
 
-import { ButtonStyleNext, ButtonStylePrev } from '@components/Button.jsx';
-import {DateUtil} from '@utils/DateUtil';
+import { ButtonStyleNext, ButtonStylePrev } from '@src/components/Button.jsx';
+import { DateUtil } from '@src/utils/DateUtil';
 
-import { FirebaseController } from '@apis/controllers/firebase.controller';
+import { SpotifyService } from '@src/apis/services/spotify.service';
+import { FirebaseService } from '@src/apis/services/firebase.service';
+import { AudioAction, AudioPlayerContext } from '@src/contexts/AudioPlayerContext';
 
-import { SpotifyController } from '@apis/controllers/spotify.controller';
-import '@assets/global.css';
-
-export default function Playlist() {
+const PlaylistPage = () => {
   // fetch data from spotify web api
   const [isLoading, setLoading] = useState(true);
   const [tracks, setTracks] = useState({});
@@ -31,62 +29,68 @@ export default function Playlist() {
   const navigate = useNavigate();
 
   // audio player
-  const { dispatch } = useContext(UserContext);
+  const { dispatch } = useContext(AudioPlayerContext);
 
   // spotify api to GET playlists and albums have different link
   const location = useLocation();
   const stateLocation = location.state == '/' ? "playlists" : "albums";
   
-  useEffect(() => {
-    const getPlaylist = async () => {
-      setLoading(true);
-      const response = await SpotifyController.getPlaylistById(stateLocation, id, token);
-      
-      if(response != null){
-        console.log(response);
-        setTracks(response);
-        setLoading(false);
-      }
+  const getPlaylist = useCallback(async () => {
+    setLoading(true);
+
+    try {
+      const response = await SpotifyService.getPlaylistById(stateLocation, id, token);
+
+      console.log(response);
+      setTracks(response);
+      setLoading(false);
+    } catch(e) {
+      console.log();
     }
-    
-    getPlaylist();
   }, [id, token, stateLocation]);
 
-
-  const updateAlbumState = () => {
-    // console.log(tracks);
-    // console.log(db);
-
+  const handleUpdateLibrary = async () => {
     if(isLoading == true) return;
 
-    const found = db?.user_library?.filter((curr) => curr.id === tracks.id);
-
-    if(found.length === 1){
-      // remove it from database
-      const newlibrary = db?.user_library?.filter((curr) => curr.id !== tracks.id);
-      
-      setDB({ ...db, user_library: newlibrary });
-      
-      pushLibraryService(authUser?.uid, newlibrary);
-
-    } else if(db?.user_library.length > 3){
-      // alert maximum library 
-      window.alert("The library has reached its maximum size.");
-    } else if(found.length == 0){
-      // insert it into database
-      const newlibrary = [ ...db?.user_library, {
+    try {
+      const response = await FirebaseService.updateLibrary(authUser?.uid, tracks.id, {
         "name": tracks.name,
         "id": tracks.id,
         "images": tracks.images[0].url,
         "state": tracks.type == "playlist" ? '/' : '/album',
         "page": "album"
-      } ];
+      });
 
-      setDB({ ...db, user_library: newlibrary });
+      setDB({
+        ...db,
+        user_library: response
+      })
       
-      pushLibraryService(authUser?.uid, newlibrary);
+    } catch(e) {
+      console.log(`error: ${e}`);
+    } finally {
+      setLoading(false);
     }
+    
   }
+
+  const handleAudioPlay = (track) => {
+    // console.log('get in toggle');
+    dispatch({
+      type: AudioAction.SET_AUDIO_SOURCE,
+      payload: {
+        src: tracks.type == "playlist" ?
+          { ...track.track, type: "playlist"} : { ...track, images: tracks.images[0].url }
+      }
+    })
+  }
+  
+  useEffect(() => {
+    getPlaylist();
+  }, [id, token, stateLocation, getPlaylist]);
+
+  console.log("playlist page render");
+  console.log(db?.user_library);
 
   return (
     <>
@@ -132,7 +136,7 @@ export default function Playlist() {
                 icon={faHeart}
                 size='2xl'
                 style={{ color: db?.user_library?.filter((curr) => curr.id === tracks.id).length == 1 && isLoading == false ? 'red' : 'white' }}
-                onClick={ updateAlbumState }
+                onClick={ handleUpdateLibrary }
               />
             </div>
           </section>
@@ -159,16 +163,7 @@ export default function Playlist() {
                       <div
                         key={index}
                         className='group cursor-pointer w-[96%] flex flex-row m-1 p-2 items-center hover:bg-black-3'
-                        onClick={() => {
-                          // console.log('get in toggle');
-                          dispatch({
-                            type: AudioAction.SET_AUDIO_SOURCE,
-                            payload: {
-                              src: tracks.type == "playlist" ?
-                                { ...track?.track, type: "playlist"} : { ...track, images: tracks.images[0].url }
-                            }
-                          })
-                        }}
+                        onClick={() => handleAudioPlay(track) }
                       >
                         <div className='w-[3%] flex items-center justify-center mr-2'>
                           <h1 className='group-hover:hidden opacity-80'>{index + 1}</h1>
@@ -200,7 +195,7 @@ export default function Playlist() {
                         </div>
                         <div className='w-[22%]'>
                           <h1 className='font-scbk line-clamp-1 text-sm opacity-80 pl-9'>
-                            {tracks.type == "playlist" ? DateUtil.extractYearMonthDay(track?.added_at) : tracks?.release_date}
+                            {tracks.type == "playlist" ? DateUtil.extractYearMonthDay(new Date(track?.added_at)) : new Date(tracks?.release_date)}
                           </h1>
                         </div>
                         <div className='w-[15%] pl-3 opacity-80 font-scbk text-sm text-center'>
@@ -219,3 +214,5 @@ export default function Playlist() {
     </>
   )
 }
+
+export default PlaylistPage;

@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { signOut } from 'firebase/auth';
-import { auth } from '@configs/firebase';
+import { auth } from '@src/configs/firebase';
 
-import '@assets/global.css';
+import '@src/assets/global.css';
 
 UserOption.propTypes = {
   _setProfileVisible: PropTypes.func.isRequired,

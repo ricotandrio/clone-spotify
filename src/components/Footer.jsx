@@ -1,10 +1,10 @@
-import Twitter from '@images/uil_twitter.png';
-import Facebook from '@images/ic_twotone-facebook.png';
-import Instagram from '@images/bi_instagram.png';
+import Twitter from '@src/assets/images/uil_twitter.png';
+import Facebook from '@src/assets/images/ic_twotone-facebook.png';
+import Instagram from '@src/assets/images/bi_instagram.png';
 
-import '@assets/global.css';
+import '@src/assets/global.css';
 
-export default function Footer() {
+const Footer = () => {
   return (
     <>
       <footer className='pb-32 p-2 mt-20'>
@@ -63,3 +63,4 @@ export default function Footer() {
   )
 }
 
+export default Footer;

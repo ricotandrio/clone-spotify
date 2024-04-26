@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import '@assets/global.css';
+import '@src/assets/global.css';
 
-export default function Error() {
+const Error = () => {
   return (
     <>
       <div className='w-full h-screen flex justify-center items-center'>
@@ -21,3 +21,4 @@ export default function Error() {
   )
 }
 
+export default Error;

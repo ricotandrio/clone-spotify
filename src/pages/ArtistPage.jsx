@@ -1,24 +1,24 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import { SpotifyController } from '@apis/controllers/spotify.controller';
-import { FirebaseController } from '@apis/controllers/firebase.controller';
-import { UserContext } from '@contexts/UserContext.jsx';
+import { UserContext } from '@src/contexts/UserContext.jsx';
 
-import Footer from '@components/Footer.jsx';
-import Loading from '@components/Loading.jsx';
-import UserOption from '@components/UserOption.jsx';
+import Footer from '@src/components/Footer.jsx';
+import Loading from '@src/components/Loading.jsx';
+import UserOption from '@src/components/UserOption.jsx';
 
-import SongSection from '@pages/Home/SongSection.jsx';
+import SongSection from '@src/pages/Home/SongSection.jsx';
 
-import { ButtonStyleNext, ButtonStylePrev } from '@components/Button.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '@src/components/Button.jsx';
 
-import '@assets/global.css';
+import '@src/assets/global.css';
+import { SpotifyService } from '@src/apis/services/spotify.service';
+import { FirebaseService } from '@src/apis/services/firebase.service';
 
-export default function Artists() {
+const ArtistPage = () => {
   const [profileVisible, setProfileVisible] = useState(false);
 
   // fetch data from spotify web api
@@ -29,24 +29,29 @@ export default function Artists() {
   const { login, token, db, setDB, authUser } = useContext(UserContext);
   const { id } = useParams(); // get id from browser link
 
-  useEffect(() => {
-    const getArtist = async () => {
-      setLoading(true);
-      const responseArtist = await SpotifyController.getArtist(token, id);
-      const responseAlbum = await SpotifyController.getAlbumByArtist(token, id);
+  const getArtist = useCallback(async () => {
 
+    try {
+      setLoading(true);
+      const responseArtist = await SpotifyService.getArtist(token, id);
+      const responseAlbum = await SpotifyService.getAlbumByArtist(token, id);
+  
       if(responseArtist != null){
         setArtist(responseArtist);
         setLoading(false);
       }
-
+  
       if(responseAlbum != null){
         setAlbums(responseAlbum);
       }
-    }
-
-    if(token) getArtist();
+    } catch(e) {
+      console.log(`error: ${e.message}`);
+    } 
   }, [id, token]);
+
+  useEffect(() => {
+    if(token) getArtist();
+  }, [id, token, getArtist]);
 
   const updateArtistState = () => {
 
@@ -60,13 +65,13 @@ export default function Artists() {
       
       setDB({ ...db, user_library: newlibrary });
       
-      pushLibraryService(authUser?.uid, newlibrary);
+      FirebaseService.pushLibrary(authUser?.uid, newlibrary);
     } else if(db?.user_library.length > 3){
       // alert maximum library 
       window.alert("The library has reached its maximum size.");
     } else if(found.length == 0){
       // insert it into database
-      const newlibrary = [ ...db?.user_library, {
+      const newlibrary = [ ...db.user_library, {
         "name": artist.name,
         "id": artist.id,
         "images": artist.images[0].url,
@@ -76,7 +81,7 @@ export default function Artists() {
 
       setDB({ ...db, user_library: newlibrary });
       
-      pushLibraryService(authUser?.uid, newlibrary);
+      FirebaseService.pushLibrary(authUser?.uid, newlibrary);
     }
   }
 
@@ -182,3 +187,5 @@ export default function Artists() {
     </>
   )
 }
+
+export default ArtistPage;

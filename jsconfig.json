@@ -3,16 +3,7 @@
     "baseUrl": "./",
     "paths": {
       "@public/*": ["public/*"],
-      "@apis/*": ["src/apis/*"],
-      "@assets/*": ["src/assets/*"],
-      "@components/*": ["src/components/*"],
-      "@configs/*": ["src/configs/*"],
-      "@contexts/*": ["src/contexts/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@models/*": ["src/models/*"],
-      "@pages/*": ["src/pages/*"],
-      "@utils/*": ["src/utils/*"],
-      "@datas/*": ["src/assets/datas/*"],
+      "@src/*": ["src/*"],
     }
   }
 }

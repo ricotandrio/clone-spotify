@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import banners from '@assets/datas/banner.jsx';
+import banners from '@src/assets/datas/banner.jsx';
 
-import { UserContext } from '@contexts/UserContext.jsx';
+import { UserContext } from '@src/contexts/UserContext.jsx';
 
-import '@assets/global.css';
+import '@src/assets/global.css';
 
-export default function DefaultQuery() {
+const DefaultOutlet = () => {
   const navigate = useNavigate();
   const { login } = useContext(UserContext);
 
@@ -38,3 +38,5 @@ export default function DefaultQuery() {
     </>
   )
 }
+
+export default DefaultOutlet;

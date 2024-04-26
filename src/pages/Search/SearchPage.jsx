@@ -4,18 +4,18 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faDownload, faSearch } from '@fortawesome/free-solid-svg-icons';
 
-import { UserContext } from '@contexts/UserContext.jsx';
-import { QueryContext } from '@contexts/QueryContext.jsx';
+import { UserContext } from '@src/contexts/UserContext.jsx';
+import { QueryContext } from '@src/contexts/QueryContext.jsx';
 
-import Footer from '@components/Footer.jsx';
-import UserOption from '@components/UserOption.jsx';
-import AudioPlayer from '@components/AudioPlayer.jsx';
+import Footer from '@src/components/Footer.jsx';
+import UserOption from '@src/components/UserOption.jsx';
+import AudioPlayer from '@src/components/AudioControllerBar';
 
-import { ButtonStyleNext, ButtonStylePrev } from '@components/Button.jsx';
+import { ButtonStyleNext, ButtonStylePrev } from '@src/components/Button.jsx';
 
-import '@assets/global.css';
+import '@src/assets/global.css';
 
-export default function Search() {
+const SearchPage = () => {
   const { authUser } = useContext(UserContext);
   const { query, setQuery } = useContext(QueryContext);
 
@@ -108,3 +108,5 @@ export default function Search() {
     </>
   )
 }
+
+export default SearchPage;

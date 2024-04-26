@@ -1,17 +1,17 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBackward, faForward, faHeadset, faListUl, faPause, faPlay, faVolumeHigh, faVolumeMute } from '@fortawesome/free-solid-svg-icons';
 
-import { UserContext } from '@contexts/UserContext.jsx';
-import { AudioAction } from '@contexts/UserContext';
+import { DateUtil } from '@src/utils/DateUtil';
+import '@src/assets/global.css';
+import { AudioAction, AudioPlayerContext } from '@src/contexts/AudioPlayerContext';
 
-import { DateUtil } from '@utils/DateUtil';
-import '@assets/global.css';
+const AudioControllerBar = () => {
+  const {state, dispatch} = useContext(AudioPlayerContext);
+  console.log("audio controller bar render");
 
-export default function AudioPlayer() {
-  const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,12 +29,12 @@ export default function AudioPlayer() {
     }
 
     return () => clearInterval(interval);
-  }, [state.isPlaying]);
+  }, [state.isPlaying, dispatch, state.audioSource, state.audioRef]);
 
   return (
     <>
       <audio
-        ref={state.audioRef}
+        ref={state?.audioRef}
         src={state?.audioSource?.preview_url}
       />
 
@@ -68,9 +68,9 @@ export default function AudioPlayer() {
                 <div
                   className='relative cursor-pointer p-3 border rounded-full w-10 aspect-square flex items-center justify-center bg-white hover:scale-105'
                   onClick={() => {
-                    // console.log(Math.ceil(state.elapseDuration), 'to' , Math.floor(state.maxDuration/1000));
-                    if(Math.ceil(state.elapseDuration) == Math.floor(state.maxDuration / 1000)){
-                      state.elapseDuration = 0;
+                    // console.log(Math.ceil(state.elapse), 'to' , Math.floor(state.maxDuration/1000));
+                    if(Math.ceil(state.elapse) == Math.floor(state.maxDuration / 1000)){
+                      state.elapse = 0;
                       state.isPlaying = false;
                     }
                     dispatch({ type: AudioAction.SET_PLAY })
@@ -84,14 +84,14 @@ export default function AudioPlayer() {
 
               </div>
               <div className='flex flex-row items-center w-full justify-center gap-2 mt-2'>
-                <h1 className='text-xs opacity-90'>{DateUtil.convertMsToMMSS(state.elapseDuration * 1000)}</h1>
+                <h1 className='text-xs opacity-90'>{DateUtil.convertMsToMMSS(state.elapse * 1000)}</h1>
                 <div className='w-1/2 bg-gray-1 h-1 rounded-full flex'>
                   <div
                     className='bg-white rounded-full aspect-square'
-                    style={{width: `${Math.ceil((state.elapseDuration))/Math.floor(state.maxDuration/1000) * 100}%`}}
+                    style={{width: `${Math.ceil((state.elapse))/Math.floor(state.audioMaxDuration/1000) * 100}%`}}
                   />
                 </div>
-                <h1 className='text-xs opacity-90'>{DateUtil.convertMsToMMSS(Math.floor(state.maxDuration))}</h1>
+                <h1 className='text-xs opacity-90'>{DateUtil.convertMsToMMSS(Math.floor(state.audioMaxDuration))}</h1>
               </div>
             </section>
 
@@ -144,3 +144,5 @@ export default function AudioPlayer() {
     </>
   )
 }
+
+export default AudioControllerBar;

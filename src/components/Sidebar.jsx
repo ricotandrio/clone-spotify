@@ -1,26 +1,24 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { UserContext } from '@contexts/UserContext';
-import AudioPlayer from '@components/AudioPlayer';
+import { UserContext } from '@src/contexts/UserContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse, faMagnifyingGlass, faPlus, faLinesLeaning, faBars, faX } from '@fortawesome/free-solid-svg-icons';
 
-import '@assets/global.css';
+import '@src/assets/global.css';
+import AudioControllerBar from '@src/components/AudioControllerBar';
 
-Sidebar.propTypes = {
-  _favorite: PropTypes.array,
-}
-
-export default function Sidebar({ _favorite }) {
+const Sidebar = ({ _favorite }) => {
   const [width, setWidth] = useState(screen.width);
   const [menu, setMenu] = useState(false);
   const [filterBar, setFilterBar] = useState("ALL");
   const navigate = useNavigate();
   const location = useLocation();
+
+  console.log("Sdf");
   
   const { db, authUser } = useContext(UserContext);
   
@@ -44,8 +42,15 @@ export default function Sidebar({ _favorite }) {
     }
   }
 
+  const renderAudioControllerBar = useCallback(() => {
+    return (
+      <AudioControllerBar />
+    )
+  }, []);
+
   return (
     <>
+      { renderAudioControllerBar() }
       <div className='z-[990] relative'>
         {
           width >= '640' ? (
@@ -124,8 +129,7 @@ export default function Sidebar({ _favorite }) {
                   db && (
                     <div>
                       {
-                        db?.user_library
-                        .filter((curr) => {
+                        db?.user_library?.filter((curr) => {
                           if(filterBar == "ALL"){
                             return curr;
                           } else if(filterBar == "PLAYLISTS"){
@@ -241,7 +245,12 @@ export default function Sidebar({ _favorite }) {
         }
       </div>
       <Outlet />
-      <AudioPlayer />
     </>
   )
 }
+
+Sidebar.propTypes = {
+  _favorite: PropTypes.array,
+}
+
+export default Sidebar;

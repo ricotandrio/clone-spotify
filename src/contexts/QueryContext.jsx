@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 
 export const QueryContext = createContext();
 
-QueryProvider.propTypes = {
-  children: PropTypes.element.isRequired,
-}
-
-export default function QueryProvider({ children }){
+const QueryProvider = ({ children }) => {
   const [query, setQuery] = useState(false);
   
   return(
@@ -16,3 +12,9 @@ export default function QueryProvider({ children }){
     </QueryContext.Provider>
   )
 }
+
+QueryProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+}
+
+export default QueryProvider;

@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
-import { UserContext } from '@contexts/UserContext.jsx';
+import { UserContext } from '@src/contexts/UserContext.jsx';
 
-import '@assets/global.css';
+import '@src/assets/global.css';
 
 SongSection.propTypes = {
   data: PropTypes.array.isRequired,

@@ -1,13 +1,10 @@
 export class DateUtil extends Date {
-  constructor(date) {
-    super(date);
-  }
 
-  static extractYearMonthDay = () => {
+  static extractYearMonthDay = (date) => {
 
-    const year = this.date.getFullYear();
-    const month = (this.date.getMonth() + 1).toString().padStart(2, '0');
-    const day = this.date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
   
     return `${year}-${month}-${day}`;
   }
@@ -18,6 +15,14 @@ export class DateUtil extends Date {
     const seconds = totalSeconds % 60;
   
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  static toDate = (seconds) => {
+    return new Date(seconds * 1000);
+  }
+
+  static toIsoString = (date) => {
+    return date.toISOString();
   }
   
 }

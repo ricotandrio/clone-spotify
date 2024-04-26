@@ -1,11 +1,8 @@
-import { createContext, createRef } from "react";
+import { createContext, createRef, useEffect, useReducer } from "react";
 import PropTypes from 'prop-types';
+import { useLocation } from "react-router-dom";
 
 export const AudioPlayerContext = createContext();
-
-AudioPlayerProvider.propTypes = {
-  children: PropTypes.element.isRequired,
-}
 
 export const AudioAction = {
   SET_AUDIO_SOURCE: 'SET_AUDIO_SOURCE',
@@ -14,13 +11,14 @@ export const AudioAction = {
   SET_ELAPSE: 'SET_ELAPSE',
   SET_NEXT: 'SET_NEXT',
   SET_PREV: 'SET_PREV',
+  SET_STOP: 'SET_STOP',
 }
 
 const AudioReducer = (state, action) => {
   switch(action.type) {
     case AudioAction.SET_AUDIO_SOURCE:
       // console.log('progress in audioaction.setaudiosource');
-      // console.log(action.payload);
+      console.log(action.payload);
       if(state.isPlaying == true){
         state.audioRef.current.pause();
         state.audioSource = '';
@@ -65,7 +63,7 @@ const AudioReducer = (state, action) => {
         state.audioSource = '';
       }
 
-      const nextIndex = (state.audioAlbumIndex + 1) % state.audioAlbum.length;
+      var nextIndex = (state.audioAlbumIndex + 1) % state.audioAlbum.length;
 
       return {
         ...state,
@@ -82,7 +80,7 @@ const AudioReducer = (state, action) => {
         state.audioSource = '';
       }
 
-      const prevIndex = state.audioAlbumIndex === 0 ? state.audioAlbum.length - 1 : state.audioAlbumIndex - 1;
+      var prevIndex = state.audioAlbumIndex === 0 ? state.audioAlbum.length - 1 : state.audioAlbumIndex - 1;
 
       return {
         ...state,
@@ -93,12 +91,19 @@ const AudioReducer = (state, action) => {
         elapsed: 0,
         isPlaying: true,
       }
+    case AudioAction.SET_STOP:
+      state.audioRef.current.pause();
+      
+      return {
+        ...state,
+        isPlaying: false,
+      }
     default:
       break;
   }
 }
 
-export default function AudioPlayerProvider({ children }){
+const AudioPlayerProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AudioReducer, {
     audioSource: '',
     audioMaxDuration: 0,
@@ -116,3 +121,9 @@ export default function AudioPlayerProvider({ children }){
     </AudioPlayerContext.Provider>
   )
 }
+
+AudioPlayerProvider.propTypes = {
+  children: PropTypes.element.isRequired,
+}
+
+export default AudioPlayerProvider;

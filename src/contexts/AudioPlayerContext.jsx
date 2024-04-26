@@ -1,6 +1,7 @@
 import { createContext, createRef, useEffect, useReducer } from "react";
 import PropTypes from 'prop-types';
 import { useLocation } from "react-router-dom";
+import { FirebaseService } from "@src/apis/services/firebase.service";
 
 export const AudioPlayerContext = createContext();
 
@@ -40,6 +41,7 @@ const AudioReducer = (state, action) => {
       } else {
         state.audioRef.current.play();
       }
+
       return {
         ...state,
         isPlaying: !state.isPlaying,

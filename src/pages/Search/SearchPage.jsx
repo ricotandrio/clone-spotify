@@ -29,7 +29,7 @@ const SearchPage = () => {
 
   return (
     <>
-      <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
+      <div className='w-full h-full ml-1 pt-2 pr-2 top-0 left-0'>
         <div className='relative bg-black-1 w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>

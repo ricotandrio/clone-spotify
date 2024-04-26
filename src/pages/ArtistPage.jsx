@@ -87,7 +87,7 @@ const ArtistPage = () => {
 
   if(isLoading == true){
     return (
-      <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
+      <div className='w-full h-full ml-1 pt-2 pr-2 top-0 left-0'>
         <Loading />
       </div>
     );

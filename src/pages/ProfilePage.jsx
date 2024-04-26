@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,22 +12,56 @@ import Footer from '@src/components/Footer.jsx';
 import Error from '@src/pages/ErrorPage.jsx';
 
 import { ButtonStyleNext, ButtonStylePrev } from '@src/components/Button.jsx';
+import { FirebaseService } from '@src/apis/services/firebase.service';
 
 const ProfilePage = () => {
 
-  const { authUser, db } = useContext(UserContext);
+  const { authUser, db, setDB } = useContext(UserContext);
 
   const [profileVisible, setProfileVisible] = useState(false);
 
   const navigate = useNavigate();
 
-  if(!authUser || !db) return <Error />
 
+  const [isLoading, setLoading] = useState(false);
+
+  const [topTracks, setTopTracks] = useState([]);
+  const [topArtists, setTopArtists] = useState([]);
+  
+  useEffect(() => {
+
+    const fetchData = async () => {
+
+      try {
+        setLoading(true);
+        const topArtists = await FirebaseService.getTopArtists(authUser.uid); 
+
+        const topTracks = await FirebaseService.getTopTracks(authUser.uid);
+
+        setTopArtists(topArtists);
+        setTopTracks(topTracks);
+
+        console.log(topArtists);
+        console.log(topTracks);
+
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if(authUser) {
+      fetchData();
+    }
+  }, [authUser, db, setDB]);
   // console.log(db.top_artists);
-
+  
+  
+  if(!authUser || !db) return <Error />
   return (
     <>
-      <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
+      <div className='w-full h-full ml-1 pt-2 pr-2 top-0 left-0'>
         <div className='relative bg-[#484848] w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center'>
             <div className='gap-6 flex'>
@@ -69,23 +103,24 @@ const ProfilePage = () => {
           </div>
           <>
             {
-              !db ? (
+              isLoading ? (
                 <div>
                   <h1 className='text-2xl opacity-80'>... no data</h1>
                 </div>
               ) : (
                 <div className='p-5 w-full flex flex-row items-center'>{
-                  db?.top_artists?.map((artist) => (
+                  topArtists?.map((artist, index) => (
                     <div
-                      key={artist.spotify_id}
+                      key={index}
                       className='w-1/4 m-2 flex flex-col items-center justify-center relative cursor-pointer bg-black-1 rounded-xl ease-in-out duration-300
                     hover:bg-[#282828] group/button'
+                      onClick={() => navigate(`/artist/${encodeURIComponent(artist.songArtist)}`)}
                     >
                       <div className='w-3/4 m-4 h-40 rounded-full overflow-hidden flex items-center justify-center'>
-                        <img src={artist.artist_img} alt={artist.artist_img} className='rounded-full aspect-square'/>
+                        <img src={artist.songImage} alt={artist.songArtist} className='rounded-full aspect-square'/>
                       </div>
                       <div className='mt-2 mb-8 w-3/4'>
-                        <h1 className=''>{artist.name}</h1>
+                        <h1 className=''>{artist.songArtist}</h1>
                         <h2 className='text-md font-scbk opacity-80'>Artist</h2>
                       </div>
 
@@ -110,38 +145,38 @@ const ProfilePage = () => {
           </div>
           <>
             {
-              !db ? (
+              isLoading ? (
                 <div className='ml-5 mt-3'>
                   <h1 className='text-2xl opacity-80'>... no data</h1>
                 </div>
               ) : (
                 <div>{
-                  db?.top_tracks?.map((track, index) => (
-                    <div key={track.spotify_id}
+                  topTracks?.map((track, index) => (
+                    <div key={index}
                       className='relative flex flex-row items-center h-14 gap-2 m-2 ml-5 mr-5 bg-black-1 hover:bg-[#282828]'
                     >
                       <div className='w-12 flex items-center justify-center h-full opacity-80'>
                         {index + 1}
                       </div>
                       <div className='w-14 p-2 h-full'>
-                        <img src={track.track_img} alt={track.track_img} className=''/>
+                        <img src={track.songImage} alt={track.songName} className=''/>
                       </div>
                       <div className='w-1/2'>
                         <h1
                           className='font-scbk text-md cursor-pointer underline underline-offset-2 decoration-transparent hover:decoration-current'
-                          onClick={() => navigate(`/search/${encodeURIComponent(track.title)}`)}
+                          onClick={() => navigate(`/search/${encodeURIComponent(track.songName)}`)}
                         >
-                          {track.title}
+                          {track.songName}
                         </h1>
-                        <h2 className='font-scbk text-sm opacity-80'>{track.artists}</h2>
+                        <h2 className='font-scbk text-sm opacity-80'>{track.songArtist}</h2>
                       </div>
 
                       <div className='w-1/4 text-sm opacity-80 font-scbk'>
-                        {track.album_name}
+                        {track.songAlbum}
                       </div>
 
                       <div className='text-sm opacity-80 font-scbk'>
-                        {track.duration}
+                        {track.duration || `00:00`}
                       </div>
                     </div>
                   ))

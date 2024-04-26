@@ -94,7 +94,7 @@ const PlaylistPage = () => {
 
   return (
     <>
-      <div className='relative w-full sm:w-3/4 h-full pt-2 pr-2 ml-[3rem] sm:ml-[20rem] top-0'>
+      <div className='w-full h-full ml-1 pt-2 pr-2 top-0 left-0'>
         <nav className='relative bg-gradient-to-b from-[#484848] to-black w-full h-22 pt-2 rounded-t-xl'>
           <div className='w-full h-16 pl-8 pr-2 pb-2 flex items-center gap-6'>
             <ButtonStylePrev />

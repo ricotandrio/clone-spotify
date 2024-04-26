@@ -19,7 +19,7 @@ const Sidebar = ({ _favorite }) => {
   const location = useLocation();
 
   console.log("Sdf");
-  
+
   const { db, authUser } = useContext(UserContext);
   
   useEffect(() => {
@@ -51,10 +51,10 @@ const Sidebar = ({ _favorite }) => {
   return (
     <>
       { renderAudioControllerBar() }
-      <div className='z-[990] relative'>
+      <div className='flex h-screen'>
         {
           width >= '640' ? (
-            <div className='fixed w-1/4 h-screen p-2 z-10 rounded-b-md' >
+            <div className='w-1/4 h-screen p-2 z-10 rounded-b-md overflow-y-auto hide-scrollbar'>
               <div className='h-1/5 p-2 pl-6 flex flex-col justify-center rounded-xl bg-black-1'>
                 <ul className='text-l'>
                   <NavLink
@@ -76,7 +76,7 @@ const Sidebar = ({ _favorite }) => {
                 </ul>
               </div>
 
-              <div className='h-screen bg-black-1 rounded-xl mt-2 flex flex-col'>
+              <div className='h-screen relative bg-black-1 rounded-xl mt-2 flex flex-col'>
                 <div className='mt-6 ml-6 font-scbb flex flex-row items-center'>
                   <div className='cursor-pointer opacity-80 ease-in-out duration-300 hover:opacity-100 flex flex-row gap-5 items-center'>
                     <FontAwesomeIcon icon={faLinesLeaning} size='xl'/>
@@ -180,7 +180,7 @@ const Sidebar = ({ _favorite }) => {
               </div>
             </div>
           ) : (
-            <div className='fixed w-[3rem] opacity-80 h-screen'>
+            <div className='fixed w-[3rem] opacity-80 h-screen overflow-y-auto hide-scrollbar'>
               <div className='flex items-center justify-center p-3'>
                 <FontAwesomeIcon icon={faBars} size='xl' onClick={ () => setMenu(true) }/>
               </div>
@@ -243,8 +243,10 @@ const Sidebar = ({ _favorite }) => {
             </div>
           )
         }
+          <div className='overflow-y-auto flex-1 relative overflow-x-hidden'>
+            <Outlet />
+          </div>
       </div>
-      <Outlet />
     </>
   )
 }

@@ -7,13 +7,17 @@ import { faBackward, faForward, faHeadset, faListUl, faPause, faPlay, faVolumeHi
 import { DateUtil } from '@src/utils/DateUtil';
 import '@src/assets/global.css';
 import { AudioAction, AudioPlayerContext } from '@src/contexts/AudioPlayerContext';
+import { FirebaseService } from '@src/apis/services/firebase.service';
+import { UserContext } from '@src/contexts/UserContext';
 
 const AudioControllerBar = () => {
   const {state, dispatch} = useContext(AudioPlayerContext);
   console.log("audio controller bar render");
 
-  const navigate = useNavigate();
+  const { authUser } = useContext(UserContext);
 
+  const navigate = useNavigate();
+    
   useEffect(() => {
     let interval;
     if(state.audioSource && state.isPlaying){
@@ -31,6 +35,28 @@ const AudioControllerBar = () => {
     return () => clearInterval(interval);
   }, [state.isPlaying, dispatch, state.audioSource, state.audioRef]);
 
+
+  const playButtonHandler = () => {
+    // console.log(Math.ceil(state.elapse), 'to' , Math.floor(state.maxDuration/1000));
+    if(Math.ceil(state.elapse) == Math.floor(state.maxDuration / 1000)){
+      state.elapse = 0;
+      state.isPlaying = false;
+    }
+
+    FirebaseService.pushListeningHistory(
+      authUser?.uid,
+      state?.audioSource?.id,
+      state?.audioSource?.type == "playlist" ? state?.audioSource?.album?.images[0]?.url : state?.audioSource?.images,
+      state?.audioSource?.name,
+      state?.audioSource?.artists[0]?.name,
+      state?.audioSource?.album?.name,
+      state?.maxDuration,
+    );
+
+
+
+    dispatch({ type: AudioAction.SET_PLAY })
+  }
   return (
     <>
       <audio
@@ -67,14 +93,7 @@ const AudioControllerBar = () => {
                 </span>
                 <div
                   className='relative cursor-pointer p-3 border rounded-full w-10 aspect-square flex items-center justify-center bg-white hover:scale-105'
-                  onClick={() => {
-                    // console.log(Math.ceil(state.elapse), 'to' , Math.floor(state.maxDuration/1000));
-                    if(Math.ceil(state.elapse) == Math.floor(state.maxDuration / 1000)){
-                      state.elapse = 0;
-                      state.isPlaying = false;
-                    }
-                    dispatch({ type: AudioAction.SET_PLAY })
-                  }}
+                  onClick={() => playButtonHandler()}
                 >
                   <FontAwesomeIcon icon={state.isPlaying == false || state?.audioRef?.current?.paused ? faPlay : faPause} size='sm' className='text-black'/>
                 </div>

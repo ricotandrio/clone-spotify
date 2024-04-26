@@ -1,5 +1,5 @@
 import { ResponseError } from "@src/apis/errors/ResponseError";
-import { getDocs, collection, setDoc, doc, FieldPath, getDoc, deleteDoc, Timestamp, onSnapshot, query } from "firebase/firestore";
+import { getDocs, collection, setDoc, doc, FieldPath, getDoc, deleteDoc, Timestamp, onSnapshot, query, FieldValue, collectionGroup } from "firebase/firestore";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { db } from "@src/configs/firebase";
 import { auth } from "@src/configs/firebase";
@@ -107,12 +107,12 @@ export class FirebaseService {
     }
 
     const library = await getDocs(collection(db, "account", uid, "user_library"));
-    const listening = await getDocs(collection(db, "account", uid, "user_listening"));
+    const history = await getDocs(collection(db, "account", uid, "listening_history"));
 
     return {
       ...currentAccount.data(),
       user_library: library.docs.map(doc => doc.data()),
-      user_listening: listening.docs.map(doc => doc.data())
+      listening_history: history.docs.map(doc => doc.data())
     };
   }
 
@@ -130,7 +130,6 @@ export class FirebaseService {
     const newLibrary = await getDocs(collection(db, "account", userId, "user_library"));
     
     return newLibrary.docs.map(doc => doc.data());
-
   }
 
   static isLibraryExist = async (userId, libraryId) => {
@@ -142,8 +141,66 @@ export class FirebaseService {
     }
   }
 
-  static watchLibrary = async (uid, callback) => {
-    return onSnapshot(collection(db, "account", uid, "user_library"), callback);
+  static pushListeningHistory = async (userId, songId, songImage, songName, songArtist, songAlbum, duration) => {
+    console.log(`userid: ${userId}`);
+    console.log(`songId: ${songId}`);
+
+    const docRef = doc(db, "account", userId, "listening_history", songId);
+
+    const getRef = await getDoc(docRef);
+
+    if(getRef.exists()) {
+      await setDoc(docRef, {
+        count: getRef.data().count + 1
+      }, { merge: true });
+
+      return;
+    }
+
+    await setDoc(doc(db, "account", userId, "listening_history", songId), {
+      songId: songId,
+      songImage: songImage,
+      songName: songName,
+      songArtist: songArtist,   
+      songAlbum: songAlbum,
+      timestamp: Timestamp.now(),
+      count: 1,
+      duration: duration
+    }, { merge: true });
+
   }
 
+  static getTopArtists = async (userId) => {
+    const q = query(collection(db, "account", userId, "listening_history"));
+    const querySnapshot = await getDocs(q);
+
+    const topArtists = querySnapshot.docs.map(doc => doc.data());
+
+    console.log(topArtists);
+
+    const sortedTopArtists = topArtists.reduce((acc, curr) => {
+      if(acc[curr.songArtist]) {
+        acc[curr.songArtist].count += curr.count;
+      } else {
+        acc[curr.songArtist] = curr;
+      }
+
+      return acc;
+    }, {});
+
+    const sortedTopArtistsArray = Object.values(sortedTopArtists).sort((a, b) => b.count - a.count);
+
+    return sortedTopArtistsArray.slice(0, 5);
+  }
+
+  static getTopTracks = async (userId) => {
+    const q = query(collection(db, "account", userId, "listening_history"));
+    const querySnapshot = await getDocs(q);
+
+    const topTracks = querySnapshot.docs.map(doc => doc.data());
+
+    const sortedTopTracks = topTracks.sort((a, b) => b.count - a.count);
+
+    return sortedTopTracks.slice(0, 5);
+  }
 }

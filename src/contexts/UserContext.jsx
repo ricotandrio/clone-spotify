@@ -12,7 +12,11 @@ export const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [userContextIsLoading, setUserContextIsLoading] = useState(true);
   const [token, setToken] = useState();
+
+  // only checking if user is logged in or not
   const [authUser, setAuthUser] = useState({});
+
+  // all user data from firebase stored here
   const [db, setDB] = useState();
 
   const userAppInit = async () => {

@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
 import Spotify from "@src/assets/images/spotify.png";
+
+import '@src/assets/global.css';
 
 const ErrorPage = () => {
   return (
@@ -13,16 +14,15 @@ const ErrorPage = () => {
           We can’t seem to find the page you are looking for.
         </p>
 
-        <Link
-          to="/"
+        <a
           className="mt-10 rounded-full bg-white px-10 py-4 text-black hover:scale-105"
         >
           Home
-        </Link>
+        </a>
 
-        <Link to="/" className="mt-10 text-white hover:underline">
+        <a className="mt-10 text-white hover:underline">
           Help
-        </Link>
+        </a>
       </div>
     </>
   );

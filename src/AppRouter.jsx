@@ -14,6 +14,8 @@ import HomePage from "./pages/HomePage";
 import Sidebar from "./pages/Sidebar";
 import AudioPlayerProvider from "./contexts/AudioPlayerContext";
 
+import '@src/assets/global.css';
+
 const AppRouter = () => {
   return (
     <>

@@ -15,12 +15,15 @@ const ErrorPage = () => {
 
         <Link
           to="/"
-          className="mt-10 rounded-full bg-white px-10 py-4 text-black hover:scale-105"
+          className="mt-10 cursor-pointer rounded-full bg-white px-10 py-4 text-black hover:scale-105"
         >
           Home
         </Link>
 
-        <Link to="/" className="mt-10 text-white hover:underline">
+        <Link
+          to="/"
+          className="mt-10 cursor-pointer text-white hover:underline"
+        >
           Help
         </Link>
       </div>

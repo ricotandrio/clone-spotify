@@ -81,7 +81,6 @@ const PlaylistPage = () => {
 
   // handle audio play function
   const handleAudioPlay = (track) => {
-    
     FirebaseService.pushListeningHistory(
       authUser?.uid,
       tracks.type == "album" ? track?.id : track?.track?.id,

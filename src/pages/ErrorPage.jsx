@@ -15,12 +15,12 @@ const ErrorPage = () => {
         </p>
 
         <a
-          className="mt-10 rounded-full bg-white px-10 py-4 text-black hover:scale-105"
+          className="cursor-pointer mt-10 rounded-full bg-white px-10 py-4 text-black hover:scale-105"
         >
           Home
         </a>
 
-        <a className="mt-10 text-white hover:underline">
+        <a className="cursor-pointer mt-10 text-white hover:underline">
           Help
         </a>
       </div>

@@ -81,7 +81,31 @@ const PlaylistPage = () => {
 
   // handle audio play function
   const handleAudioPlay = (track) => {
-    // console.log('get in toggle');
+    // console.log(track);
+    // console.log(tracks);
+
+    // console.log(
+    //   authUser?.uid,
+    //   tracks.type == "album" ? track?.id : track?.track?.id,
+    //   tracks?.images[0]?.url,
+    //   tracks.type == "album" ? track?.name : track?.track?.name,
+    //   tracks.type == "album" ? track?.artists[0]?.name : track?.track?.artists[0]?.name,
+    //   tracks.type == "album" ? tracks?.name : track?.track?.album?.name,
+    //   tracks.type == "album" ? track?.duration_ms :track?.track?.duration_ms,
+    // );
+
+    FirebaseService.pushListeningHistory(
+      authUser?.uid,
+      tracks.type == "album" ? track?.id : track?.track?.id,
+      tracks?.images[0]?.url,
+      tracks.type == "album" ? track?.name : track?.track?.name,
+      tracks.type == "album"
+        ? track?.artists[0]?.name
+        : track?.track?.artists[0]?.name,
+      tracks.type == "album" ? tracks?.name : track?.track?.album?.name,
+      tracks.type == "album" ? track?.duration_ms : track?.track?.duration_ms,
+    );
+
     dispatch({
       type: AudioAction.SET_AUDIO_SOURCE,
       payload: {

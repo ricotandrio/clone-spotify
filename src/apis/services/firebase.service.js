@@ -56,8 +56,6 @@ export class FirebaseService {
     const signUpResponse = await setDoc(
       doc(db, "account", firebase_id),
       {
-        top_artists: [],
-        top_tracks: [],
         date_of_birth: Timestamp.fromDate(date_of_birth),
         email: email,
         name: name,

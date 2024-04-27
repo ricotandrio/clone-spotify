@@ -1,7 +1,5 @@
-import { createContext, createRef, useEffect, useReducer } from "react";
+import { createContext, createRef, useReducer } from "react";
 import PropTypes from "prop-types";
-import { useLocation } from "react-router-dom";
-import { FirebaseService } from "@src/apis/services/firebase.service";
 
 export const AudioPlayerContext = createContext();
 
@@ -19,7 +17,7 @@ const AudioReducer = (state, action) => {
   switch (action.type) {
     case AudioAction.SET_AUDIO_SOURCE:
       // console.log('progress in audioaction.setaudiosource');
-      console.log(action.payload);
+      // console.log(action.payload);
       if (state.isPlaying == true) {
         state.audioRef.current.pause();
         state.audioSource = "";
@@ -29,8 +27,8 @@ const AudioReducer = (state, action) => {
         ...state,
         audioSource: action.payload.src,
         audioMaxDuration: action.payload.src.duration_ms,
-        audioAlbum: state.audioAlbum,
-        audioAlbumIndex: state.audioAlbumIndex,
+        audioAlbum: action?.payload?.src?.id,
+        audioAlbumIndex: action.payload.src.track_number,
         elapse: 0,
         isPlaying: false,
       };

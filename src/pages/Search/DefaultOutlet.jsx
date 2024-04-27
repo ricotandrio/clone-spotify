@@ -9,7 +9,7 @@ import "@src/assets/global.css";
 
 const DefaultOutlet = () => {
   const navigate = useNavigate();
-  const { login } = useContext(UserContext);
+  const { authUser } = useContext(UserContext);
 
   return (
     <>
@@ -22,7 +22,7 @@ const DefaultOutlet = () => {
               className="relative m-2 aspect-square w-[22%] cursor-pointer overflow-hidden rounded-lg"
               style={{ backgroundColor: banner.color }}
               onClick={() => {
-                if (login == "true") {
+                if (authUser) {
                   navigate(`/search/${encodeURIComponent(banner.name)}`);
                 }
               }}

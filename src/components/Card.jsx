@@ -71,10 +71,9 @@ export const SearchResultCard = (props) => {
         />
       </div>
       <div className="w-1/2 pt-2">
-        <h1 className="text-md line-clamp-1 inline-block cursor-not-allowed font-scbk">
+        <h1 className="text-md mb-2 line-clamp-1 cursor-not-allowed font-scbk">
           {props.track?.name}
         </h1>
-        <br />
         <h2
           className="z-20 line-clamp-1 inline-block cursor-pointer font-scbk text-sm underline decoration-transparent underline-offset-2 opacity-80 hover:decoration-inherit"
           onClick={() => navigate(`/artist/${props.track?.artists[0]?.id}`)}

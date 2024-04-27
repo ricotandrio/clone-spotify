@@ -19,12 +19,12 @@ import {
   AudioAction,
   AudioPlayerContext,
 } from "@src/contexts/AudioPlayerContext";
-import { FirebaseService } from "@src/apis/services/firebase.service";
 import { UserContext } from "@src/contexts/UserContext";
+import { SpotifyService } from "@src/apis/services/spotify.service";
 
 const AudioControllerBar = () => {
   const { state, dispatch } = useContext(AudioPlayerContext);
-  const { authUser } = useContext(UserContext);
+  const { token } = useContext(UserContext);
   // console.log("audio controller bar render");
 
   const navigate = useNavigate();
@@ -53,20 +53,52 @@ const AudioControllerBar = () => {
       state.isPlaying = false;
     }
 
-    // console.log(state?.audioSource);
-    FirebaseService.pushListeningHistory(
-      authUser?.uid,
-      state?.audioSource?.id,
-      state?.audioSource?.type == "playlist"
-        ? state?.audioSource?.album?.images[0]?.url
-        : state?.audioSource?.images,
-      state?.audioSource?.name,
-      state?.audioSource?.artists[0]?.name,
-      state?.audioSource?.album?.name,
-      state?.audioSource?.duration_ms,
-    );
-
     dispatch({ type: AudioAction.SET_PLAY });
+  };
+
+  const handleNextButton = async () => {
+    try {
+      const response = await SpotifyService.getNextSong(
+        token,
+        state.audioSource.id,
+      );
+
+      // console.log(response);
+
+      dispatch({
+        type: AudioAction.SET_AUDIO_SOURCE,
+        payload: {
+          src:
+            response.type == "playlist"
+              ? { ...response.response, type: "playlist" }
+              : { ...response, images: response.images[0].url },
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handlePrevButton = async () => {
+    try {
+      const response = await SpotifyService.getPrevSong(
+        token,
+        state.audioSource.id,
+      );
+
+      // console.log(response);
+      dispatch({
+        type: AudioAction.SET_AUDIO_SOURCE,
+        payload: {
+          src:
+            response.type == "playlist"
+              ? { ...response.response, type: "playlist" }
+              : { ...response, images: response.images[0].url },
+        },
+      });
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -105,7 +137,10 @@ const AudioControllerBar = () => {
 
           <section className="flex w-1/2 flex-col items-center justify-center">
             <div className="flex flex-row items-center justify-center gap-8">
-              <span className="cursor-pointer pt-1 opacity-80 hover:opacity-100">
+              <span
+                onClick={handlePrevButton}
+                className="cursor-pointer pt-1 opacity-80 hover:opacity-100"
+              >
                 <FontAwesomeIcon icon={faBackward} />
               </span>
               <div
@@ -122,7 +157,10 @@ const AudioControllerBar = () => {
                   className="text-black"
                 />
               </div>
-              <span className="cursor-pointer pt-1 opacity-80 hover:opacity-100">
+              <span
+                onClick={handleNextButton}
+                className="cursor-pointer pt-1 opacity-80 hover:opacity-100"
+              >
                 <FontAwesomeIcon icon={faForward} />
               </span>
             </div>

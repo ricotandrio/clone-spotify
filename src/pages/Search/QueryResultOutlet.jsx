@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { QueryContext } from "@src/contexts/QueryContext.jsx";
@@ -13,11 +13,26 @@ const QueryResultOutlet = () => {
   const { query } = useParams();
   const [tracksdata, setTracks] = useState();
   const [isLoading, setLoading] = useState(true);
-  const { setQuery } = useContext(QueryContext);
+  const { queryDebounce, setQuery } = useContext(QueryContext);
   const { token } = useContext(UserContext);
 
   // this use state must be in format {ref: useRef(), name: song_title, _setPlayed: function to setplayed to false}
   const [currentlyPlaying, setCurrentlyPlaying] = useState(null);
+
+  // get search results
+  const getSearch = useCallback(async () => {
+    try {
+      setLoading(true);
+
+      const response = await SpotifyService.search(token, queryDebounce);
+
+      setTracks(response.tracks.items);
+      setCurrentlyPlaying(null);
+      setLoading(false);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [queryDebounce, token]);
 
   // update song query when user searches via param
   useEffect(() => {
@@ -25,19 +40,12 @@ const QueryResultOutlet = () => {
   });
 
   useEffect(() => {
-    const getSearch = async () => {
-      setLoading(true);
-      const response = await SpotifyService.search(token, query);
+    if (token) getSearch();
 
-      if (response != null) {
-        setTracks(response.tracks.items);
-        setCurrentlyPlaying(null);
-        setLoading(false);
-      }
+    return () => {
+      setTracks([]);
     };
-
-    if (token) getSearch(token, query);
-  }, [query, token]);
+  }, [queryDebounce, token, getSearch]);
 
   return (
     <>

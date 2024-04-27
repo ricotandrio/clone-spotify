@@ -43,10 +43,6 @@ export class FirebaseService {
       password,
     );
 
-    if (!responseSignUp) {
-      throw new ResponseError(500, "Internal Server Error");
-    }
-
     const firebase_id = responseSignUp?.user?.reloadUserInfo?.localId;
 
     if (!firebase_id) {

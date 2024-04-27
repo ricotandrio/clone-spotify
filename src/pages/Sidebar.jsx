@@ -77,7 +77,7 @@ const Sidebar = () => {
               </ul>
             </div>
 
-            <div className="relative mt-2 flex flex-col rounded-xl bg-black-1 pb-10">
+            <div className="relative min-h-screen mt-2 flex flex-col rounded-xl bg-black-1 pb-10">
               <div className="ml-6 mt-6 flex flex-row items-center font-scbb">
                 <div className="flex cursor-pointer flex-row items-center gap-5 opacity-80 duration-300 ease-in-out hover:opacity-100">
                   <FontAwesomeIcon icon={faLinesLeaning} size="xl" />

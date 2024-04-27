@@ -66,12 +66,14 @@ const RegisterPage = () => {
 
       setErrors(zodValidate);
 
-      if (zodValidate == {}) return;
+      if (zodValidate === true){
+        // console.log(formToObject);
 
-      // eslint-disable-next-line no-unused-vars
-      const response = await FirebaseService.signUp(formToObject);
+        // eslint-disable-next-line no-unused-vars
+        const response = await FirebaseService.signUp(formToObject);
+        // console.log("sd");
+      }
 
-      // console.log("sd");
     } catch (e) {
       console.log(`Error: ${e.message}`);
       setErrors({ ...errors, form: e.message });
@@ -220,7 +222,15 @@ const RegisterPage = () => {
 
             <div className="flex flex-col p-2">
               <h1 className="">{`What's your date of birth?`}</h1>
-
+              {errors.date_of_birth && (
+                <div className="mt-3 flex flex-row gap-2 font-scbk text-xs text-red-500">
+                  <FontAwesomeIcon
+                    icon={faCircleExclamation}
+                    className="text-red-500"
+                  />
+                  <h1>{errors.date_of_birth}</h1>
+                </div>
+              )}
               <div className="flex w-full flex-row">
                 <div className="flex w-1/3 flex-col p-2">
                   <label htmlFor="ddob">Day</label>

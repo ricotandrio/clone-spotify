@@ -27,6 +27,6 @@ export const validateExtractor = (parsed) => {
     return errors;
   } else {
     // console.log(`errors safe`);
-    return {};
+    return true;
   }
 };

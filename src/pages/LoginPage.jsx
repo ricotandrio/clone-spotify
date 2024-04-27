@@ -48,10 +48,11 @@ const LoginPage = () => {
         loginUserSchema.safeParse(formToObject),
       );
 
-      if (zodValidation == {}) return;
+      if (zodValidation === true){
+        // eslint-disable-next-line no-unused-vars
+        const response = await FirebaseService.signIn(formToObject);
+      }
 
-      // eslint-disable-next-line no-unused-vars
-      const response = await FirebaseService.signIn(formToObject);
     } catch (e) {
       setErrors({ ...errors, form: e.message });
 

@@ -86,7 +86,7 @@ const ArtistPage = () => {
 
   return (
     <>
-      <div className="left-0 top-0 ml-1 h-full w-full pr-2 pt-2">
+      <div className="left-0 top-0 ml-1 h-full w-[90%] pr-2 pt-2 sm:w-full">
         <nav className="h-22 relative w-full rounded-t-xl bg-black-1 pt-1">
           <div className="fixed top-4 z-[999] flex h-16 w-3/4 items-center justify-between pb-2 pl-8 pr-2 backdrop-blur-sm">
             <div className="relative flex gap-6">

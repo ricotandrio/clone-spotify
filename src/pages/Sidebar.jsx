@@ -12,14 +12,12 @@ import {
   faPlus,
   faLinesLeaning,
   faBars,
-  faX,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { AudioControllerBar } from "@src/components/AudioControllerBar";
 
-const Sidebar = ({ _favorite }) => {
+const Sidebar = () => {
   const [width, setWidth] = useState(screen.width);
-  const [menu, setMenu] = useState(false);
   const [filterBar, setFilterBar] = useState("ALL");
 
   const navigate = useNavigate();
@@ -39,7 +37,6 @@ const Sidebar = ({ _favorite }) => {
   }, []);
 
   useEffect(() => {
-    setMenu(false);
     outletRef.current.scrollTo(0, 0);
   }, [location.pathname]);
 
@@ -57,7 +54,7 @@ const Sidebar = ({ _favorite }) => {
     <>
       {renderAudioControllerBar()}
       <div className="flex h-screen">
-        {width >= "640" ? (
+        {width >= 640 ? (
           <div className="hide-scrollbar z-10 w-1/4 overflow-y-auto rounded-b-md p-2">
             <div className="flex h-1/5 flex-col justify-center rounded-xl bg-black-1 p-2 pl-6">
               <ul className="text-l">
@@ -93,7 +90,7 @@ const Sidebar = ({ _favorite }) => {
                 </div>
               </div>
 
-              <div className="mb-5 ml-3 mt-5 flex flex-row items-center gap-2 ">
+              <div className="mb-5 ml-3 mt-5 flex flex-row items-center gap-2">
                 <div
                   className="flex w-1/3 cursor-pointer items-center justify-center rounded-full bg-[#232323] p-1 font-scbb hover:bg-white hover:text-black"
                   onClick={() => {
@@ -133,7 +130,7 @@ const Sidebar = ({ _favorite }) => {
               </div>
 
               {db && (
-                <div>
+                <div className="pb-12">
                   {db?.user_library
                     ?.filter((curr) => {
                       if (filterBar == "ALL") {
@@ -185,77 +182,45 @@ const Sidebar = ({ _favorite }) => {
             </div>
           </div>
         ) : (
-          <div className="hide-scrollbar fixed w-[3rem] overflow-y-auto opacity-80">
+          <div className="hide-scrollbar w-[5%] opacity-80">
             <div className="flex items-center justify-center p-3">
-              <FontAwesomeIcon
-                icon={faBars}
-                size="xl"
-                onClick={() => setMenu(true)}
-              />
+              <FontAwesomeIcon icon={faBars} size="xl" />
             </div>
+
             <div className="flex items-center justify-center p-3">
-              <FontAwesomeIcon
-                icon={faHouse}
-                size="1x"
-                onClick={() => setMenu(true)}
-              />
+              <NavLink to="/" style={NavLinkStyle}>
+                <FontAwesomeIcon icon={faHouse} size="1x" />
+              </NavLink>
             </div>
+
             <div className="flex items-center justify-center p-3">
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                size="1x"
-                onClick={() => setMenu(true)}
-              />
+              <NavLink
+                to="/search"
+                style={NavLinkStyle}
+                className="flex cursor-pointer flex-row items-center p-3 opacity-80 duration-300 ease-in-out hover:opacity-100"
+              >
+                <FontAwesomeIcon icon={faMagnifyingGlass} size="1x" />
+              </NavLink>
             </div>
+
             <div className="flex items-center justify-center p-3">
               <FontAwesomeIcon icon={faLinesLeaning} size="1x" />
             </div>
 
-            {menu == true && (
-              <div className="fixed left-0 top-0 z-[9999] flex w-full items-center justify-center bg-black">
-                <div className="absolute left-5 top-5 flex items-center justify-center p-3">
-                  <FontAwesomeIcon
-                    icon={faX}
-                    size="xl"
-                    onClick={() => setMenu(false)}
-                  />
-                </div>
-
-                <div className="">
-                  <ul className="text-l">
-                    <NavLink
-                      to="/"
-                      style={NavLinkStyle}
-                      className="flex cursor-pointer flex-row items-center p-3 opacity-80 duration-300 ease-in-out hover:opacity-100"
-                    >
-                      <FontAwesomeIcon icon={faHouse} />
-                      <h1 className="ml-5 mt-2">Home</h1>
-                    </NavLink>
-                    <NavLink
-                      to="/search"
-                      style={NavLinkStyle}
-                      className="flex cursor-pointer flex-row items-center p-3 opacity-80 duration-300 ease-in-out hover:opacity-100"
-                    >
-                      <FontAwesomeIcon icon={faMagnifyingGlass} />
-                      <h1 className="ml-5 mt-1">Search</h1>
-                    </NavLink>
-                    <div className="flex cursor-pointer flex-row items-center p-3 opacity-80 duration-300 ease-in-out hover:opacity-100">
-                      <FontAwesomeIcon icon={faLinesLeaning} size="lg" />
-                      <h1 className="ml-5 mt-1">Your Library </h1>
-                    </div>
-                  </ul>
-                </div>
-              </div>
-            )}
-
-            {_favorite != null && (
+            {db && (
               <div>
-                {_favorite.map((curr) => (
+                {db?.user_library.map((curr) => (
                   <div
                     key={curr.id}
                     className="m-2 flex cursor-pointer flex-row items-center rounded-md p-1 hover:bg-black-2"
                     onClick={() => {
-                      navigate(`/album/${curr.id}`, { state: curr.state });
+                      if (curr.page == "album") {
+                        navigate(`/album/${curr.id}`, {
+                          state: curr.state,
+                        });
+                      } else {
+                        navigate(`/artist/${curr.id}`);
+                      }
                     }}
                   >
                     <img

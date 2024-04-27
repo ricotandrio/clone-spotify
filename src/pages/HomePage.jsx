@@ -38,7 +38,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="left-0 top-0 ml-1 h-full w-full pr-2 pt-2">
+      <div className="left-0 top-0 ml-1 h-full w-[90%] pr-2 pt-2 sm:w-full">
         <div className="h-22 relative w-full rounded-t-xl bg-black-1 pt-2">
           <div className="flex h-16 w-full items-center pb-2 pl-8 pr-2">
             <div className="flex gap-6">

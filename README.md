@@ -117,15 +117,15 @@ npm run dev
 
 ## Roadmap
 
-- ✅ Account Management: Register, login, logout with Firebase Auth.
-- ✅ Song Search: Find songs by name or artist.
-- ✅ Profile Display: View favorite artists and top tracks.
-- ✅ Playlist & Artist Follow: Save playlists, follow artists.
-- ✅ Sidebar Display: Access favorite playlists and followed artists.
-- ✅ Song Playback
-  - ✅ Volume Control: Adjust volume.
-  - ✅ Listening History: Track played songs for profile view.
-  - ✅ Navigation: Next and previous buttons 
+- ✅ Register, login, and logout.
+- ✅ Find songs by name or artist.
+- ✅ Save playlists and follow artists.
+- ✅ View favorite playlists and followed artists from the sidebar.
+- ✅ View favorite artists and top tracks from the profile page.
+- ✅ Top Tracks and Artists Based on Listening History
+- ✅ Song Playback:
+  - ✅ Volume Control
+  - ✅ Next and previous buttons
 
 ## Usage
 

@@ -81,19 +81,7 @@ const PlaylistPage = () => {
 
   // handle audio play function
   const handleAudioPlay = (track) => {
-    // console.log(track);
-    // console.log(tracks);
-
-    // console.log(
-    //   authUser?.uid,
-    //   tracks.type == "album" ? track?.id : track?.track?.id,
-    //   tracks?.images[0]?.url,
-    //   tracks.type == "album" ? track?.name : track?.track?.name,
-    //   tracks.type == "album" ? track?.artists[0]?.name : track?.track?.artists[0]?.name,
-    //   tracks.type == "album" ? tracks?.name : track?.track?.album?.name,
-    //   tracks.type == "album" ? track?.duration_ms :track?.track?.duration_ms,
-    // );
-
+    
     FirebaseService.pushListeningHistory(
       authUser?.uid,
       tracks.type == "album" ? track?.id : track?.track?.id,
@@ -123,7 +111,7 @@ const PlaylistPage = () => {
 
   return (
     <>
-      <div className="left-0 top-0 ml-1 h-full w-full pr-2 pt-2">
+      <div className="left-0 top-0 ml-1 h-full w-[90%] pr-2 pt-2 sm:w-full">
         <nav className="h-22 relative w-full rounded-t-xl bg-gradient-to-b from-[#484848] to-black pt-2">
           <div className="flex h-16 w-full items-center gap-6 pb-2 pl-8 pr-2">
             <ButtonStylePrev />

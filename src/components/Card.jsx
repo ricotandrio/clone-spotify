@@ -133,7 +133,7 @@ export const HomePlaylistCard = (props) => {
       <div
         className="absolute bottom-[6rem] right-[1.5rem] flex h-12 w-12 items-center justify-center rounded-full bg-darkerGreen p-5 opacity-0 duration-300 ease-linear
         hover:z-[5] hover:scale-110 hover:bg-green hover:opacity-80
-        group-hover/button:bottom-[40%] group-hover/button:opacity-100"
+        group-hover/button:bottom-[40%] group-hover/button:opacity-100 cursor-not-allowed"
       >
         <FontAwesomeIcon icon={faPlay} color="black" size="lg" />
       </div>
@@ -180,7 +180,7 @@ export const ArtistAlbumCard = (props) => {
         <div
           className="absolute bottom-[20%] right-[1.5rem] flex h-12 w-12 items-center justify-center rounded-full bg-darkerGreen p-5 opacity-0 duration-300 ease-linear
           hover:z-[5] hover:scale-110 hover:bg-green hover:opacity-80
-          group-hover/button:bottom-[30%] group-hover/button:opacity-100"
+          group-hover/button:bottom-[30%] group-hover/button:opacity-100 cursor-not-allowed"
         >
           <FontAwesomeIcon icon={faPlay} color="black" size="lg" />
         </div>

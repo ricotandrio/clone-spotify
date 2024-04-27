@@ -48,6 +48,7 @@ const AudioReducer = (state, action) => {
         audioAlbumIndex: state.audioAlbumIndex,
       };
     case AudioAction.SET_VOLUME:
+      state.audioRef.current.volume = action.payload.value;
       return {
         ...state,
         volume: action.payload.value < 0.2 ? 0 : action.payload.value,

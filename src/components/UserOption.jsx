@@ -6,11 +6,7 @@ import { auth } from "@src/configs/firebase";
 
 import "@src/assets/global.css";
 
-UserOption.propTypes = {
-  _setProfileVisible: PropTypes.func.isRequired,
-};
-
-export default function UserOption({ _setProfileVisible }) {
+const UserOption = ({ _setProfileVisible }) => {
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -65,3 +61,9 @@ export default function UserOption({ _setProfileVisible }) {
     </>
   );
 }
+
+UserOption.propTypes = {
+  _setProfileVisible: PropTypes.func.isRequired,
+};
+
+export default UserOption;

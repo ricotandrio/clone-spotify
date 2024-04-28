@@ -1,1 +1,3 @@
-export default function AuthValidator() {}
+const AuthValidator = () => {}
+
+export default AuthValidator;

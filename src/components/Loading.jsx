@@ -3,7 +3,7 @@ import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 import "@src/assets/global.css";
 
-export default function Loading() {
+const Loading = () => {
   return (
     <div className="z-[999] mb-2 mt-2 flex flex-row items-center pl-3">
       <FontAwesomeIcon icon={faCircle} size="2xs" className="mr-2" fade />
@@ -12,3 +12,5 @@ export default function Loading() {
     </div>
   );
 }
+
+export default Loading;
